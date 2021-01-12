@@ -16,7 +16,7 @@ namespace OverroidModel.Card
         ushort? overriddenValue;
         ICardEffect? overriddenEffect;
 
-        InGameCard(ICardMaster data)
+        internal InGameCard(ICardMaster data)
         {
             this.data = data;
             Visibility = CardVisibility.Hidden;
