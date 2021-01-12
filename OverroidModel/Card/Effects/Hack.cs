@@ -11,7 +11,7 @@ namespace OverroidModel.Card.Effects
         {
             var player = g.CurrentBattle.PlayerOf(sourceCardName);
             var opponentHand = g.HandOf(g.OpponentOf(player));
-            return opponentHand.Count - opponentHand.RevealedCards.Count >= 1;
+            return opponentHand.UnrevealedCardCount >= 1;
         }
 
         IGameAction ICardEffect.GetAction(CardName sourceCardName, IGame g)

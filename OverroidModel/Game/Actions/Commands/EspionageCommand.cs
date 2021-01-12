@@ -1,4 +1,5 @@
 ﻿using OverroidModel.Card;
+using OverroidModel.Exceptions;
 using System.Diagnostics;
 
 namespace OverroidModel.Game.Actions.Commands
@@ -40,6 +41,29 @@ namespace OverroidModel.Game.Actions.Commands
             myHand.AddCard(opponentCard);
             opponentHand.AddCard(myCard);
             Debug.Assert(myHand.Cards.Count == opponentHand.Cards.Count);
+        }
+
+        void IGameCommand.Validate(IGame g)
+        {
+            if (!g.HandOf(player).HasCard(targetMyCardName))
+            {
+                throw new UnavailableActionException("Invalid Command: player does not have the card to exchange");
+            }
+            var opponentHand = g.HandOf(g.OpponentOf(player));
+            if (targetOpponentCardName == null)
+            {
+                if (opponentHand.UnrevealedCardCount == 0)
+                {
+                    throw new UnavailableActionException("Invalid Command: cannot choose opponent at random. There is no unrevealed card");
+                }
+            } 
+            else
+            {
+                if (!opponentHand.HasCard((CardName)targetOpponentCardName))
+                {
+                    throw new UnavailableActionException("Invalid Command: opponent does not have the card to exchange");
+                }
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using OverroidModel.Card;
 using OverroidModel.Exceptions;
-using System;
 
 namespace OverroidModel.Game.Actions.Commands
 {
@@ -29,16 +28,8 @@ namespace OverroidModel.Game.Actions.Commands
 
         void IGameAction.Resolve(in IGame g)
         {
-            if (targetRound >= g.CurrentBattle.Round)
-            {
-                throw new ArgumentOutOfRangeException("Morph target round must be previous rounds");
-            }
             var battle = g.Battles[targetRound];
             var targetCard = battle.CardOf(g.OpponentOf(CommandingPlayer));
-            if (targetCard.Name != targetCardName)
-            {
-                throw new UnavailableActionException("Morph target is not opponent card of target round");
-            }
             var thisCard = g.CurrentBattle.CardOf(player);
             var copiedEffect = targetCard.DefaultEffect;
             thisCard.OverrideEffect(copiedEffect);
@@ -48,6 +39,19 @@ namespace OverroidModel.Game.Actions.Commands
             if (copiedEffect.Timing <= currentTiming && copiedEffect.ConditionIsSatisfied(thisCard.Name, g))
             {
                 g.PushToActionStack(copiedEffect.GetAction(thisCard.Name, g));
+            }
+        }
+
+        void IGameCommand.Validate(IGame g)
+        {
+            if (targetRound >= g.CurrentBattle.Round)
+            {
+                throw new UnavailableActionException("Morph target round must be previous rounds");
+            }
+            var targetCard = g.Battles[targetRound].CardOf(g.OpponentOf(CommandingPlayer));
+            if (targetCard.Name != targetCardName)
+            {
+                throw new UnavailableActionException("Morph target is not opponent card of target round");
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using OverroidModel.Card;
+using OverroidModel.Exceptions;
 
 namespace OverroidModel.Game.Actions.Commands
 {
@@ -30,6 +31,14 @@ namespace OverroidModel.Game.Actions.Commands
             thisCard.SetGuessed();
             g.CurrentBattle.ReplaceCard(player, targetCard);
             g.HandOf(player).AddCard(targetCard);
+        }
+
+        void IGameCommand.Validate(IGame g)
+        {
+            if (!g.HandOf(player).HasCard(targetCardName))
+            {
+                throw new UnavailableActionException("Player does not have Rush target card");
+            }
         }
     }
 }

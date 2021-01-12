@@ -17,7 +17,8 @@ namespace OverroidModel.Game
 
         public IReadOnlyList<InGameCard> Cards => cards;
         public ushort Count => (ushort)Cards.Count;
-        public IReadOnlyList<InGameCard> GuessableCards => cards.FindAll(c => c.Visibility != CardVisibility.Hidden);
+        public ushort UnrevealedCardCount => (ushort)(Count - GuessableCardNames.Count);
+        public IReadOnlyList<CardName> GuessableCardNames => cards.Where(c => c.Visibility != CardVisibility.Hidden).Select(c => c.Name).ToList();
         public IReadOnlyList<InGameCard> RevealedCards => cards.FindAll(c => c.Visibility == CardVisibility.Revealed);
 
         public InGameCard? CardOf(CardName cn) => cards.Where(c => c.Name == cn).FirstOrDefault();

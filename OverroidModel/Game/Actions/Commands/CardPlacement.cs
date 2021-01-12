@@ -1,4 +1,5 @@
 ﻿using OverroidModel.Card;
+using OverroidModel.Exceptions;
 
 namespace OverroidModel.Game.Actions.Commands
 {
@@ -37,6 +38,18 @@ namespace OverroidModel.Game.Actions.Commands
             else
             {
                 g.AddCommandAuthorizer(new CommandAuthorizer<CardPlacement>(g.OpponentOf(player)));
+            }
+        }
+
+        void IGameCommand.Validate(IGame g)
+        {
+            if (g.CurrentBattle.HasCardOf(player))
+            {
+                throw new UnavailableActionException("Invalid Command: player has already set card");
+            }
+            if (g.HandOf(player).HasCard(cardNameToPlace))
+            {
+                throw new UnavailableActionException("Invalid Command: player does not have the card to set");
             }
         }
     }

@@ -2,6 +2,8 @@
 {
     public interface IGameCommand : IGameAction
     {
-        PlayerAccount CommandingPlayer { get; }
+        public PlayerAccount CommandingPlayer { get; }
+
+        internal void Validate(IGame g); 
     }
 }
