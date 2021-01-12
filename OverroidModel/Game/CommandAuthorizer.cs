@@ -1,19 +1,22 @@
 ﻿using OverroidModel.Exceptions;
-using OverroidModel.Game.Actions;
 using OverroidModel.Game.Actions.Commands;
 
 namespace OverroidModel.Game
 {
-    class CommandAuthorizer<T> : ICommandAuthorizer where T : IGameAction
+    /// <summary>
+    /// Implementation of ICommandAuthorizer
+    /// </summary>
+    /// <typeparam name="T">GameCommand class that expected to be passed to the game.</typeparam>
+    class CommandAuthorizer<T> : ICommandAuthorizer where T : IGameCommand
     {
         readonly PlayerAccount expectedPlayer;
 
+        /// <param name="expectedPlayer">Player expected to command.</param>
         public CommandAuthorizer(PlayerAccount expectedPlayer)
         {
             this.expectedPlayer = expectedPlayer;
         }
 
-        /// <inheritdoc cref="ICommandAuthorizer.Authorize(IGameAction)"/>
         public void Authorize(IGameCommand command)
         {
             if (!(command is T))

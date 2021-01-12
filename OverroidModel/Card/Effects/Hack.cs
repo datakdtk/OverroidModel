@@ -3,8 +3,12 @@ using OverroidModel.Game.Actions;
 
 namespace OverroidModel.Card.Effects
 {
+    /// <summary>
+    /// Effect of Hacker (2).
+    /// </summary>
     public class Hack : ICardEffect
     {
+
         EffectTiming ICardEffect.Timing => EffectTiming.POST_BATTLE;
 
         bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGame g)

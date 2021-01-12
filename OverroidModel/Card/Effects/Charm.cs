@@ -3,6 +3,9 @@ using OverroidModel.Game.Actions;
 
 namespace OverroidModel.Card.Effects
 {
+    /// <summary>
+    /// Effect of Idol (5).
+    /// </summary>
     public class Charm : ICardEffect
     {
 

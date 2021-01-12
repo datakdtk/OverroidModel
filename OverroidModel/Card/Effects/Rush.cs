@@ -4,8 +4,12 @@ using OverroidModel.Game.Actions.Commands;
 
 namespace OverroidModel.Card.Effects
 {
+    /// <summary>
+    /// Effect of Soldier (11).
+    /// </summary>
     public class Rush : ICardEffect
     {
+
         EffectTiming ICardEffect.Timing => EffectTiming.POST_BATTLE;
 
         bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGame g)

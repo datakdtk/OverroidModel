@@ -3,8 +3,12 @@ using OverroidModel.Game.Actions;
 
 namespace OverroidModel.Card.Effects
 {
+    /// <summary>
+    /// Effect of Trickster (6).
+    /// </summary>
     public class Reversal : ICardEffect
     {
+
         EffectTiming ICardEffect.Timing => EffectTiming.PRE_BATTLE;
 
         bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGame g) => true;

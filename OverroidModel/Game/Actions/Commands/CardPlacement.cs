@@ -3,12 +3,18 @@ using OverroidModel.Exceptions;
 
 namespace OverroidModel.Game.Actions.Commands
 {
+    /// <summary>
+    /// Action to place battle card from hand.
+    /// </summary>
     public class CardPlacement : IGameCommand
     {
         readonly PlayerAccount player;
         readonly CardName cardNameToPlace;
         readonly CardName? detectedCardName;
 
+        /// <param name="player">Player who places a card.</param>
+        /// <param name="cardNameToPlace">Card to be placed.</param>
+        /// <param name="detectedCardName">Called card name for detection if detected by defending player.</param>
         public CardPlacement(PlayerAccount player, CardName cardNameToPlace, CardName? detectedCardName)
         {
             this.player = player;

@@ -2,11 +2,16 @@
 
 namespace OverroidModel.Game.Actions
 {
+    /// <summary>
+    /// Effect resolving action of Innocence (1).
+    /// </summary>
     public class MiracleEffect : IGameAction
     {
         readonly PlayerAccount controller;
         readonly CardName sourceCardName;
 
+        /// <param name="controller">Card controller of the source card of the effect.</param>
+        /// <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
         internal MiracleEffect(PlayerAccount controller, CardName sourceCardName)
         {
             this.controller = controller;

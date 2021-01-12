@@ -3,8 +3,12 @@ using OverroidModel.Game.Actions;
 
 namespace OverroidModel.Card.Effects
 {
+    /// <summary>
+    /// Effect of Overroid (12).
+    /// </summary>
     public class Singularity : ICardEffect
     {
+
         EffectTiming ICardEffect.Timing => EffectTiming.POST_BATTLE;
 
         bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGame g)

@@ -2,6 +2,9 @@
 
 namespace OverroidModel.Game.Actions
 {
+    /// <summary>
+    /// Action to start new battle round.
+    /// </summary>
     public class RoundStart : IGameAction
     {
         public PlayerAccount? Controller => null;

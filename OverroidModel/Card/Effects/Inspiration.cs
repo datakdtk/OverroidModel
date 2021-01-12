@@ -3,8 +3,12 @@ using OverroidModel.Game.Actions;
 
 namespace OverroidModel.Card.Effects
 {
+    /// <summary>
+    /// Effect of Diva (8).
+    /// </summary>
     public class Inspiration : ICardEffect
     {
+
         EffectTiming ICardEffect.Timing => EffectTiming.PRE_BATTLE;
 
         bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGame g)

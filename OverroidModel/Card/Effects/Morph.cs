@@ -4,8 +4,12 @@ using OverroidModel.Game.Actions.Commands;
 
 namespace OverroidModel.Card.Effects
 {
+    /// <summary>
+    /// Effect of Beast (9).
+    /// </summary>
     public class Morph : ICardEffect
     {
+
         EffectTiming ICardEffect.Timing => EffectTiming.SECOND;
 
         bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGame g)

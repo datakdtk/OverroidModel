@@ -3,11 +3,16 @@ using OverroidModel.Exceptions;
 
 namespace OverroidModel.Game.Actions.Commands
 {
+    /// <summary>
+    /// Effect resolving action of Solder (11).
+    /// </summary>
     public class RushCommand : IGameCommand
     {
         readonly PlayerAccount player;
         readonly CardName targetCardName;
 
+        /// <param name="player">Card controller of the source card of the effect.</param>
+        /// <param name="targetCardName"></param>
         public RushCommand(PlayerAccount player, CardName targetCardName)
         {
             this.player = player;

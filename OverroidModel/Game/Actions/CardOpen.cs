@@ -4,6 +4,9 @@ using OverroidModel.Exceptions;
 
 namespace OverroidModel.Game.Actions
 {
+    /// <summary>
+    /// Action to open faced down battle cards.
+    /// </summary>
     public class CardOpen : IGameAction
     {
 

@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace OverroidModel.Game
 {
+    /// <summary>
+    /// Implementation of one-to-one game.
+    /// </summary>
     internal class IndividualGame : IGame
     {
         readonly PlayerAccount humanPlayer;
@@ -22,6 +25,10 @@ namespace OverroidModel.Game
         const ushort maxRound = 6;
         
 
+        /// <param name="humanPlayer"> Player who plays Human force,</param>
+        /// <param name="overroidPlayer">Player who plays Overroid force.</param>
+        /// <param name="humanPlayerHand">Hand cards of Human player.</param>
+        /// <param name="overroidPlayerHand">Hand card of Overroid player.</param>
         public IndividualGame(
             PlayerAccount humanPlayer,
             PlayerAccount overroidPlayer,

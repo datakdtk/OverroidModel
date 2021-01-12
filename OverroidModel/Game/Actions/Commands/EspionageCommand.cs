@@ -4,12 +4,18 @@ using System.Diagnostics;
 
 namespace OverroidModel.Game.Actions.Commands
 {
+    /// <summary>
+    /// Effect resolving action of Spy (7).
+    /// </summary>
     public class EspionageCommand : IGameCommand
     {
         readonly PlayerAccount player;
         readonly CardName targetMyCardName;
         readonly CardName? targetOpponentCardName;
 
+        /// <param name="player">Card controller of the source card of the effect.</param>
+        /// <param name="targetMyCardName">Name of card which will be chosen from the card controller's hand.</param>
+        /// <param name="targetOpponentCardName">Name of card which will be chosen from the opponent's hand. If it is null, chosen randomly.</param>
         public EspionageCommand(PlayerAccount player, CardName targetMyCardName, CardName? targetOpponentCardName)
         {
             this.player = player;

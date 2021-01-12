@@ -3,8 +3,12 @@ using OverroidModel.Game.Actions;
 
 namespace OverroidModel.Card.Effects
 {
+    /// <summary>
+    /// Effect of Innocence (1).
+    /// </summary>
     public class Miracle : ICardEffect
     {
+
         EffectTiming ICardEffect.Timing => EffectTiming.PRE_BATTLE;
 
         bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGame g)

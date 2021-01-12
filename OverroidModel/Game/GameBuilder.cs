@@ -5,10 +5,14 @@ using System.Linq;
 
 namespace OverroidModel.Game
 {
+    /// <summary>
+    /// Builder class to create IGame implementations.
+    /// </summary>
     class GameBuilder
     {
         readonly ICardMaster[] cardSet;
 
+        /// <param name="cardSet">Card set to use with 11 cards that excludes Innocence and Overroid card.</param>
         public GameBuilder(ICardMaster[] cardSet)
         {
             if (cardSet.Length != 11)
@@ -18,6 +22,11 @@ namespace OverroidModel.Game
             this.cardSet = cardSet;
         }
 
+        /// <summary>
+        /// Create a new individual game.
+        /// </summary>
+        /// <param name="humanPlayer">Player who plays human force.</param>
+        /// <param name="overroidPlayer">Player who plays overroid force.</param>
         public IndividualGame InitializeIndividualGame(PlayerAccount humanPlayer, PlayerAccount overroidPlayer)
         {
             var shuffledCardSet = cardSet.OrderBy(c => Guid.NewGuid()).ToArray();
@@ -36,6 +45,9 @@ namespace OverroidModel.Game
             return new IndividualGame(humanPlayer, overroidPlayer, new PlayerHand(humanHand), new PlayerHand(overroidHand));
         }
 
+        /// <summary>
+        /// Get cards of basic set.
+        /// </summary>
         public static ICardMaster[] DefaultCardSet()
         {
             return new ICardMaster[11]

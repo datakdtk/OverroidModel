@@ -3,6 +3,10 @@ using OverroidModel.Game.Actions.Commands;
 
 namespace OverroidModel.Game.Actions
 {
+    /// <summary>
+    /// Action to get readied to accept external commands.
+    /// </summary>
+    /// <typeparam name="T">Expected command class.</typeparam>
     public class CommandStandbyEffect<T> : IGameAction where T : IGameCommand
     {
         readonly CardName sourceCardName;

@@ -1,5 +1,8 @@
 ﻿namespace OverroidModel.Card
 {
+    /// <summary>
+    /// Card name that identifies each card in game.
+    /// </summary>
     public enum CardName
     {
         Inocent,

@@ -3,8 +3,12 @@ using OverroidModel.Card.Effects;
 
 namespace OverroidModel.Game.Actions
 {
+    /// <summary>
+    /// Action to compare the card values and determine the battle winner.
+    /// </summary>
     class BattleEnd : IGameAction
     {
+
         public PlayerAccount? Controller => null;
 
         public bool HasVisualEffect() => true;
@@ -28,7 +32,6 @@ namespace OverroidModel.Game.Actions
                         g.PushToActionStack(c.Effect.GetAction(c.Name, g));
                     }
             }
-
         }
     }
 }

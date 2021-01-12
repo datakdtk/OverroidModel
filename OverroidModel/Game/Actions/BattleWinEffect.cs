@@ -2,11 +2,16 @@
 
 namespace OverroidModel.Game.Actions
 {
+    /// <summary>
+    /// Common implement for auto-win card effects.
+    /// </summary>
     public abstract class BattleWinEffect : IGameAction
     {
         readonly PlayerAccount controller;
         readonly CardName sourceCardName;
 
+        /// <param name="controller">Card controller of the source card of the effect.</param>
+        /// <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
         protected BattleWinEffect(PlayerAccount controller, CardName sourceCardName)
         {
             this.controller = controller;
