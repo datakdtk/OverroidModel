@@ -2,7 +2,7 @@
 using OverroidModel.Card.Master;
 using Xunit;
 
-namespace OverroidModel.Test
+namespace OverroidModel.Test.Card
 {
     public class InGameCardTest
     {

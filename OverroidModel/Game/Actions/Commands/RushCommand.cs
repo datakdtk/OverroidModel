@@ -33,7 +33,6 @@ namespace OverroidModel.Game.Actions.Commands
         {
             var thisCard = g.CurrentBattle.CardOf(player);
             var targetCard = g.HandOf(player).RemoveCard(targetCardName);
-            thisCard.SetGuessed();
             g.CurrentBattle.ReplaceCard(player, targetCard);
             g.HandOf(player).AddCard(targetCard);
         }

@@ -27,7 +27,7 @@ namespace OverroidModel.Game.Actions
         void IGameAction.Resolve(in IGame g)
         {
             var player = g.CurrentBattle.PlayerOf(sourceCardName);
-            g.HandOf(player).RevealRandomCard();
+            g.HandOf(player).SelectRandamUnrevealCard().Reveal();
         }
     }
 }

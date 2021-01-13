@@ -73,23 +73,16 @@ namespace OverroidModel.Game
         /// <param name="c">Card to add</param>
         internal void AddCard(InGameCard c) {
             c.ReturnToDefault();
+            c.SetGuessed();
             cards.Add(c);
         }
 
         /// <summary>
-        /// Remove an unrevealed card at random.
+        /// Selects an unrevealed card at random and returns it.
         /// </summary>
         /// <returns>Removed card.</returns>
         /// <exception cref="UnavailableActionException">Thrown when there is no unrevealed card in the hand.</exception>
-        internal InGameCard RemoveRandomUnrevealedCard() => RemoveCard(GetRandamUnrevealCard().Name);
-
-        /// <summary>
-        /// Reveal an unrevealed card at random.
-        /// </summary>
-        /// <exception cref="UnavailableActionException">Thrown when there is no unrevealed card in the hand.</exception>
-        internal void RevealRandomCard() => GetRandamUnrevealCard().Reveal();
-
-        private InGameCard GetRandamUnrevealCard()
+        internal InGameCard SelectRandamUnrevealCard()
         {
             var unrevealedCards = cards.FindAll(c => c.Visibility != CardVisibility.Revealed);
             if (unrevealedCards.Count == 0)
@@ -98,7 +91,8 @@ namespace OverroidModel.Game
             }
             var rand = new Random();
             var randomIndex = rand.Next(unrevealedCards.Count - 1);
-            return cards[randomIndex];
+            return unrevealedCards[randomIndex];
         }
+
     }
 }

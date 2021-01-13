@@ -40,10 +40,8 @@ namespace OverroidModel.Game.Actions.Commands
             Debug.Assert(myHand.Cards.Count == opponentHand.Cards.Count);
             var myCard = myHand.RemoveCard(targetMyCardName);
             var opponentCard = targetOpponentCardName == null
-                ? opponentHand.RemoveRandomUnrevealedCard()
+                ? opponentHand.RemoveCard(opponentHand.SelectRandamUnrevealCard().Name)
                 : opponentHand.RemoveCard(targetOpponentCardName.Value);
-            myCard.SetGuessed();
-            opponentCard.SetGuessed();
             myHand.AddCard(opponentCard);
             opponentHand.AddCard(myCard);
             Debug.Assert(myHand.Cards.Count == opponentHand.Cards.Count);
