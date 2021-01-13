@@ -117,7 +117,7 @@ namespace OverroidModel.Test.Game
             Assert.NotNull(cardInHand);
 
             Assert.Equal(cardInHand?.Value, cardInHand?.DefaultValue);
-            Assert.IsType(cardInHand?.Effect.GetType(), cardInHand?.DefaultEffect);
+            Assert.Equal(cardInHand?.Effect, cardInHand?.DefaultEffect);
         }
 
         [Fact]

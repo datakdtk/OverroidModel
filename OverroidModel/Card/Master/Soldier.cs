@@ -5,7 +5,7 @@ namespace OverroidModel.Card.Master
     /// <summary>
     /// Card with value 11.
     /// </summary>
-    public class Soldier : ICardMaster
+    public struct Soldier : ICardMaster
     {
 
         public ushort Value => 11;

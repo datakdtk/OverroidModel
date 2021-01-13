@@ -6,7 +6,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Creator (3).
     /// </summary>
-    public class Lifemaker : ICardEffect
+    public struct Lifemaker : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.PRE_BATTLE;
