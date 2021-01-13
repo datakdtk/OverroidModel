@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OverroidModel", "OverroidModel\OverroidModel.csproj", "{AEFA2F64-907C-42BF-AF8F-BC3DB46D98EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OverroidModel.Test", "OverroidModel.Test\OverroidModel.Test.csproj", "{1F67A02C-08CA-44B1-9D10-027D3635B606}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AEFA2F64-907C-42BF-AF8F-BC3DB46D98EB} = {AEFA2F64-907C-42BF-AF8F-BC3DB46D98EB}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
