@@ -38,7 +38,7 @@ namespace OverroidModel.Game.Actions
         /// Changes the state of Current game.
         /// </summary>
         /// <param name="g">Game that will be changed by the action.</param>
-        internal void Resolve(in IGame g);
+        internal void Resolve(IMutableGame g);
 
     }
 }

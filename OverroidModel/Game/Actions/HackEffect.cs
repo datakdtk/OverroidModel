@@ -24,7 +24,7 @@ namespace OverroidModel.Game.Actions
 
         public bool IsCardEffect() => true;
 
-        void IGameAction.Resolve(in IGame g)
+        void IGameAction.Resolve(IMutableGame g)
         {
             var player = g.CurrentBattle.PlayerOf(sourceCardName);
             g.HandOf(player).SelectRandamUnrevealCard().Reveal();

@@ -33,7 +33,7 @@ namespace OverroidModel.Game.Actions.Commands
 
         public bool IsCardEffect() => true;
 
-        void IGameAction.Resolve(in IGame g)
+        void IGameAction.Resolve(IMutableGame g)
         {
             var myHand = g.HandOf(player);
             var opponentHand = g.HandOf(g.OpponentOf(player));
@@ -47,7 +47,7 @@ namespace OverroidModel.Game.Actions.Commands
             Debug.Assert(myHand.Cards.Count == opponentHand.Cards.Count);
         }
 
-        void IGameCommand.Validate(IGame g)
+        void IGameCommand.Validate(IGameInformation g)
         {
             if (!g.HandOf(player).HasCard(targetMyCardName))
             {

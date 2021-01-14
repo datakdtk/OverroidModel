@@ -16,7 +16,7 @@
         /// </summary>
         /// <param name="g">Current game object.</param>
         /// <exception cref="Exceptions.UnavailableActionException">Thrown when the command is inapplicable.</exception>
-        internal void Validate(IGame g); 
+        internal void Validate(IGameInformation g); 
 
     }
 }

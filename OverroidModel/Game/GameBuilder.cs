@@ -6,7 +6,7 @@ using System.Linq;
 namespace OverroidModel.Game
 {
     /// <summary>
-    /// Builder class to create IGame implementations.
+    /// Builder class to create IGameInformation implementations.
     /// </summary>
     class GameBuilder
     {

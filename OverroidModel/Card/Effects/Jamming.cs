@@ -11,9 +11,9 @@ namespace OverroidModel.Card.Effects
 
         EffectTiming ICardEffect.Timing => EffectTiming.FIRST;
 
-        bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGame g) => true;
+        bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGameInformation g) => true;
 
-        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGame g)
+        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
         {
             return new JammingEffect(g.CurrentBattle.PlayerOf(sourceCardName), sourceCardName);
         }

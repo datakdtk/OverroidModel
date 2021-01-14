@@ -11,13 +11,13 @@ namespace OverroidModel.Card.Effects
 
         EffectTiming ICardEffect.Timing => EffectTiming.PRE_BATTLE;
 
-        bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGame g)
+        bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGameInformation g)
         {
             var battle = g.CurrentBattle;
             return sourceCardName == battle.CardOf(battle.AttackingPlayer).Name;
         }
 
-        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGame g)
+        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
         {
             return new SnipeEffect(g.CurrentBattle.PlayerOf(sourceCardName), sourceCardName);
         }

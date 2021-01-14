@@ -16,7 +16,7 @@ namespace OverroidModel.Game.Actions
 
         public bool IsCardEffect() => false;
 
-        void IGameAction.Resolve(in IGame g)
+        void IGameAction.Resolve(IMutableGame g)
         {
             var battle = g.CurrentBattle;
             if (!battle.HasBothPlayersCards())

@@ -10,7 +10,7 @@ namespace OverroidModel.Game
     /// <summary>
     /// Implementation of one-to-one game.
     /// </summary>
-    internal class IndividualGame : IGame
+    internal class IndividualGame : IMutableGame
     {
         readonly PlayerAccount humanPlayer;
         readonly PlayerAccount overroidPlayer;
@@ -126,7 +126,7 @@ namespace OverroidModel.Game
             ResolveStacks();
         }
 
-        void IGame.AddNewRound()
+        void IMutableGame.AddNewRound()
         {
             if (HasFinished())
             {
@@ -138,9 +138,9 @@ namespace OverroidModel.Game
             battles.Add(new Battle(newRound, attackingPlayer, defendingPlayer));
         }
 
-        void IGame.AddCommandAuthorizer(ICommandAuthorizer a) => commandAuthorizer = a;
+        void IMutableGame.AddCommandAuthorizer(ICommandAuthorizer a) => commandAuthorizer = a;
 
-        void IGame.DisableRoundEffects(PlayerAccount targetPlayer, ushort round)
+        void IMutableGame.DisableRoundEffects(PlayerAccount targetPlayer, ushort round)
         {
             if (round == 0 || round > maxRound)
             {
@@ -149,9 +149,9 @@ namespace OverroidModel.Game
             effectDisabledPlayers[round] = targetPlayer;
         }
 
-        void IGame.PushToActionStack(IGameAction a) => PushToActionStack(a);
+        void IMutableGame.PushToActionStack(IGameAction a) => PushToActionStack(a);
 
-        void IGame.SetSpecialWinner(PlayerAccount p) => specialWinner = p;
+        void IMutableGame.SetSpecialWinner(PlayerAccount p) => specialWinner = p;
 
         private void PushToActionStack(IGameAction a)
         {

@@ -32,7 +32,7 @@ namespace OverroidModel.Game.Actions.Commands
 
         public bool IsCardEffect() => true;
 
-        void IGameAction.Resolve(in IGame g)
+        void IGameAction.Resolve(IMutableGame g)
         {
             var battle = g.Battles[targetRound];
             var targetCard = battle.CardOf(g.OpponentOf(CommandingPlayer));
@@ -48,7 +48,7 @@ namespace OverroidModel.Game.Actions.Commands
             }
         }
 
-        void IGameCommand.Validate(IGame g)
+        void IGameCommand.Validate(IGameInformation g)
         {
             if (targetRound >= g.CurrentBattle.Round)
             {

@@ -32,7 +32,7 @@ namespace OverroidModel.Game.Actions.Commands
 
         public bool IsCardEffect() => false;
 
-        void IGameAction.Resolve(in IGame g)
+        void IGameAction.Resolve(IMutableGame g)
         {
             var card = g.HandOf(player).RemoveCard(cardNameToPlace);
             var battle = g.CurrentBattle;
@@ -47,7 +47,7 @@ namespace OverroidModel.Game.Actions.Commands
             }
         }
 
-        void IGameCommand.Validate(IGame g)
+        void IGameCommand.Validate(IGameInformation g)
         {
             if (g.CurrentBattle.HasCardOf(player))
             {

@@ -12,12 +12,12 @@ namespace OverroidModel.Card.Effects
 
         EffectTiming ICardEffect.Timing => EffectTiming.SECOND;
 
-        bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGame g)
+        bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGameInformation g)
         {
             return g.CurrentBattle.Round >= 2;
         }
 
-        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGame g)
+        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
         {
             return new CommandStandbyEffect<MorphCommand>(sourceCardName);
         }

@@ -24,7 +24,7 @@ namespace OverroidModel.Game.Actions
 
         public bool IsCardEffect() => true;
 
-        void IGameAction.Resolve(in IGame g)
+        void IGameAction.Resolve(IMutableGame g)
         {
             g.DisableRoundEffects(g.OpponentOf(controller), (ushort)(g.CurrentBattle.Round + 1));
         }

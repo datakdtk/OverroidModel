@@ -43,7 +43,7 @@ namespace OverroidModel.Card.Effects
         /// <param name="sourceCardName">Name of the card from which this effect was triggered.</param>
         /// <param name="g">Current game object</param>
         /// <returns></returns>
-        internal IGameAction GetAction(CardName sourceCardName, IGame g);
+        internal IGameAction GetAction(CardName sourceCardName, IGameInformation g);
 
         /// <summary>
         /// Checks if this effect triggers on current game state. But does not consider effect timing.
@@ -51,7 +51,7 @@ namespace OverroidModel.Card.Effects
         /// <param name="sourceCardName">Name of the card from which this effect will be triggered.</param>
         /// <param name="g">Current game object</param>
         /// <returns>Returns true if the trigger condition is satisfied.</returns>
-        internal bool ConditionIsSatisfied(CardName sourceCardName, IGame g);
+        internal bool ConditionIsSatisfied(CardName sourceCardName, IGameInformation g);
 
     }
 }
