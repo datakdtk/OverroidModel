@@ -6,7 +6,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Innocence (1).
     /// </summary>
-    public struct Miracle : ICardEffect
+    public class Miracle : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.PRE_BATTLE;

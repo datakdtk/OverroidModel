@@ -3,9 +3,9 @@
 namespace OverroidModel.Card.Master
 {
     /// <summary>
-    /// Card with value 2;
+    /// Card with
     /// </summary>
-    public struct Hacker : ICardMaster
+    public class Hacker : ICardMaster
     {
 
         public ushort Value => 2;

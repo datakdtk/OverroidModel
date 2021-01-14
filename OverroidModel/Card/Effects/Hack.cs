@@ -6,7 +6,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Hacker (2).
     /// </summary>
-    public struct Hack : ICardEffect
+    public class Hack : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.POST_BATTLE;

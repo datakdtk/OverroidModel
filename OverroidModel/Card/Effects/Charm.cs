@@ -6,7 +6,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Idol (5).
     /// </summary>
-    public struct Charm : ICardEffect
+    public class Charm : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.PRE_BATTLE;

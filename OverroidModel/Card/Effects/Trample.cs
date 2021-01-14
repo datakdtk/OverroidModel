@@ -6,7 +6,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Legion (10).
     /// </summary>
-    public struct Trample : ICardEffect
+    public class Trample : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.POST_BATTLE;

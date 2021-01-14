@@ -6,7 +6,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Death (13).
     /// </summary>
-    public struct Snipe : ICardEffect
+    public class Snipe : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.PRE_BATTLE;

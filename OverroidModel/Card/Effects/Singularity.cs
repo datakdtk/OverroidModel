@@ -6,7 +6,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Overroid (12).
     /// </summary>
-    public struct Singularity : ICardEffect
+    public class Singularity : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.POST_BATTLE;

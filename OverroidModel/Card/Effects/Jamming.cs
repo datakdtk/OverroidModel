@@ -6,7 +6,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Doctor (4).
     /// </summary>
-    public struct Jamming : ICardEffect
+    public class Jamming : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.FIRST;

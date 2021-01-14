@@ -6,7 +6,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Spy (7).
     /// </summary>
-    public struct Espionage : ICardEffect
+    public class Espionage : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.POST_BATTLE;

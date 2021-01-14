@@ -5,7 +5,7 @@ namespace OverroidModel.Card.Master
     /// <summary>
     /// Card with value 9.
     /// </summary>
-    public struct Beast : ICardMaster
+    public class Beast : ICardMaster
     {
 
         public ushort Value => 9;

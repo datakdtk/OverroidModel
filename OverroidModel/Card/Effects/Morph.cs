@@ -7,7 +7,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Beast (9).
     /// </summary>
-    public struct Morph : ICardEffect
+    public class Morph : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.SECOND;

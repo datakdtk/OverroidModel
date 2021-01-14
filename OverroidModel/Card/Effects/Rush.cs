@@ -7,7 +7,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Soldier (11).
     /// </summary>
-    public struct Rush : ICardEffect
+    public class Rush : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.POST_BATTLE;

@@ -39,8 +39,8 @@ namespace OverroidModel.Test.Card
         {
             var master = new Innocence();
             var card = new InGameCard(master);
-            Assert.Equal(master.Effect, card.Effect);
-            Assert.Equal(master.Effect, card.DefaultEffect);
+            Assert.IsType(master.Effect.GetType(), card.Effect);
+            Assert.IsType(master.Effect.GetType(), card.DefaultEffect);
         }
 
         [Fact]
@@ -50,9 +50,9 @@ namespace OverroidModel.Test.Card
             var card = new InGameCard(master);
             var anotherMaster = new Overroid();
             card.OverrideEffect(anotherMaster.Effect);
-            Assert.NotEqual(master.Effect, card.Effect);
-            Assert.Equal(anotherMaster.Effect, card.Effect);
-            Assert.Equal(master.Effect, card.DefaultEffect);
+            Assert.IsNotType(master.Effect.GetType(), card.Effect);
+            Assert.IsType(anotherMaster.Effect.GetType(), card.Effect);
+            Assert.IsType(master.Effect.GetType(), card.DefaultEffect);
         }
 
         [Fact]
@@ -106,12 +106,12 @@ namespace OverroidModel.Test.Card
             card.OverrideEffect(anotherMaster.Effect);
             
             Assert.NotEqual(master.Value, card.Value);
-            Assert.NotEqual(master.Effect, card.Effect);
+            Assert.IsNotType(master.Effect.GetType(), card.Effect);
 
             card.ReturnToDefault();
             
             Assert.Equal(master.Value, card.Value);
-            Assert.Equal(master.Effect, card.Effect);
+            Assert.IsType(master.Effect.GetType(), card.Effect);
         }
     }
 }

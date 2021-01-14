@@ -6,7 +6,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Effect of Diva (8).
     /// </summary>
-    public struct Inspiration : ICardEffect
+    public class Inspiration : ICardEffect
     {
 
         EffectTiming ICardEffect.Timing => EffectTiming.PRE_BATTLE;
