@@ -20,12 +20,27 @@ namespace OverroidModel
 
         public bool Equals(PlayerAccount? other)
         {
-            return other != null && this.ID == other.ID;
+            return (object?)other != null && this.ID == other.ID; 
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return this.Equals(obj as PlayerAccount);
         }
 
         public override int GetHashCode()
         {
             return HashCode.Combine(ID);
+        }
+
+        public static bool operator ==(PlayerAccount self, PlayerAccount other)
+        {
+            return self.Equals(other);
+        }
+
+        public static bool operator !=(PlayerAccount self, PlayerAccount other)
+        {
+            return !(self == other);
         }
     }
 }
