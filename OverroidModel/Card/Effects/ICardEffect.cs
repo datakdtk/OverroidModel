@@ -1,4 +1,5 @@
-﻿using OverroidModel.Game;
+﻿using System;
+using OverroidModel.Game;
 using OverroidModel.Game.Actions;
 
 namespace OverroidModel.Card.Effects
@@ -29,7 +30,7 @@ namespace OverroidModel.Card.Effects
     /// <summary>
     /// Common interface for card effect classes.
     /// </summary>
-    public interface ICardEffect
+    public interface ICardEffect : IEquatable<ICardEffect>
     {
 
         /// <summary>
@@ -53,5 +54,9 @@ namespace OverroidModel.Card.Effects
         /// <returns>Returns true if the trigger condition is satisfied.</returns>
         internal bool ConditionIsSatisfied(CardName sourceCardName, IGameInformation g);
 
+        /// <summary>
+        /// Just if they are same class, they are equal. Overriding mainly for test assertion.
+        /// </summary>
+        bool IEquatable<ICardEffect>.Equals(ICardEffect? other) => other != null && this.GetType() == other.GetType();
     }
 }
