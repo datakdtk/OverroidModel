@@ -1,5 +1,6 @@
 ﻿using OverroidModel.Card;
 using OverroidModel.Card.Master;
+using OverroidModel.Config;
 using System;
 using System.Linq;
 
@@ -27,7 +28,7 @@ namespace OverroidModel.Game
         /// </summary>
         /// <param name="humanPlayer">Player who plays human force.</param>
         /// <param name="overroidPlayer">Player who plays overroid force.</param>
-        public IndividualGame InitializeIndividualGame(PlayerAccount humanPlayer, PlayerAccount overroidPlayer)
+        public IndividualGame InitializeIndividualGame(PlayerAccount humanPlayer, PlayerAccount overroidPlayer, IGameConfig config)
         {
             var shuffledCardSet = cardSet.OrderBy(c => Guid.NewGuid()).ToArray();
             
@@ -42,7 +43,7 @@ namespace OverroidModel.Game
             overroidCard.SetGuessed();
             overroidHand.Add(overroidCard);
 
-            return new IndividualGame(humanPlayer, overroidPlayer, new PlayerHand(humanHand), new PlayerHand(overroidHand));
+            return new IndividualGame(humanPlayer, overroidPlayer, new PlayerHand(humanHand), new PlayerHand(overroidHand), config);
         }
 
         /// <summary>

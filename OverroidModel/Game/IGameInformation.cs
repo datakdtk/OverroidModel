@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace OverroidModel.Game
 {
     /// <summary>
-    /// Common interface of all kinds of games.
+    /// Common interface for taking all kinds of games.
     /// </summary>
     public interface IGameInformation
     {
@@ -39,6 +39,11 @@ namespace OverroidModel.Game
         /// Winner of the game if already determined.
         /// </summary>
         public PlayerAccount? Winner{ get; }
+
+        /// <summary>
+        /// Whether defending player detect a card in battles.
+        /// </summary>
+        public bool DetectionAvailable { get; }
 
         /// <summary>
         /// Check if the game winner is already determined.

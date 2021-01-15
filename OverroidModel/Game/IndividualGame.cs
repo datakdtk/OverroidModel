@@ -1,4 +1,5 @@
-﻿using OverroidModel.Exceptions;
+﻿using OverroidModel.Config;
+using OverroidModel.Exceptions;
 using OverroidModel.Game.Actions;
 using OverroidModel.Game.Actions.Commands;
 using System;
@@ -15,6 +16,7 @@ namespace OverroidModel.Game
         readonly PlayerAccount humanPlayer;
         readonly PlayerAccount overroidPlayer;
         readonly Dictionary<PlayerAccount, PlayerHand> playerHands;
+        readonly IGameConfig config;
         readonly List<Battle> battles;
         readonly Stack<IGameAction> actionStack;
         readonly List<IGameAction> actionHistory;
@@ -33,11 +35,13 @@ namespace OverroidModel.Game
             PlayerAccount humanPlayer,
             PlayerAccount overroidPlayer,
             PlayerHand humanPlayerHand,
-            PlayerHand overroidPlayerHand
+            PlayerHand overroidPlayerHand,
+            IGameConfig config
         )
         {
             this.humanPlayer = humanPlayer;
             this.overroidPlayer = overroidPlayer;
+            this.config = config;
             playerHands = new Dictionary<PlayerAccount, PlayerHand>()
             {
                 [humanPlayer] = humanPlayerHand,
@@ -78,6 +82,8 @@ namespace OverroidModel.Game
                 return humanStars > overroidStars ? humanPlayer : overroidPlayer;
             }
         }
+
+        public bool DetectionAvailable => config.DetectionAvailable;
 
         public bool HasFinished()
         {

@@ -36,14 +36,17 @@ namespace OverroidModel.Game.Actions.Commands
         {
             var card = g.HandOf(player).RemoveCard(cardNameToPlace);
             var battle = g.CurrentBattle;
-            battle.SetCard(player, card, detectedCardName);
-            if (player == battle.DefendingPlayer)
+            if (player == battle.AttackingPlayer)
             {
-                g.PushToActionStack(new CardOpen());
+                battle.SetCard(player, card, null);
+                g.AddCommandAuthorizer(new CommandAuthorizer<CardPlacement>(g.OpponentOf(player)));
             } 
             else
             {
-                g.AddCommandAuthorizer(new CommandAuthorizer<CardPlacement>(g.OpponentOf(player)));
+                var detectedCardName = g.DetectionAvailable ? this.detectedCardName : null;
+
+                battle.SetCard(player, card, detectedCardName);
+                g.PushToActionStack(new CardOpen());
             }
         }
 

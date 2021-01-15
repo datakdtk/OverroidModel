@@ -5,6 +5,9 @@ using OverroidModel.Game.Actions;
 
 namespace OverroidModel.Game
 {
+    /// <summary>
+    /// Interface to modify all kind of games.
+    /// </summary>
     public interface IMutableGame : IGameInformation
     {
         /// <summary>
