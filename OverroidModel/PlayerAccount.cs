@@ -33,12 +33,12 @@ namespace OverroidModel
             return HashCode.Combine(ID);
         }
 
-        public static bool operator ==(PlayerAccount self, PlayerAccount other)
+        public static bool operator ==(PlayerAccount? self, PlayerAccount? other)
         {
-            return self.Equals(other);
+            return (object?)self != null && (object?)other != null &&self.Equals(other);
         }
 
-        public static bool operator !=(PlayerAccount self, PlayerAccount other)
+        public static bool operator !=(PlayerAccount? self, PlayerAccount? other)
         {
             return !(self == other);
         }
