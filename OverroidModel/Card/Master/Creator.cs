@@ -7,12 +7,13 @@ namespace OverroidModel.Card.Master
     /// </summary>
     public class Creator : ICardMaster
     {
+        ICardEffect? effect;
 
         public ushort Value => 3;
 
         public CardName Name => CardName.Creator;
 
-        public ICardEffect Effect => new Lifemaker();
+        public ICardEffect Effect => effect ??= new Lifemaker();
 
     }
 }

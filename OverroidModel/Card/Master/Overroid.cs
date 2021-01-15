@@ -7,12 +7,13 @@ namespace OverroidModel.Card.Master
     /// </summary>
     public class Overroid : ICardMaster
     {
+        ICardEffect? effect;
 
         public ushort Value => 12;
 
         public CardName Name => CardName.Overroid;
 
-        public ICardEffect Effect => new Singularity();
+        public ICardEffect Effect => effect ??= new Singularity();
 
     }
 }

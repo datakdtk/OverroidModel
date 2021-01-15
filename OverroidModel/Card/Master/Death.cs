@@ -7,12 +7,13 @@ namespace OverroidModel.Card.Master
     /// </summary>
     public class Death : ICardMaster
     {
+        ICardEffect? effect;
 
         public ushort Value => 13;
 
         public CardName Name => CardName.Death;
 
-        public ICardEffect Effect => new Snipe();
+        public ICardEffect Effect => effect ??= new Snipe();
 
     }
 }

@@ -7,12 +7,13 @@ namespace OverroidModel.Card.Master
     /// </summary>
     public class Legion : ICardMaster
     {
+        ICardEffect? effect;
 
         public ushort Value => 10;
 
         public CardName Name => CardName.Legion;
 
-        public ICardEffect Effect => new Trample();
+        public ICardEffect Effect => effect ??= new Trample();
 
     }
 }

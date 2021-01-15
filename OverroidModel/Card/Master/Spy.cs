@@ -7,12 +7,13 @@ namespace OverroidModel.Card.Master
     /// </summary>
     public class Spy : ICardMaster
     {
+        ICardEffect? effect;
 
         public ushort Value => 7;
 
         public CardName Name => CardName.Spy;
 
-        public ICardEffect Effect => new Espionage();
+        public ICardEffect Effect => effect ??= new Espionage();
         
     }
 }

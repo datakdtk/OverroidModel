@@ -7,12 +7,13 @@ namespace OverroidModel.Card.Master
     /// </summary>
     public class Innocence : ICardMaster
     {
+        ICardEffect? effect;
 
         public ushort Value => 1;
 
         public CardName Name => CardName.Inocent;
 
-        public ICardEffect Effect => new Miracle();
+        public ICardEffect Effect => effect ??= new Miracle();
 
     }
 }
