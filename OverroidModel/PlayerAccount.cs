@@ -35,7 +35,8 @@ namespace OverroidModel
 
         public static bool operator ==(PlayerAccount? self, PlayerAccount? other)
         {
-            return (object?)self != null && (object?)other != null &&self.Equals(other);
+            var otherIsNull = (object?)other == null;
+            return (object?)self == null ?  otherIsNull : !otherIsNull && self.Equals(other);
         }
 
         public static bool operator !=(PlayerAccount? self, PlayerAccount? other)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Xunit;
 
 namespace OverroidModel.Test
@@ -25,6 +24,33 @@ namespace OverroidModel.Test
             Assert.False(a == b);
             Assert.True(a != b);
         }
+
+        [Fact]
+        public void Test_Equality_WithNull()
+        {
+            var a = new PlayerAccount("hoge");
+            PlayerAccount? b = null;
+            Assert.NotEqual(a, b);
+            Assert.False(a == b);
+            Assert.True(a != b);
+        }
+
+        [Fact]
+        public void Test_Equality_WithNull_2()
+        {
+            var a = new PlayerAccount("hoge");
+            Assert.False(a == null);
+            Assert.True(a != null);
+        }
+
+        [Fact]
+        public void Test_Equality_WithNull_3()
+        {
+            PlayerAccount? a = null;
+            Assert.True(a == null);
+            Assert.False(a != null);
+        }
+
 
         [Fact]
         public void Test_BehaviourAsHashKey()
