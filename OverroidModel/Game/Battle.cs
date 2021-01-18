@@ -17,6 +17,7 @@ namespace OverroidModel.Game
         readonly Dictionary<PlayerAccount, InGameCard> cards;
         CardName? detectedCardName;
         PlayerAccount? winner;
+        bool isDrawBattle;
         bool reversesCardValues;
         bool cardsOpened;
 
@@ -63,11 +64,11 @@ namespace OverroidModel.Game
         /// <exception cref="CardNotFoundException">Thrown when named card is not placed in this battle.</exception>
         public PlayerAccount PlayerOf(CardName cn)
         {
-            if (cn == cards[AttackingPlayer]?.Name)
+            if (HasCardOf(attackingPlayer) &&  cn == cards[AttackingPlayer].Name)
             {
                 return AttackingPlayer;
             }
-            if (cn == cards[DefendingPlayer]?.Name)
+            if (HasCardOf(defendingPlayer) && cn == cards[DefendingPlayer].Name)
             {
                 return DefendingPlayer;
             }
@@ -133,7 +134,12 @@ namespace OverroidModel.Game
         /// Check if the battle has already decided its winner.
         /// Additional card effects might be triggered even if this method returns true.
         /// </summary>
-        public bool HasFinished() => winner != null;
+        public bool HasFinished() => isDrawBattle || (Winner != null);
+
+        /// <summary>
+        /// Returns true if battle has ended and there is no winner. 
+        /// </summary>
+        public bool IsDrawBattle() => isDrawBattle;
 
         /// <summary>
         /// Get number of stars that given player got in this battle.
@@ -142,7 +148,7 @@ namespace OverroidModel.Game
         /// <exception cref="NonGamePlayerException"></exception>
         public ushort WinningStarOf(PlayerAccount p)
         {
-            if (p != attackingPlayer && p == defendingPlayer)
+            if (p != attackingPlayer && p != defendingPlayer)
             {
                 throw new NonGamePlayerException(p);
             }
@@ -204,7 +210,13 @@ namespace OverroidModel.Game
             }
             var attackingCard = CardOf(AttackingPlayer);
             var defendingCard = CardOf(DefendingPlayer);
-            // WARNING: It does not consider when card values are same
+
+            if (attackingCard.Value == defendingCard.Value)
+            {
+                isDrawBattle = true;
+                return;
+            }
+
             bool attackerWins = reversesCardValues ? attackingCard.Value < defendingCard.Value : attackingCard.Value > defendingCard.Value;
             winner = attackerWins ? AttackingPlayer : DefendingPlayer;
         }
