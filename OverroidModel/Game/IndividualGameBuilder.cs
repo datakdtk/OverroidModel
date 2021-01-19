@@ -1,4 +1,5 @@
-﻿using OverroidModel.Card.Master;
+﻿using OverroidModel.Card;
+using OverroidModel.Card.Master;
 using OverroidModel.Config;
 using OverroidModel.Game.Actions;
 using System;
@@ -35,7 +36,7 @@ namespace OverroidModel.Game
             PlayerAccount overroidPlayer,
             IGameConfig config)
         {
-            var shuffledCardSet = cardSet.OrderBy(c => Guid.NewGuid()).ToList();
+            var shuffledCardSet = CardDictionary.DefaultCardList.OrderBy(c => Guid.NewGuid()).ToList();
             var actions = new List<IGameAction>() { new RoundStart() };
             return LordGame(humanPlayer, overroidPlayer, shuffledCardSet, actions, config);
         }
@@ -68,22 +69,5 @@ namespace OverroidModel.Game
         /// <summary>
         /// Get cards of basic set.
         /// </summary>
-        public static ICardMaster[] DefaultCardSet()
-        {
-            return new ICardMaster[11]
-            {
-                new Hacker(),
-                new Creator(),
-                new Doctor(),
-                new Idol(),
-                new Trickster(),
-                new Spy(),
-                new Diva(),
-                new Beast(),
-                new Legion(),
-                new Soldier(),
-                new Death(),
-            };
-        }
     }
 }

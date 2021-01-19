@@ -36,8 +36,6 @@ namespace OverroidModel.Test.Game
         public void Test_InitialState_BattleResult()
         {
             var b = GetBattle();
-            var ap = new PlayerAccount(attackingPlayerId);
-            var dp = new PlayerAccount(defendingPlayerId);
             Assert.Null(b.Winner);
             Assert.False(b.HasFinished());
             Assert.False(b.IsDrawBattle());
@@ -52,7 +50,7 @@ namespace OverroidModel.Test.Game
             var p = new PlayerAccount(attackingPlayerId);
             Assert.False(b.HasCardOf(p));
 
-            var c = new InGameCard(new Innocence());
+            var c = CardDictionary.GetInGameCard(CardName.Inocent);
             var detectedCardName = CardName.Hacker; // should be ignored
             b.SetCard(p, c, detectedCardName);
 
@@ -71,7 +69,7 @@ namespace OverroidModel.Test.Game
             var p = new PlayerAccount(defendingPlayerId);
             Assert.False(b.HasCardOf(p));
 
-            var c = new InGameCard(new Innocence());
+            var c = CardDictionary.GetInGameCard(CardName.Inocent);
             var detectedCardName = CardName.Hacker;
             b.SetCard(p, c, detectedCardName);
 
@@ -89,8 +87,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var p = new PlayerAccount(defendingPlayerId);
 
-            var c1 = new InGameCard(new Innocence());
-            var c2 = new InGameCard(new Hacker());
+            var c1 = CardDictionary.GetInGameCard(CardName.Inocent);
+            var c2 = CardDictionary.GetInGameCard(CardName.Hacker);
             var detectedCardName = CardName.Creator;
             b.SetCard(p, c1, detectedCardName);
             Assert.Equal(c1.Name, b.CardOf(p).Name);
@@ -106,8 +104,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = new InGameCard(new Idol());
-            var dc = new InGameCard(new Doctor());
+            var ac = CardDictionary.GetInGameCard(CardName.Idol);
+            var dc = CardDictionary.GetInGameCard(CardName.Doctor);
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, null);
@@ -128,8 +126,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = new InGameCard(new Doctor());
-            var dc = new InGameCard(new Idol());
+            var ac = CardDictionary.GetInGameCard(CardName.Doctor);
+            var dc = CardDictionary.GetInGameCard(CardName.Idol);
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, null);
@@ -150,8 +148,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = new InGameCard(new Doctor());
-            var dc = new InGameCard(new Doctor());
+            var ac = CardDictionary.GetInGameCard(CardName.Doctor);
+            var dc = CardDictionary.GetInGameCard(CardName.Doctor);
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, null);
@@ -172,8 +170,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = new InGameCard(new Spy());
-            var dc = new InGameCard(new Trickster());
+            var ac = CardDictionary.GetInGameCard(CardName.Spy);
+            var dc = CardDictionary.GetInGameCard(CardName.Trickster);
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, null);
@@ -189,8 +187,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = new InGameCard(new Idol());
-            var dc = new InGameCard(new Doctor());
+            var ac = CardDictionary.GetInGameCard(CardName.Idol);
+            var dc = CardDictionary.GetInGameCard(CardName.Doctor);
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, null);
@@ -208,8 +206,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = new InGameCard(new Spy());
-            var dc = new InGameCard(new Trickster());
+            var ac = CardDictionary.GetInGameCard(CardName.Spy);
+            var dc = CardDictionary.GetInGameCard(CardName.Trickster);
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, null);
@@ -228,8 +226,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = new InGameCard(new Creator());
-            var dc = new InGameCard(new Doctor());
+            var ac = CardDictionary.GetInGameCard(CardName.Creator);
+            var dc = CardDictionary.GetInGameCard(CardName.Doctor);
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, null);
@@ -246,8 +244,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = new InGameCard(new Creator());
-            var dc = new InGameCard(new Doctor());
+            var ac = CardDictionary.GetInGameCard(CardName.Creator);
+            var dc = CardDictionary.GetInGameCard(CardName.Doctor);
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, dc.Name);
@@ -264,8 +262,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = new InGameCard(new Creator());
-            var dc = new InGameCard(new Doctor());
+            var ac = CardDictionary.GetInGameCard(CardName.Creator);
+            var dc = CardDictionary.GetInGameCard(CardName.Doctor);
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, ac.Name);
@@ -282,8 +280,8 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = new InGameCard(new Idol());
-            var dc = new InGameCard(new Doctor());
+            var ac = CardDictionary.GetInGameCard(CardName.Idol);
+            var dc = CardDictionary.GetInGameCard(CardName.Doctor);
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, ac.Name);

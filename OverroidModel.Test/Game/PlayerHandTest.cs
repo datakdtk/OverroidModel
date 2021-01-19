@@ -203,9 +203,9 @@ namespace OverroidModel.Test.Game
         {
             var cards =  new List<InGameCard>()
             {
-                new InGameCard(new Innocence()),
-                new InGameCard(new Hacker()),
-                new InGameCard(new Creator()),
+                CardDictionary.GetInGameCard(CardName.Inocent),
+                CardDictionary.GetInGameCard(CardName.Hacker),
+                CardDictionary.GetInGameCard(CardName.Creator),
             };
             cards[0].Reveal();
             var hand = new PlayerHand(cards);
@@ -219,9 +219,9 @@ namespace OverroidModel.Test.Game
         {
             var cards =  new List<InGameCard>()
             {
-                new InGameCard(new Innocence()),
-                new InGameCard(new Hacker()),
-                new InGameCard(new Creator()),
+                CardDictionary.GetInGameCard(CardName.Inocent),
+                CardDictionary.GetInGameCard(CardName.Hacker),
+                CardDictionary.GetInGameCard(CardName.Creator),
             };
             cards[0].Reveal();
             cards[1].SetGuessed();
@@ -237,9 +237,9 @@ namespace OverroidModel.Test.Game
         {
             var cards =  new List<InGameCard>()
             {
-                new InGameCard(new Innocence()),
-                new InGameCard(new Hacker()),
-                new InGameCard(new Creator()),
+                CardDictionary.GetInGameCard(CardName.Inocent),
+                CardDictionary.GetInGameCard(CardName.Hacker),
+                CardDictionary.GetInGameCard(CardName.Creator),
             };
             cards[0].Reveal();
             cards[1].Reveal();
@@ -252,12 +252,12 @@ namespace OverroidModel.Test.Game
         {
             return new List<InGameCard>()
             {
-                new InGameCard(new Innocence()),
-                new InGameCard(new Hacker()),
-                new InGameCard(new Creator()),
-                new InGameCard(new Doctor()),
-                new InGameCard(new Idol()),
-                new InGameCard(new Trickster()),
+                CardDictionary.GetInGameCard(CardName.Inocent),
+                CardDictionary.GetInGameCard(CardName.Hacker),
+                CardDictionary.GetInGameCard(CardName.Creator),
+                CardDictionary.GetInGameCard(CardName.Doctor),
+                CardDictionary.GetInGameCard(CardName.Idol),
+                CardDictionary.GetInGameCard(CardName.Trickster),
             };
         }
     }
