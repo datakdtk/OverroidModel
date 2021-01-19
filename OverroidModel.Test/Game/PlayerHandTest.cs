@@ -203,7 +203,7 @@ namespace OverroidModel.Test.Game
         {
             var cards =  new List<InGameCard>()
             {
-                CardDictionary.GetInGameCard(CardName.Inocent),
+                CardDictionary.GetInGameCard(CardName.Inocence),
                 CardDictionary.GetInGameCard(CardName.Hacker),
                 CardDictionary.GetInGameCard(CardName.Creator),
             };
@@ -219,7 +219,7 @@ namespace OverroidModel.Test.Game
         {
             var cards =  new List<InGameCard>()
             {
-                CardDictionary.GetInGameCard(CardName.Inocent),
+                CardDictionary.GetInGameCard(CardName.Inocence),
                 CardDictionary.GetInGameCard(CardName.Hacker),
                 CardDictionary.GetInGameCard(CardName.Creator),
             };
@@ -237,7 +237,7 @@ namespace OverroidModel.Test.Game
         {
             var cards =  new List<InGameCard>()
             {
-                CardDictionary.GetInGameCard(CardName.Inocent),
+                CardDictionary.GetInGameCard(CardName.Inocence),
                 CardDictionary.GetInGameCard(CardName.Hacker),
                 CardDictionary.GetInGameCard(CardName.Creator),
             };
@@ -252,7 +252,7 @@ namespace OverroidModel.Test.Game
         {
             return new List<InGameCard>()
             {
-                CardDictionary.GetInGameCard(CardName.Inocent),
+                CardDictionary.GetInGameCard(CardName.Inocence),
                 CardDictionary.GetInGameCard(CardName.Hacker),
                 CardDictionary.GetInGameCard(CardName.Creator),
                 CardDictionary.GetInGameCard(CardName.Doctor),

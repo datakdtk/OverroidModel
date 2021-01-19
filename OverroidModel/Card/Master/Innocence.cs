@@ -11,7 +11,7 @@ namespace OverroidModel.Card.Master
 
         public ushort Value => 1;
 
-        public CardName Name => CardName.Inocent;
+        public CardName Name => CardName.Inocence;
 
         public ICardEffect Effect => effect ??= new Miracle();
 

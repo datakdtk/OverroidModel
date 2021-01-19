@@ -12,7 +12,7 @@ namespace OverroidModel.Card
         {
             dic = new Dictionary<CardName, ICardMaster>()
             {
-                [CardName.Inocent] = new Innocence(),
+                [CardName.Inocence] = new Innocence(),
                 [CardName.Hacker] = new Hacker(),
                 [CardName.Creator] = new Creator(),
                 [CardName.Doctor] = new Doctor(),

@@ -14,7 +14,7 @@ namespace OverroidModel.Test.Game
             var p= new PlayerAccount("hoge");
             var a = new CommandAuthorizer<CardPlacement>(p);
 
-            var c = new CardPlacement(p, CardName.Inocent, null);
+            var c = new CardPlacement(p, CardName.Inocence, null);
             a.Authorize(c);
 
             Assert.True(true); // Expected not to be thrown;
@@ -27,7 +27,7 @@ namespace OverroidModel.Test.Game
             var a = new CommandAuthorizer<CardPlacement>(p);
 
             var anotherP = new PlayerAccount("fuga");
-            var c = new CardPlacement(anotherP, CardName.Inocent, null);
+            var c = new CardPlacement(anotherP, CardName.Inocence, null);
             Assert.Throws<UnavailableActionException>(() => a.Authorize(c));
         }
 
@@ -37,7 +37,7 @@ namespace OverroidModel.Test.Game
             var p= new PlayerAccount("hoge");
             var a = new CommandAuthorizer<CardPlacement>(p);
 
-            var c = new RushCommand(p, CardName.Inocent);
+            var c = new RushCommand(p, CardName.Inocence);
             Assert.Throws<UnavailableActionException>(() => a.Authorize(c));
         }
     }
