@@ -1,4 +1,6 @@
-﻿using OverroidModel.Config;
+﻿using OverroidModel.Card;
+using OverroidModel.Card.Master;
+using OverroidModel.Config;
 using OverroidModel.Exceptions;
 using OverroidModel.Game.Actions;
 using OverroidModel.Game.Actions.Commands;
@@ -25,35 +27,36 @@ namespace OverroidModel.Game
         PlayerAccount? specialWinner;
 
         const ushort maxRound = 6;
-        
 
         /// <param name="humanPlayer"> Player who plays Human force,</param>
         /// <param name="overroidPlayer">Player who plays Overroid force.</param>
         /// <param name="humanPlayerHand">Hand cards of Human player.</param>
         /// <param name="overroidPlayerHand">Hand card of Overroid player.</param>
-        public IndividualGame(
+        internal IndividualGame(
             PlayerAccount humanPlayer,
             PlayerAccount overroidPlayer,
-            PlayerHand humanPlayerHand,
-            PlayerHand overroidPlayerHand,
+            List<ICardMaster> sortedDeck,
             IGameConfig config
         )
         {
             this.humanPlayer = humanPlayer;
             this.overroidPlayer = overroidPlayer;
             this.config = config;
+
+            var humanHand = sortedDeck.GetRange(0, 5).Select(c => new InGameCard(c)).ToList();
+            var overroidHand = sortedDeck.GetRange(5, 5).Select(c => new InGameCard(c)).ToList();
+            humanHand.Add(new InGameCard(new Innocence()));
+            overroidHand.Add(new InGameCard(new Overroid()));
             playerHands = new Dictionary<PlayerAccount, PlayerHand>()
             {
-                [humanPlayer] = humanPlayerHand,
-                [overroidPlayer] = overroidPlayerHand,
+                [humanPlayer] = new PlayerHand(humanHand),
+                [overroidPlayer] = new PlayerHand(overroidHand),
             };
+            
             battles = new List<Battle>();
             actionStack = new Stack<IGameAction>();
             actionHistory = new List<IGameAction>();
             effectDisabledPlayers = new PlayerAccount?[maxRound];
-
-            PushToActionStack(new RoundStart());
-            ResolveStacks();
         }
 
         public PlayerAccount HumanPlayer => humanPlayer;
@@ -159,12 +162,7 @@ namespace OverroidModel.Game
 
         void IMutableGame.SetSpecialWinner(PlayerAccount p) => specialWinner = p;
 
-        private void PushToActionStack(IGameAction a)
-        {
-            actionStack.Push(a);
-        }
-
-        private void ResolveStacks()
+        internal void ResolveStacks()
         {
             while(commandAuthorizer == null && actionStack.Count > 0)
             {
@@ -182,6 +180,11 @@ namespace OverroidModel.Game
                 a.Resolve(this);
                 actionHistory.Add(a);
             }
+        }
+
+        internal void PushToActionStack(IGameAction a)
+        {
+            actionStack.Push(a);
         }
     }
 }
