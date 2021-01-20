@@ -16,6 +16,7 @@
         /// </summary>
         /// <param name="g">Current game object.</param>
         /// <exception cref="Exceptions.UnavailableActionException">Thrown when the command is inapplicable.</exception>
+        /// <exception cref="Exceptions.GameLogicException">Thrown if something is wrong in the code of the package.</exception>
         internal void Validate(IGameInformation g); 
 
     }

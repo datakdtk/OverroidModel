@@ -1,5 +1,4 @@
 ﻿using OverroidModel.Card;
-using OverroidModel.Card.Master;
 using OverroidModel.Game;
 using Xunit;
 
@@ -291,15 +290,6 @@ namespace OverroidModel.Test.Game
             Assert.Equal(1, b.WinningStarOf(ap));
             Assert.Equal(0, b.WinningStarOf(dp));
 
-        }
- 
-        [Fact]
-        public void Test_OpenCards()
-        {
-            var b = GetBattle();
-            Assert.False(b.CardsHaveOpened());
-            b.OpenCards();
-            Assert.True(b.CardsHaveOpened());
         }
 
         static Battle GetBattle()

@@ -46,16 +46,19 @@ namespace OverroidModel.Game.Actions.Commands
                 var detectedCardName = g.DetectionAvailable ? this.detectedCardName : null;
 
                 battle.SetCard(player, card, detectedCardName);
-                g.PushToActionStack(new CardOpen());
+                g.AddCommandAuthorizer(new CommandAuthorizer<CardOpen>(battle.AttackingPlayer));
             }
         }
 
         void IGameCommand.Validate(IGameInformation g)
         {
+            // Assertion. Expected to be never thrown.
             if (g.CurrentBattle.HasCardOf(player))
             {
-                throw new UnavailableActionException("Invalid Command: player has already set card");
+                throw new GameLogicException("Invalid Command: player has already set card");
             }
+            // Assertion end.
+
             if (g.HandOf(player).HasCard(cardNameToPlace))
             {
                 throw new UnavailableActionException("Invalid Command: player does not have the card to set");

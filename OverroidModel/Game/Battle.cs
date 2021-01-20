@@ -126,11 +126,6 @@ namespace OverroidModel.Game
         }
 
         /// <summary>
-        /// Check if battle cards has already faced up.
-        /// </summary>
-        public bool CardsHaveOpened() => cardsOpened;
-
-        /// <summary>
         /// Check if the battle has already decided its winner.
         /// Additional card effects might be triggered even if this method returns true.
         /// </summary>
@@ -220,11 +215,6 @@ namespace OverroidModel.Game
             bool attackerWins = reversesCardValues ? attackingCard.Value < defendingCard.Value : attackingCard.Value > defendingCard.Value;
             winner = attackerWins ? AttackingPlayer : DefendingPlayer;
         }
-
-        /// <summary>
-        /// Set all battle cards opened.
-        /// </summary>
-        internal void OpenCards() => cardsOpened = true;
 
         /// <summary>
         /// Changes the rule of this battle from greater-wins to lesser-wins.
