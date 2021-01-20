@@ -66,33 +66,78 @@ namespace OverroidModel.Test.Card
         }
 
         [Fact]
-        public void Test_Reveal()
+        public void Test_RevealByHack_FromHidden()
         {
             var master = new Innocence();
             var card = new InGameCard(master);
             Assert.Equal(CardVisibility.Hidden, card.Visibility);
-            card.Reveal();
-            Assert.Equal(CardVisibility.Revealed, card.Visibility);
+            card.RevealByHack();
+            Assert.Equal(CardVisibility.Hacked, card.Visibility);
         }
 
         [Fact]
-        public void Test_SetGuessedAndReveal()
+        public void Test_RevealByHack_FromGuessed()
         {
             var master = new Innocence();
             var card = new InGameCard(master);
             card.SetGuessed();
-            card.Reveal();
-            Assert.Equal(CardVisibility.Revealed, card.Visibility);
+            Assert.Equal(CardVisibility.Guessed, card.Visibility);
+            card.RevealByHack();
+            Assert.Equal(CardVisibility.Hacked, card.Visibility);
         }
 
         [Fact]
-        public void Test_RevealAndSetGuessed()
+        public void Test_SetGuessed_FromRevealed()
         {
             var master = new Innocence();
             var card = new InGameCard(master);
-            card.Reveal();
+            card.RevealByHack();
+            Assert.Equal(CardVisibility.Hacked, card.Visibility);
             card.SetGuessed(); // still to be revealed
-            Assert.Equal(CardVisibility.Revealed, card.Visibility);
+            Assert.Equal(CardVisibility.Hacked, card.Visibility);
+        }
+
+        [Fact]
+        public void Test_SetGuessed_FromOpened()
+        {
+            var master = new Innocence();
+            var card = new InGameCard(master);
+            card.Open();
+            Assert.Equal(CardVisibility.Opened, card.Visibility);
+            card.SetGuessed(); // still to be revealed
+            Assert.Equal(CardVisibility.Guessed, card.Visibility);
+        }
+
+        [Fact]
+        public void Test_Open_FromHidden()
+        {
+            var master = new Innocence();
+            var card = new InGameCard(master);
+            Assert.Equal(CardVisibility.Hidden, card.Visibility);
+            card.Open();
+            Assert.Equal(CardVisibility.Opened, card.Visibility);
+        }
+
+        [Fact]
+        public void Test_Open_FromGuessed()
+        {
+            var master = new Innocence();
+            var card = new InGameCard(master);
+            card.SetGuessed();
+            Assert.Equal(CardVisibility.Guessed, card.Visibility);
+            card.Open();
+            Assert.Equal(CardVisibility.Opened, card.Visibility);
+        }
+
+        [Fact]
+        public void Test_Open_FromHacked()
+        {
+            var master = new Innocence();
+            var card = new InGameCard(master);
+            card.RevealByHack();
+            Assert.Equal(CardVisibility.Hacked, card.Visibility);
+            card.Open();
+            Assert.Equal(CardVisibility.Opened, card.Visibility);
         }
 
         [Fact]

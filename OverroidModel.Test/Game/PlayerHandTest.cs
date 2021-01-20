@@ -16,8 +16,8 @@ namespace OverroidModel.Test.Game
             var cards = GetCardList();
             cards[2].SetGuessed();
             cards[3].SetGuessed();
-            cards[4].Reveal();
-            cards[5].Reveal();
+            cards[4].RevealByHack();
+            cards[5].RevealByHack();
             var hand = new PlayerHand(cards);
             Assert.Equal(cards.Count, hand.Count);
         }
@@ -28,8 +28,8 @@ namespace OverroidModel.Test.Game
             var cards = GetCardList();
             cards[2].SetGuessed();
             cards[3].SetGuessed();
-            cards[4].Reveal();
-            cards[5].Reveal();
+            cards[4].RevealByHack();
+            cards[5].RevealByHack();
             var hand = new PlayerHand(cards);
             Assert.Equal(cards.Count - 2, hand.UnrevealedCardCount);
         }
@@ -40,8 +40,8 @@ namespace OverroidModel.Test.Game
             var cards = GetCardList();
             cards[2].SetGuessed();
             cards[3].SetGuessed();
-            cards[4].Reveal();
-            cards[5].Reveal();
+            cards[4].RevealByHack();
+            cards[5].RevealByHack();
             var expected = cards.ToArray()[2..6].Select(c => c.Name).OrderBy(n => n).ToArray();
             var hand = new PlayerHand(cards);
             var actual = hand.GuessableCardNames.OrderBy(n => n).ToArray();
@@ -135,18 +135,34 @@ namespace OverroidModel.Test.Game
         }
 
         [Fact]
-        public void Test_AddCard_CardKeepsRevealed()
+        public void Test_AddCard_CardKeepsRevealedIfHasBeenHacked()
         {
             var cards = GetCardList();
             var hand = new PlayerHand(cards);
             var additionalCard = new InGameCard(new Overroid());
-            additionalCard.Reveal();
+            additionalCard.RevealByHack();
 
             hand.AddCard(additionalCard);
             var cardInHand = hand.CardOf(additionalCard.Name);
             Assert.NotNull(cardInHand);
 
-            Assert.Equal(CardVisibility.Revealed, cardInHand?.Visibility);
+            Assert.Equal(CardVisibility.Hacked, cardInHand?.Visibility);
+        }
+
+        [Fact]
+        public void Test_AddCard_CardTurnsGuessedIfHasBeenOpend()
+        {
+            var cards = GetCardList();
+            var hand = new PlayerHand(cards);
+            var additionalCard = new InGameCard(new Overroid());
+            additionalCard.Open();
+            Assert.Equal(CardVisibility.Opened, additionalCard.Visibility);
+
+            hand.AddCard(additionalCard);
+            var cardInHand = hand.CardOf(additionalCard.Name);
+            Assert.NotNull(cardInHand);
+
+            Assert.Equal(CardVisibility.Guessed, cardInHand?.Visibility);
         }
 
         [Fact]
@@ -207,7 +223,7 @@ namespace OverroidModel.Test.Game
                 CardDictionary.GetInGameCard(CardName.Hacker),
                 CardDictionary.GetInGameCard(CardName.Creator),
             };
-            cards[0].Reveal();
+            cards[0].RevealByHack();
             var hand = new PlayerHand(cards);
             var selected = hand.SelectRandamUnrevealCard();
 
@@ -223,7 +239,7 @@ namespace OverroidModel.Test.Game
                 CardDictionary.GetInGameCard(CardName.Hacker),
                 CardDictionary.GetInGameCard(CardName.Creator),
             };
-            cards[0].Reveal();
+            cards[0].RevealByHack();
             cards[1].SetGuessed();
             cards[2].SetGuessed();
             var hand = new PlayerHand(cards);
@@ -241,9 +257,9 @@ namespace OverroidModel.Test.Game
                 CardDictionary.GetInGameCard(CardName.Hacker),
                 CardDictionary.GetInGameCard(CardName.Creator),
             };
-            cards[0].Reveal();
-            cards[1].Reveal();
-            cards[2].Reveal();
+            cards[0].RevealByHack();
+            cards[1].RevealByHack();
+            cards[2].RevealByHack();
             var hand = new PlayerHand(cards);
             Assert.Throws<UnavailableActionException>(() => hand.SelectRandamUnrevealCard());
         }

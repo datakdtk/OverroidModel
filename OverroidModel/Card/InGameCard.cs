@@ -17,9 +17,14 @@ namespace OverroidModel.Card
         /// </summary>
         Guessed,
         /// <summary>
-        /// Opponent can see the card and tell where it is.
+        /// Revealed by card effect. Opponent can see the card and tell where it is.
         /// </summary>
-        Revealed,
+        Hacked,
+
+        /// <summary>
+        /// Revealed in battles.
+        /// </summary>
+        Opened,
     }
 
     /// <summary>
@@ -75,16 +80,21 @@ namespace OverroidModel.Card
         /// </summary>
         internal void SetGuessed()
         {
-            if (Visibility != CardVisibility.Revealed)
+            if (Visibility != CardVisibility.Hacked)
             {
                 visibility = CardVisibility.Guessed;
             }
         }
 
         /// <summary>
-        /// Reveals the card and make it visible from all players.
+        /// Reveals the card by card effect and make it visible from all players.
         /// </summary>
-        internal void Reveal() => visibility = CardVisibility.Revealed;
+        internal void RevealByHack() => visibility = CardVisibility.Hacked;
+
+        /// <summary>
+        /// Reveals the card in the battle.
+        /// </summary>
+        internal void Open() => visibility = CardVisibility.Opened;
 
         /// <summary>
         /// Change the card's value temporally.

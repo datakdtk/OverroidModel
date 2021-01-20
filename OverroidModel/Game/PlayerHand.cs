@@ -32,7 +32,7 @@ namespace OverroidModel.Game
         /// <summary>
         /// The number of cards that are not revealed.
         /// </summary>
-        public ushort UnrevealedCardCount => (ushort)cards.Where(c => c.Visibility != CardVisibility.Revealed).Count();
+        public ushort UnrevealedCardCount => (ushort)cards.Where(c => c.Visibility != CardVisibility.Hacked).Count();
 
         /// <summary>
         /// Names of cards that are guessable by the opponent.
@@ -84,7 +84,7 @@ namespace OverroidModel.Game
         /// <exception cref="UnavailableActionException">Thrown when there is no unrevealed card in the hand.</exception>
         internal InGameCard SelectRandamUnrevealCard()
         {
-            var unrevealedCards = cards.FindAll(c => c.Visibility != CardVisibility.Revealed);
+            var unrevealedCards = cards.FindAll(c => c.Visibility != CardVisibility.Hacked);
             if (unrevealedCards.Count == 0)
             {
                 throw new UnavailableActionException("unrevealed card does not exist. so cannot choose at random");

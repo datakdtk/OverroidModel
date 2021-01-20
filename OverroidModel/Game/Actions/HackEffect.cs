@@ -27,7 +27,7 @@ namespace OverroidModel.Game.Actions
         void IGameAction.Resolve(IMutableGame g)
         {
             var player = g.CurrentBattle.PlayerOf(sourceCardName);
-            g.HandOf(player).SelectRandamUnrevealCard().Reveal();
+            g.HandOf(player).SelectRandamUnrevealCard().RevealByHack();
         }
     }
 }
