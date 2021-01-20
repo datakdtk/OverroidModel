@@ -200,7 +200,7 @@ namespace OverroidModel.Test.Game
             var hand = new PlayerHand(cards);
             var cn = CardName.Overroid;
 
-            Assert.Throws<UnavailableActionException>(() => hand.RemoveCard(cn));
+            Assert.Throws<GameLogicException>(() => hand.RemoveCard(cn));
         }
 
         [Fact]
@@ -261,7 +261,7 @@ namespace OverroidModel.Test.Game
             cards[1].RevealByHack();
             cards[2].RevealByHack();
             var hand = new PlayerHand(cards);
-            Assert.Throws<UnavailableActionException>(() => hand.SelectRandamUnrevealCard());
+            Assert.Throws<GameLogicException>(() => hand.SelectRandamUnrevealCard());
         }
 
         private static List<InGameCard> GetCardList()

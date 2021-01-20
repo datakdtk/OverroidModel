@@ -169,12 +169,12 @@ namespace OverroidModel.Game
         /// <param name="p">Player who places a card.</param>
         /// <param name="c">Card to be placed.</param>
         /// <param name="detectedCardName">The card name if the player is detecting a card.</param>
-        /// <exception cref="UnavailableActionException">Thrown if the player has already set a card.</exception>
+        /// <exception cref="GameLogicException">Thrown if the player has already set a card.</exception>
         internal void SetCard(PlayerAccount p, InGameCard c, CardName? detectedCardName)
         {
             if (HasCardOf(p))
             {
-                throw new UnavailableActionException("Battle Card has already been set.");
+                throw new GameLogicException("Battle Card has already been set.");
             }
             cards[p] = c;
             if (p == DefendingPlayer)
@@ -188,12 +188,12 @@ namespace OverroidModel.Game
         /// </summary>
         /// <param name="p">Player who places a card.</param>
         /// <param name="c">Card to be newly placed.</param>
-        /// <exception cref="UnavailableActionException">Thrown if the player has not set any card yet.</exception>
+        /// <exception cref="GameLogicException">Thrown if the player has not set any card yet.</exception>
         internal void ReplaceCard(PlayerAccount p, InGameCard c)
         {
             if (!HasCardOf(p))
             {
-                throw new UnavailableActionException("Battle Card has not set yet.");
+                throw new GameLogicException("Battle Card has not set yet.");
             }
             cards[p] = c;
         }

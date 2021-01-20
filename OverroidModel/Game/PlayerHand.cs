@@ -54,13 +54,13 @@ namespace OverroidModel.Game
         /// Remove a card with given name from the hand.
         /// </summary>
         /// <returns>Removed card.</returns>
-        /// <exception cref="UnavailableActionException">Thrown if a card with given name is not in the hand.</exception>
+        /// <exception cref="GameLogicException">Thrown if a card with given name is not in the hand.</exception>
         internal InGameCard RemoveCard(CardName cn)
         {
             var c = CardOf(cn);
             if (c == null)
             {
-                throw new UnavailableActionException("Card cannot remove from hand");
+                throw new GameLogicException("Card cannot remove from hand");
             }
             cards.Remove(c);
             return c;
@@ -81,13 +81,13 @@ namespace OverroidModel.Game
         /// Selects an unrevealed card at random and returns it.
         /// </summary>
         /// <returns>Removed card.</returns>
-        /// <exception cref="UnavailableActionException">Thrown when there is no unrevealed card in the hand.</exception>
+        /// <exception cref="GameLogicException">Thrown when there is no unrevealed card in the hand.</exception>
         internal InGameCard SelectRandamUnrevealCard()
         {
             var unrevealedCards = cards.FindAll(c => c.Visibility != CardVisibility.Hacked);
             if (unrevealedCards.Count == 0)
             {
-                throw new UnavailableActionException("unrevealed card does not exist. so cannot choose at random");
+                throw new GameLogicException("unrevealed card does not exist. so cannot choose at random");
             }
             var rand = new Random();
             var randomIndex = rand.Next(unrevealedCards.Count - 1);
