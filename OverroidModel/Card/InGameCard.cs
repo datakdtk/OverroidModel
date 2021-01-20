@@ -1,5 +1,6 @@
 ﻿using OverroidModel.Card.Effects;
 using OverroidModel.Card.Master;
+using OverroidModel.Exceptions;
 
 namespace OverroidModel.Card
 {
@@ -32,7 +33,7 @@ namespace OverroidModel.Card
     /// </summary>
     public class InGameCard
     {
-        readonly ICardMaster data;
+        ICardMaster data;
         CardVisibility visibility = CardVisibility.Hidden;
         ushort? overriddenValue;
         ICardEffect? overriddenEffect;
@@ -74,6 +75,11 @@ namespace OverroidModel.Card
         public CardVisibility Visibility => visibility;
 
         /// <summary>
+        /// Returns true if it is unknown card.
+        /// </summary>
+        public bool IsUnknown() => Name == CardName.Unknown;
+
+        /// <summary>
         /// Marks the card guessable.
         /// Used when card moves from visible area to invisible area for any player's point of view.
         /// If the card has already been revealed, it is still revealed.
@@ -89,24 +95,56 @@ namespace OverroidModel.Card
         /// <summary>
         /// Reveals the card by card effect and make it visible from all players.
         /// </summary>
-        internal void RevealByHack() => visibility = CardVisibility.Hacked;
+        /// <exception cref="GameLogicException">Thrown if it is unknown card.</exception>
+        internal void RevealByHack()
+        {
+            if (IsUnknown())
+            {
+                throw new GameLogicException("Cannot reveal a card if it is still unknown");
+            }
+            visibility = CardVisibility.Hacked;
+        }
 
         /// <summary>
         /// Reveals the card in the battle.
         /// </summary>
-        internal void Open() => visibility = CardVisibility.Opened;
+        /// <exception cref="GameLogicException">Thrown if it is unknown card.</exception>
+        internal void Open()
+        {
+            if (IsUnknown())
+            {
+                throw new GameLogicException("Cannot reveal a card if it is still unknown");
+            }
+            visibility = CardVisibility.Opened;
+        }
 
         /// <summary>
         /// Change the card's value temporally.
         /// </summary>
         /// <param name="v">New value of the card.</param>
-        internal void OverrideValue(ushort v) => overriddenValue = v;
+        /// <exception cref="GameLogicException">Thrown if it is unknown card.</exception>
+        internal void OverrideValue(ushort v)
+        {
+            if (IsUnknown())
+            {
+                throw new GameLogicException("Cannot reveal a card if it is still unknown");
+            }
+            overriddenValue = v;
+        }
 
         /// <summary>
         /// Change the card's effect temporally.
         /// </summary>
         /// <param name="v">New effect of the card.</param>
-        internal void OverrideEffect(ICardEffect e) => overriddenEffect = e;
+        /// <exception cref="GameLogicException">Thrown if it is unknown card.</exception>
+        internal void OverrideEffect(ICardEffect e)
+        {
+            if (IsUnknown())
+            {
+                throw new GameLogicException("Cannot reveal a card if it is still unknown");
+            }
+            overriddenEffect = e;
+        }
 
         /// <summary>
         /// Cancels temporal state changes.
@@ -116,6 +154,26 @@ namespace OverroidModel.Card
         {
             overriddenValue = null;
             overriddenEffect = null;
+        }
+
+        /// <summary>
+        /// Update master data of unknown card.
+        /// </summary>
+        /// <param name="trueCardName">Name of card to set its data</param>
+        /// <exception cref="GameLogicException">
+        /// Thrown when unknown card name is given or tried to change data of not unknown card. 
+        /// </exception>
+        internal void SetTrueDataIfUnknown(CardName trueCardName)
+        {
+            if (trueCardName == CardName.Unknown)
+            {
+                throw new GameLogicException("Unknown card must not be set as true card.");
+            }
+            if (!IsUnknown() && data.Name != trueCardName)
+            {
+                throw new GameLogicException("Cannot change master data of not unknown card.");
+            }
+            data = CardDictionary.GetMaster(trueCardName);
         }
     }
 }
