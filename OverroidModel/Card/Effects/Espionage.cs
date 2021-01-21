@@ -1,5 +1,6 @@
 ﻿using OverroidModel.Game;
 using OverroidModel.Game.Actions;
+using OverroidModel.Game.Actions.Commands;
 
 namespace OverroidModel.Card.Effects
 {
@@ -18,7 +19,7 @@ namespace OverroidModel.Card.Effects
 
         IGameAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
         {
-            return new CharmEffect(g.CurrentBattle.PlayerOf(sourceCardName), sourceCardName);
+            return new CommandStandbyEffect<EspionageCommand>(sourceCardName);
         }
     }
 }

@@ -11,12 +11,12 @@ namespace OverroidModel.Game.Actions.Commands
     {
         readonly PlayerAccount player;
         readonly CardName targetMyCardName;
-        readonly CardName? targetOpponentCardName;
+        readonly CardName targetOpponentCardName;
 
         /// <param name="player">Card controller of the source card of the effect.</param>
         /// <param name="targetMyCardName">Name of card which will be chosen from the card controller's hand.</param>
-        /// <param name="targetOpponentCardName">Name of card which will be chosen from the opponent's hand. If it is null, chosen randomly.</param>
-        public EspionageCommand(PlayerAccount player, CardName targetMyCardName, CardName? targetOpponentCardName)
+        /// <param name="targetOpponentCardName">Name of card which will be chosen from the opponent's hand.</param>
+        public EspionageCommand(PlayerAccount player, CardName targetMyCardName, CardName targetOpponentCardName)
         {
             this.player = player;
             this.targetMyCardName = targetMyCardName;
@@ -39,9 +39,7 @@ namespace OverroidModel.Game.Actions.Commands
             var opponentHand = g.HandOf(g.OpponentOf(player));
             Debug.Assert(myHand.Cards.Count == opponentHand.Cards.Count);
             var myCard = myHand.RemoveCard(targetMyCardName);
-            var opponentCard = targetOpponentCardName == null
-                ? opponentHand.RemoveCard(opponentHand.SelectRandamUnrevealCard().Name)
-                : opponentHand.RemoveCard(targetOpponentCardName.Value);
+            var opponentCard = opponentHand.RemoveCard(targetOpponentCardName);
             myHand.AddCard(opponentCard);
             opponentHand.AddCard(myCard);
             Debug.Assert(myHand.Cards.Count == opponentHand.Cards.Count);
@@ -54,19 +52,9 @@ namespace OverroidModel.Game.Actions.Commands
                 throw new UnavailableActionException("Invalid Command: player does not have the card to exchange");
             }
             var opponentHand = g.HandOf(g.OpponentOf(player));
-            if (targetOpponentCardName == null)
+            if (!opponentHand.HasCard(targetOpponentCardName))
             {
-                if (opponentHand.UnrevealedCardCount == 0)
-                {
-                    throw new UnavailableActionException("Invalid Command: cannot choose opponent at random. There is no unrevealed card");
-                }
-            } 
-            else
-            {
-                if (!opponentHand.HasCard((CardName)targetOpponentCardName))
-                {
-                    throw new UnavailableActionException("Invalid Command: opponent does not have the card to exchange");
-                }
+                throw new UnavailableActionException("Invalid Command: opponent does not have the card to exchange");
             }
         }
     }
