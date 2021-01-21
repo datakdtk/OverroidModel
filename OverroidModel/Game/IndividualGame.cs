@@ -32,10 +32,12 @@ namespace OverroidModel.Game
         /// <param name="overroidPlayer">Player who plays Overroid force.</param>
         /// <param name="humanPlayerHand">Hand cards of Human player.</param>
         /// <param name="overroidPlayerHand">Hand card of Overroid player.</param>
+        /// <param name="config">Customized rule of the game</param>
         internal IndividualGame(
             PlayerAccount humanPlayer,
             PlayerAccount overroidPlayer,
-            List<ICardMaster> sortedDeck,
+            PlayerHand humanPlayerHand,
+            PlayerHand overroidPlayerHand,
             IGameConfig config
         )
         {
@@ -43,14 +45,10 @@ namespace OverroidModel.Game
             this.overroidPlayer = overroidPlayer;
             this.config = config;
 
-            var humanHand = sortedDeck.GetRange(0, 5).Select(c => new InGameCard(c)).ToList();
-            var overroidHand = sortedDeck.GetRange(5, 5).Select(c => new InGameCard(c)).ToList();
-            humanHand.Add(new InGameCard(new Innocence()));
-            overroidHand.Add(new InGameCard(new Overroid()));
             playerHands = new Dictionary<PlayerAccount, PlayerHand>()
             {
-                [humanPlayer] = new PlayerHand(humanHand),
-                [overroidPlayer] = new PlayerHand(overroidHand),
+                [humanPlayer] = humanPlayerHand,
+                [overroidPlayer] = overroidPlayerHand,
             };
             
             battles = new List<Battle>();

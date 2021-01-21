@@ -19,7 +19,6 @@ namespace OverroidModel.Game
         PlayerAccount? winner;
         bool isDrawBattle;
         bool reversesCardValues;
-        bool cardsOpened;
 
         /// <param name="round">Current battle number</param>
         /// <param name="attackingPlayer">Player who places battle card first,</param>

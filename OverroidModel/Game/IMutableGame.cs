@@ -1,4 +1,5 @@
 ﻿using OverroidModel.Game.Actions;
+using OverroidModel.Game.Actions.Commands;
 
 namespace OverroidModel.Game
 {
@@ -7,6 +8,13 @@ namespace OverroidModel.Game
     /// </summary>
     public interface IMutableGame : IGameInformation
     {
+
+        /// <summary>
+        /// Receive and resolve a game command by a player in game.
+        /// </summary>
+        /// <exception cref="UnavailableActionException">Thrown when the command is not applicable in the current game state.</exception>
+        public void ReceiveCommand(IGameCommand command);
+
         /// <summary>
         /// Create new battle and add it to the game.
         /// </summary>

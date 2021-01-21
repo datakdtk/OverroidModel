@@ -14,9 +14,9 @@ namespace OverroidModel.Game
         readonly List<InGameCard> cards;
 
         /// <param name="cards">Cards in the hand.</param>
-        public PlayerHand(List<InGameCard> cards)
+        public PlayerHand(IEnumerable<InGameCard> cards)
         {
-            this.cards = cards;
+            this.cards = cards.ToList();
         }
 
         /// <summary>

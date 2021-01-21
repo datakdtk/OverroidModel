@@ -1,7 +1,7 @@
 ﻿using OverroidModel.Card;
-using OverroidModel.Card.Master;
 using OverroidModel.Config;
 using OverroidModel.Game.Actions;
+using OverroidModel.Game.Actions.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +13,12 @@ namespace OverroidModel.Game
     /// </summary>
     class IndividualGameBuilder
     {
-        readonly ICardMaster[] cardSet;
+        readonly ICardShuffler shuffler;
 
-        /// <param name="cardSet">Card set to use with 11 cards that excludes Innocence and Overroid card.</param>
-        public IndividualGameBuilder(ICardMaster[] cardSet)
+        /// <param name="shuffler">Determines how to shuffle initial card deck.</param>
+        public IndividualGameBuilder(ICardShuffler shuffler)
         {
-            if (cardSet.Length != 11)
-            {
-                throw new ArgumentException("Length of card set must be 11");
-            }
-            this.cardSet = cardSet;
+            this.shuffler = shuffler;
         }
 
         /// <summary>
@@ -30,44 +26,52 @@ namespace OverroidModel.Game
         /// </summary>
         /// <param name="humanPlayer">Player who plays human force.</param>
         /// <param name="overroidPlayer">Player who plays overroid force.</param>
+        /// <param name="shufflingSeed">Randomizing seed to determine order of card deck.</param>
         /// <param name="config">Customized game rule.</param>
         public IndividualGame InitializeGame (
             PlayerAccount humanPlayer,
             PlayerAccount overroidPlayer,
-            IGameConfig config)
-        {
-            var shuffledCardSet = CardDictionary.DefaultCardList.OrderBy(c => Guid.NewGuid()).ToList();
-            var actions = new List<IGameAction>() { new RoundStart() };
-            return LordGame(humanPlayer, overroidPlayer, shuffledCardSet, actions, config);
-        }
-
-        /// <summary>
-        ///  Restore latest game state from initial state and history.
-        /// </summary>
-        /// <param name="humanPlayer">Player who plays human force.</param>
-        /// <param name="overroidPlayer">Player who plays overroid force.</param>
-        /// <param name="orderedDeck">Order of the deck at the beginning of the game</param>
-        /// <param name="actionHistory">List of what has happened since game start,</param>
-        /// <param name="config">Customized game rule.</param>
-        public IndividualGame LordGame (
-            PlayerAccount humanPlayer,
-            PlayerAccount overroidPlayer,
-            List<ICardMaster> orderedDeck,
-            List<IGameAction> actionHistory,
+            string shufflingSeed,
             IGameConfig config
         )
         {
-            var g = new IndividualGame(humanPlayer, overroidPlayer, orderedDeck, config);
-            foreach (var a in actionHistory.Reverse<IGameAction>())
-            {
-                g.PushToActionStack(a);
-            }
-            g.ResolveStacks();
-            return g;
+            var cardSet = CardDictionary.DefaultCardList;
+            var shuffledDeck = shuffler.Shuffle(cardSet, shufflingSeed);
+
+            var humanHand = new PlayerHand(shuffledDeck.GetRange(0, 5).Select(c => new InGameCard(c)));
+            var overroidHand = new PlayerHand(shuffledDeck.GetRange(5, 5).Select(c => new InGameCard(c)));
+            humanHand.AddCard(CardDictionary.GetInGameCard(CardName.Inocence));
+            overroidHand.AddCard(CardDictionary.GetInGameCard(CardName.Overroid));
+
+            var game = new IndividualGame(humanPlayer, overroidPlayer, humanHand, overroidHand, config);
+            game.PushToActionStack(new RoundStart());
+            game.ResolveStacks();
+            return game;
         }
 
         /// <summary>
-        /// Get cards of basic set.
+        ///  Restore latest game state from initial state and commands.
         /// </summary>
+        /// <param name="humanPlayer">Player who plays human force.</param>
+        /// <param name="overroidPlayer">Player who plays overroid force.</param>
+        /// <param name="shufflingSeed">Randomizing seed to determine order of card deck.</param>
+        /// <param name="config">Customized game rule.</param>
+        /// <param name="commandHistory">History of the choices of the players from beginning of the game.</param>
+        /// <exception cref="Exceptions.UnavailableActionException">Thrown when commandHistory is invalid.</exception>
+        public IndividualGame LordGame (
+            PlayerAccount humanPlayer,
+            PlayerAccount overroidPlayer,
+            string shufflingSeed,
+            IGameConfig config,
+            IEnumerable<IGameCommand> commandHistory
+        )
+        {
+            var game = InitializeGame(humanPlayer, overroidPlayer, shufflingSeed, config);
+            foreach (var c in commandHistory)
+            {
+                game.ReceiveCommand(c);
+            }
+            return game;
+        }
     }
 }

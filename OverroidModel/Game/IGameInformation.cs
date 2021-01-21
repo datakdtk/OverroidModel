@@ -76,11 +76,5 @@ namespace OverroidModel.Game
         /// <exception cref="NonGamePlayerException"></exception>
         public ushort WinningStarOf(PlayerAccount p);
 
-        /// <summary>
-        /// Receive and resolve a game command by a player in game.
-        /// </summary>
-        /// <exception cref="UnavailableActionException">Thrown when the command is not applicable in the current game state.</exception>
-        public void ReceiveCommand(IGameCommand command);
-
     }
 }
