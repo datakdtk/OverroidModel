@@ -159,56 +159,5 @@ namespace OverroidModel.Test.Card
             Assert.Equal(master.Value, card.Value);
             Assert.Equal(master.Effect, card.Effect);
         }
-
-        [Fact]
-        public void Test_SetTrueDataIfUnkown_CanUpdateUnkownCard()
-        {
-            var master = new UnknownCard();
-            var card = new InGameCard(master);
-
-            card.SetTrueDataIfUnknown(CardName.Overroid);
-
-            Assert.False(card.IsUnknown());
-            Assert.Equal(CardName.Overroid, card.Name);
-        }
-
-        [Fact]
-        public void Test_SetTrueDataIfUnkown_NothingHappensWhenGivenSameCardName()
-        {
-            var master = new Overroid();
-            var card = new InGameCard(master);
-
-            card.SetTrueDataIfUnknown(CardName.Overroid);
-
-            Assert.False(card.IsUnknown());
-            Assert.Equal(CardName.Overroid, card.Name);
-        }
-
-        [Fact]
-        public void Test_SetTrueDataIfUnkown_ThrowsWhenTriedToKnownCard()
-        {
-            var master = new Innocence();
-            var card = new InGameCard(master);
-
-            Assert.Throws<GameLogicException>(() => card.SetTrueDataIfUnknown(CardName.Overroid));
-        }
-
-        [Fact]
-        public void Test_IsUnknown_True()
-        {
-            var master = new UnknownCard();
-            var card = new InGameCard(master);
-
-            Assert.True(card.IsUnknown());
-        }
-
-        [Fact]
-        public void Test_IsUnknown_False()
-        {
-            var master = new Innocence();
-            var card = new InGameCard(master);
-
-            Assert.False(card.IsUnknown());
-        }
     }
 }

@@ -32,7 +32,6 @@ namespace OverroidModel.Game.Actions.Commands
         {
             var battle = g.CurrentBattle;
             var card = battle.CardOf(player);
-            card.SetTrueDataIfUnknown(placedCardName);
             card.Open();
 
             if (player == battle.AttackingPlayer)
@@ -60,7 +59,7 @@ namespace OverroidModel.Game.Actions.Commands
         void IGameCommand.Validate(IGameInformation g)
         {
             var battle = g.CurrentBattle;
-            // Assertion of game state. Expected to be never thrown.
+            // Assertion of game state. Expected to be never thrown because command .
             if (!battle.HasBothPlayersCards())
             {
                 throw new GameLogicException("Battle cards cannot open. Not all cards have been set");
@@ -75,7 +74,7 @@ namespace OverroidModel.Game.Actions.Commands
             }
             else
             {
-                if (attakingPlayerCard.Visibility != CardVisibility.Opened || attakingPlayerCard.IsUnknown())
+                if (attakingPlayerCard.Visibility != CardVisibility.Opened)
                 {
                     throw new GameLogicException("Attacking player has not opened a card yet.");
                 }
@@ -83,7 +82,7 @@ namespace OverroidModel.Game.Actions.Commands
             // Assertion end.
 
             var card = battle.CardOf(player);
-            if (!card.IsUnknown() && card.Name != placedCardName)
+            if (battle.CardOf(player).Name != placedCardName)
             {
                 throw new UnavailableActionException("Card name to open must be same as actual card.");
             }
