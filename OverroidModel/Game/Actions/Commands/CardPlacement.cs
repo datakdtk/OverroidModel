@@ -1,4 +1,5 @@
-﻿using OverroidModel.Card;
+﻿using System.Diagnostics;
+using OverroidModel.Card;
 using OverroidModel.Exceptions;
 
 namespace OverroidModel.Game.Actions.Commands
@@ -54,25 +55,24 @@ namespace OverroidModel.Game.Actions.Commands
         {
             var battle = g.CurrentBattle;
             // Assertion. Expected to be never thrown.
-            if (battle.HasCardOf(player))
-            {
-                throw new GameLogicException("Invalid Command: player has already set card");
-            }
+            Debug.Assert(
+                !battle.HasCardOf(player),
+                "Player has already set card"
+                );
             var opponent = g.OpponentOf(player);
             if (player == battle.AttackingPlayer)
             {
-                if (battle.HasCardOf(opponent))
-                {
-                    throw new GameLogicException("Defending player placed a card earlier than attackingPlayer");
-                }
-
+                Debug.Assert(
+                    !battle.HasCardOf(opponent),
+                    "Defending player placed a card earlier than attackingPlayer"
+                    );
             }
             else
             {
-                if (!battle.HasCardOf(opponent))
-                {
-                    throw new GameLogicException("Attacking player has not placed a card yet.");
-                }
+                Debug.Assert(
+                    battle.HasCardOf(opponent),
+                    "Attacking player has not placed a card yet."
+                    );
             }
             // Assertion end.
 

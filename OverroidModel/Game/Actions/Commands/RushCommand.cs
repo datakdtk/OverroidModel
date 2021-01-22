@@ -31,7 +31,6 @@ namespace OverroidModel.Game.Actions.Commands
 
         void IGameAction.Resolve(IMutableGame g)
         {
-            var thisCard = g.CurrentBattle.CardOf(player);
             var targetCard = g.HandOf(player).RemoveCard(targetCardName);
             g.CurrentBattle.ReplaceCard(player, targetCard);
             g.HandOf(player).AddCard(targetCard);
