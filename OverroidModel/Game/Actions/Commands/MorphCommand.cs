@@ -1,4 +1,6 @@
-﻿using OverroidModel.Card;
+﻿using System.Linq;
+using OverroidModel.Card;
+using OverroidModel.Card.Effects;
 using OverroidModel.Exceptions;
 
 namespace OverroidModel.Game.Actions.Commands
@@ -9,16 +11,13 @@ namespace OverroidModel.Game.Actions.Commands
     public class MorphCommand : IGameCommand
     {
         readonly PlayerAccount player;
-        readonly ushort targetRound;
         readonly CardName targetCardName;
 
         /// <param name="player">Card controller of the source card of the effect.</param>
-        /// <param name="targetRound">Round where copy target card is placed.</param>
         /// <param name="targetCardName">Name of target card from which an effect will be copied.</param>
         public MorphCommand(PlayerAccount player, ushort targetRound, CardName targetCardName)
         {
             this.player = player;
-            this.targetRound = targetRound;
             this.targetCardName = targetCardName;
         }
 
@@ -34,15 +33,12 @@ namespace OverroidModel.Game.Actions.Commands
 
         void IGameAction.Resolve(IMutableGame g)
         {
-            var battle = g.Battles[targetRound];
-            var targetCard = battle.CardOf(g.OpponentOf(CommandingPlayer));
             var thisCard = g.CurrentBattle.CardOf(player);
-            var copiedEffect = targetCard.DefaultEffect;
+            var copiedEffect = CardDictionary.GetMaster(targetCardName).Effect;
             thisCard.OverrideEffect(copiedEffect);
 
-            // Push copied effect to Stack if original effect timing has already missed
-            var currentTiming = thisCard.DefaultEffect.Timing;
-            if (copiedEffect.Timing <= currentTiming && copiedEffect.ConditionIsSatisfied(thisCard.Name, g))
+            // Resolve the effect immediately if a pre-battle effect is copied.
+            if (copiedEffect.Timing <= EffectTiming.PRE_BATTLE && copiedEffect.ConditionIsSatisfied(thisCard.Name, g))
             {
                 g.PushToActionStack(copiedEffect.GetAction(thisCard.Name, g));
             }
@@ -50,14 +46,15 @@ namespace OverroidModel.Game.Actions.Commands
 
         void IGameCommand.Validate(IGameInformation g)
         {
-            if (targetRound >= g.CurrentBattle.Round)
+            var opponent = g.OpponentOf(player);
+            var battle = g.Battles.FirstOrDefault(b => b.CardOf(opponent).Name == targetCardName);
+            if (battle == null)
+            {
+                throw new UnavailableActionException("Morph target is not opponent's battle card.");
+            }
+            if (battle.Round >= g.CurrentBattle.Round)
             {
                 throw new UnavailableActionException("Morph target round must be previous rounds");
-            }
-            var targetCard = g.Battles[targetRound].CardOf(g.OpponentOf(CommandingPlayer));
-            if (targetCard.Name != targetCardName)
-            {
-                throw new UnavailableActionException("Morph target is not opponent card of target round");
             }
         }
     }
