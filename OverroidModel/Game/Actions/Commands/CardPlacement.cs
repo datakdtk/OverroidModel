@@ -26,7 +26,7 @@ namespace OverroidModel.Game.Actions.Commands
 
         public PlayerAccount CommandingPlayer => player;
 
-        public CardName? TargetCardName => cardNameToPlace;
+        public CardName? TargetCardName => null; // Which card was placed is should be unknown until card open.
 
         public bool HasVisualEffect() => true;
 
@@ -44,18 +44,35 @@ namespace OverroidModel.Game.Actions.Commands
             else
             {
                 var detectedCardName = g.DetectionAvailable ? this.detectedCardName : null;
-
                 battle.SetCard(player, card, detectedCardName);
-                g.AddCommandAuthorizer(new CommandAuthorizer<CardOpen>(battle.AttackingPlayer));
+                var ap = battle.AttackingPlayer;
+                g.PushToActionStack(new CardOpen(ap, battle.CardOf(ap).Name));
             }
         }
 
         void IGameCommand.Validate(IGameInformation g)
         {
+            var battle = g.CurrentBattle;
             // Assertion. Expected to be never thrown.
-            if (g.CurrentBattle.HasCardOf(player))
+            if (battle.HasCardOf(player))
             {
                 throw new GameLogicException("Invalid Command: player has already set card");
+            }
+            var opponent = g.OpponentOf(player);
+            if (player == battle.AttackingPlayer)
+            {
+                if (battle.HasCardOf(opponent))
+                {
+                    throw new GameLogicException("Defending player placed a card earlier than attackingPlayer");
+                }
+
+            }
+            else
+            {
+                if (!battle.HasCardOf(opponent))
+                {
+                    throw new GameLogicException("Attacking player has not placed a card yet.");
+                }
             }
             // Assertion end.
 

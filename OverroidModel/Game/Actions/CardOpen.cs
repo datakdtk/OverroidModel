@@ -2,19 +2,17 @@
 using OverroidModel.Card.Effects;
 using OverroidModel.Exceptions;
 
-namespace OverroidModel.Game.Actions.Commands
+namespace OverroidModel.Game.Actions
 {
     /// <summary>
     /// Action to open faced down battle cards.
     /// </summary>
-    public class CardOpen : IGameCommand
+    public class CardOpen : IGameAction
     {
         readonly PlayerAccount player;
         readonly CardName placedCardName;
 
-        /// <param name="player">Player who places a card.</param>
-        /// <param name="placedCardName">Name of card set to the battle.</param>
-        public CardOpen(PlayerAccount player, CardName placedCardName)
+        internal CardOpen(PlayerAccount player, CardName placedCardName)
         {
             this.player = player;
             this.placedCardName = placedCardName;
@@ -22,7 +20,7 @@ namespace OverroidModel.Game.Actions.Commands
 
         public PlayerAccount? Controller => player;
 
-        public PlayerAccount CommandingPlayer => player;
+        public CardName? TargetCardName => placedCardName;
 
         public bool HasVisualEffect() => true;
 
@@ -31,19 +29,21 @@ namespace OverroidModel.Game.Actions.Commands
         void IGameAction.Resolve(IMutableGame g)
         {
             var battle = g.CurrentBattle;
-            var card = battle.CardOf(player);
-            card.Open();
+            Assertion(battle);
+
+            battle.CardOf(player).Open();
 
             if (player == battle.AttackingPlayer)
             {
-                g.AddCommandAuthorizer(new CommandAuthorizer<CardOpen>(battle.DefendingPlayer));
+                var dp = battle.DefendingPlayer;
+                g.PushToActionStack(new CardOpen(dp, battle.CardOf(dp).Name));
                 return;
             }
 
             g.PushToActionStack(new BattleEnd());
             // set arrays in reverse of resolving order because stack resolves effects in "first in, last out" order
-            var cards = new InGameCard[2] { battle.CardOf(battle.DefendingPlayer), battle.CardOf(battle.AttackingPlayer) };
             var timings = new EffectTiming[3] { EffectTiming.PRE_BATTLE, EffectTiming.SECOND, EffectTiming.FIRST };
+            var cards = new InGameCard[2] { battle.CardOf(battle.DefendingPlayer), battle.CardOf(battle.AttackingPlayer) };
             foreach (var t in timings)
             {
                 foreach (var c in cards)
@@ -56,14 +56,17 @@ namespace OverroidModel.Game.Actions.Commands
             }
         }
 
-        void IGameCommand.Validate(IGameInformation g)
+        private void Assertion(Battle battle)
         {
-            var battle = g.CurrentBattle;
-            // Assertion of game state. Expected to be never thrown because command .
             if (!battle.HasBothPlayersCards())
             {
                 throw new GameLogicException("Battle cards cannot open. Not all cards have been set");
             }
+            if (battle.CardOf(player).Name != placedCardName)
+            {
+                throw new GameLogicException("Card name to open must be same as actual card.");
+            }
+
             var attakingPlayerCard = battle.CardOf(battle.AttackingPlayer);
             if (player == battle.AttackingPlayer)
             {
@@ -78,13 +81,6 @@ namespace OverroidModel.Game.Actions.Commands
                 {
                     throw new GameLogicException("Attacking player has not opened a card yet.");
                 }
-            }
-            // Assertion end.
-
-            var card = battle.CardOf(player);
-            if (battle.CardOf(player).Name != placedCardName)
-            {
-                throw new UnavailableActionException("Card name to open must be same as actual card.");
             }
         }
     }
