@@ -15,7 +15,7 @@ namespace OverroidModel.Game.Actions.Commands
 
         /// <param name="player">Card controller of the source card of the effect.</param>
         /// <param name="targetCardName">Name of target card from which an effect will be copied.</param>
-        public MorphCommand(PlayerAccount player, ushort targetRound, CardName targetCardName)
+        public MorphCommand(PlayerAccount player, CardName targetCardName)
         {
             this.player = player;
             this.targetCardName = targetCardName;

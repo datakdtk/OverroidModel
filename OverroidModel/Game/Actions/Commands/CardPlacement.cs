@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using OverroidModel.Card;
 using OverroidModel.Exceptions;
 
@@ -27,11 +28,17 @@ namespace OverroidModel.Game.Actions.Commands
 
         public PlayerAccount CommandingPlayer => player;
 
-        public CardName? TargetCardName => null; // Which card was placed is should be unknown until card open.
+        public CardName? TargetCardName => detectedCardName; // placedCardName should be unknown until card open.
 
         public bool HasVisualEffect() => true;
 
         public bool IsCardEffect() => false;
+
+        public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
+        {
+            ["cardNameToPlace"] = cardNameToPlace.ToString(),
+            ["detectedCardName"] = detectedCardName?.ToString() ?? "",
+        };
 
         void IGameAction.Resolve(IMutableGame g)
         {

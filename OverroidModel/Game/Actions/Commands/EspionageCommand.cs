@@ -1,5 +1,6 @@
 ﻿using OverroidModel.Card;
 using OverroidModel.Exceptions;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace OverroidModel.Game.Actions.Commands
@@ -27,11 +28,20 @@ namespace OverroidModel.Game.Actions.Commands
 
         public PlayerAccount CommandingPlayer => player;
 
-        public CardName? TargetCardName => null;
+        public CardName? TargetCardName => targetMyCardName;
+
+        public CardName? SecondTargetCardName => targetOpponentCardName;
 
         public bool HasVisualEffect() => true;
 
         public bool IsCardEffect() => true;
+
+        public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
+        {
+            ["targetMyCardName"] = targetMyCardName.ToString(),
+            ["targetOpponentCardName"] = targetOpponentCardName.ToString(),
+        };
+
 
         void IGameAction.Resolve(IMutableGame g)
         {

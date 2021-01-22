@@ -17,12 +17,12 @@ namespace OverroidModel.Game.Actions
         /// <summary>
         /// Name of the card that is mainly affected by action if exists.
         /// </summary>
-        public CardName? TargetCardName => null;
+        public CardName? TargetCardName { get; }
 
         /// <summary>
-        /// Parameters that are required for render animation.
+        /// Name of the card that is secondary affected by action if exists.
         /// </summary>
-        public Dictionary<string, string> VisualEffectParameter => new Dictionary<string, string>();
+        public CardName? SecondTargetCardName => null;
 
         /// <summary>
         /// Whether it is card effect.

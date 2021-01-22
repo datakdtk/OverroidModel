@@ -18,6 +18,8 @@ namespace OverroidModel.Game.Actions
 
         public PlayerAccount? Controller => null;
 
+        public CardName? TargetCardName => null;
+
         public bool HasVisualEffect() => false;
 
         public bool IsCardEffect() => true;

@@ -1,8 +1,12 @@
-﻿namespace OverroidModel.Game.Actions
+﻿using OverroidModel.Card;
+
+namespace OverroidModel.Game.Actions
 {
     class NoAction : IGameAction
     {
         public PlayerAccount? Controller => null;
+
+        public CardName? TargetCardName => null;
 
         public bool HasVisualEffect() => false;
 

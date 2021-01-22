@@ -20,6 +20,8 @@ namespace OverroidModel.Game.Actions
 
         public PlayerAccount Controller => controller;
 
+        public CardName? TargetCardName => throw new System.NotImplementedException();
+
         public bool HasVisualEffect() => true;
 
         public bool IsCardEffect() => true;

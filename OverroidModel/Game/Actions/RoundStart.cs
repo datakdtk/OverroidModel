@@ -1,4 +1,5 @@
-﻿using OverroidModel.Game.Actions.Commands;
+﻿using OverroidModel.Card;
+using OverroidModel.Game.Actions.Commands;
 
 namespace OverroidModel.Game.Actions
 {
@@ -8,6 +9,8 @@ namespace OverroidModel.Game.Actions
     public class RoundStart : IGameAction
     {
         public PlayerAccount? Controller => null;
+
+        public CardName? TargetCardName => null;
 
         public bool HasVisualEffect() => true;
 
