@@ -1,6 +1,4 @@
-﻿using OverroidModel.Card;
-using OverroidModel.Card.Master;
-using OverroidModel.Config;
+﻿using OverroidModel.Config;
 using OverroidModel.Exceptions;
 using OverroidModel.Game.Actions;
 using OverroidModel.Game.Actions.Commands;
@@ -59,7 +57,7 @@ namespace OverroidModel.Game
 
         public PlayerAccount HumanPlayer => humanPlayer;
         public PlayerAccount OverroidPlayer => overroidPlayer;
-        public List<IGameAction> ActionHistory => actionHistory;
+        public IReadOnlyList<IGameAction> ActionHistory => actionHistory;
         public IReadOnlyList<Battle> Battles => battles;
         public Battle CurrentBattle => battles.Last();
         public PlayerAccount? Winner

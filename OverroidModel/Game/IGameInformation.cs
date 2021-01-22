@@ -23,7 +23,7 @@ namespace OverroidModel.Game
         /// <summary>
         /// Game actions from the beginning to current game state.
         /// </summary>
-        public List<IGameAction> ActionHistory { get; }
+        public IReadOnlyList<IGameAction> ActionHistory { get; }
 
         /// <summary>
         /// List of battles in this game.
