@@ -261,7 +261,7 @@ namespace OverroidModel.Test.Game
             cards[1].RevealByHack();
             cards[2].RevealByHack();
             var hand = new PlayerHand(cards);
-            Assert.Throws<GameLogicException>(() => hand.SelectRandomUnrevealCard());
+            Assert.Throws<UnavailableActionException>(() => hand.SelectRandomUnrevealCard());
         }
 
         private static List<InGameCard> GetCardList()
