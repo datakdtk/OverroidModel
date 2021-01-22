@@ -1,6 +1,7 @@
 ﻿using OverroidModel.Exceptions;
 using OverroidModel.Game.Actions;
 using OverroidModel.Game.Actions.Commands;
+using System;
 using System.Collections.Generic;
 
 namespace OverroidModel.Game
@@ -44,6 +45,11 @@ namespace OverroidModel.Game
         /// Whether defending player detect a card in battles.
         /// </summary>
         public bool DetectionAvailable { get; }
+
+        /// <summary>
+        /// Tells whose and which command is expected to be given. If no command is expected, returns null.
+        /// </summary>
+        public (Type, PlayerAccount)? RequiredCommandInfo { get; }
 
         /// <summary>
         /// Check if the game winner is already determined.
