@@ -208,7 +208,7 @@ namespace OverroidModel.Test.Game
         {
             var cards = GetCardList();
             var hand = new PlayerHand(cards);
-            var selected = hand.SelectRandamUnrevealCard();
+            var selected = hand.SelectRandomUnrevealCard();
 
             Assert.True(hand.HasCard(selected.Name));
         }
@@ -225,7 +225,7 @@ namespace OverroidModel.Test.Game
             };
             cards[0].RevealByHack();
             var hand = new PlayerHand(cards);
-            var selected = hand.SelectRandamUnrevealCard();
+            var selected = hand.SelectRandomUnrevealCard();
 
             Assert.True(selected.Name == CardName.Hacker || selected.Name == CardName.Creator, selected.Name.ToString());
         }
@@ -243,7 +243,7 @@ namespace OverroidModel.Test.Game
             cards[1].SetGuessed();
             cards[2].SetGuessed();
             var hand = new PlayerHand(cards);
-            var selected = hand.SelectRandamUnrevealCard();
+            var selected = hand.SelectRandomUnrevealCard();
 
             Assert.True(selected.Name == CardName.Hacker || selected.Name == CardName.Creator, selected.Name.ToString());
         }
@@ -261,7 +261,7 @@ namespace OverroidModel.Test.Game
             cards[1].RevealByHack();
             cards[2].RevealByHack();
             var hand = new PlayerHand(cards);
-            Assert.Throws<GameLogicException>(() => hand.SelectRandamUnrevealCard());
+            Assert.Throws<GameLogicException>(() => hand.SelectRandomUnrevealCard());
         }
 
         private static List<InGameCard> GetCardList()

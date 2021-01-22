@@ -51,6 +51,23 @@ namespace OverroidModel.Game
         public bool HasCard(CardName cn) => CardOf(cn) != null;
 
         /// <summary>
+        /// Selects an unrevealed card at random and returns it.
+        /// </summary>
+        /// <returns>Removed card.</returns>
+        /// <exception cref="UnavailableActionException">Thrown when there is no unrevealed card in the hand.</exception>
+        public InGameCard SelectRandomUnrevealCard()
+        {
+            var unrevealedCards = cards.FindAll(c => c.Visibility != CardVisibility.Hacked);
+            if (unrevealedCards.Count == 0)
+            {
+                throw new UnavailableActionException("Unrevealed card does not exist. So cannot choose at random");
+            }
+            var rand = new Random();
+            var randomIndex = rand.Next(unrevealedCards.Count - 1);
+            return unrevealedCards[randomIndex];
+        }
+
+        /// <summary>
         /// Remove a card with given name from the hand.
         /// </summary>
         /// <returns>Removed card.</returns>
@@ -75,23 +92,6 @@ namespace OverroidModel.Game
             c.ReturnToDefault();
             c.SetGuessed();
             cards.Add(c);
-        }
-
-        /// <summary>
-        /// Selects an unrevealed card at random and returns it.
-        /// </summary>
-        /// <returns>Removed card.</returns>
-        /// <exception cref="GameLogicException">Thrown when there is no unrevealed card in the hand.</exception>
-        internal InGameCard SelectRandamUnrevealCard()
-        {
-            var unrevealedCards = cards.FindAll(c => c.Visibility != CardVisibility.Hacked);
-            if (unrevealedCards.Count == 0)
-            {
-                throw new GameLogicException("unrevealed card does not exist. so cannot choose at random");
-            }
-            var rand = new Random();
-            var randomIndex = rand.Next(unrevealedCards.Count - 1);
-            return unrevealedCards[randomIndex];
         }
 
     }

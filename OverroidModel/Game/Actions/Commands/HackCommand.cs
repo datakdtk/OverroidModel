@@ -6,14 +6,14 @@ namespace OverroidModel.Game.Actions.Commands
     /// <summary>
     /// Effect resolving action of Hack (2).
     /// </summary>
-    class HackCommand : IGameCommand
+    public class HackCommand : IGameCommand
     {
         readonly PlayerAccount controller;
         readonly CardName targetCardName;
 
         /// <param name="controller">Card controller of the source card of the effect.</param>
         /// <param name="targetCardName">Card name to reveal</param>
-        internal HackCommand(PlayerAccount controller, CardName targetCardName)
+        public HackCommand(PlayerAccount controller, CardName targetCardName)
         {
             this.controller = controller;
             this.targetCardName = targetCardName;
