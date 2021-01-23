@@ -15,8 +15,8 @@ namespace OverroidModel.Test.TestLib
             IEnumerable<CardName>? cardNamesInOverroidHand = null,
             bool detectionAvailable = true)
         {
-            var humanPlayer = new PlayerAccount("hoge");
-            var overroidPlayer = new PlayerAccount("fuga");
+            var humanPlayer = new PlayerAccount("human");
+            var overroidPlayer = new PlayerAccount("overroid");
 
             var handSize = IGameInformation.maxRound + 1 - round;
             var humanHand = createPlayerHand(cardNamesInHumanHand, handSize);

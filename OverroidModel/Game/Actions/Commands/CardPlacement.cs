@@ -83,7 +83,7 @@ namespace OverroidModel.Game.Actions.Commands
             }
             // Assertion end.
 
-            if (g.HandOf(player).HasCard(cardNameToPlace))
+            if (!g.HandOf(player).HasCard(cardNameToPlace))
             {
                 throw new UnavailableActionException("Invalid Command: player does not have the card to set");
             }

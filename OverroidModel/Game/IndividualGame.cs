@@ -136,6 +136,7 @@ namespace OverroidModel.Game
             commandAuthorizer.Authorize(command);
             command.Validate(this);
             PushToActionStack(command);
+            commandAuthorizer = null;
             ResolveStacks();
         }
 
