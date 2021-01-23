@@ -59,7 +59,7 @@ namespace OverroidModel.Game
         public PlayerAccount OverroidPlayer => overroidPlayer;
         public IReadOnlyList<IGameAction> ActionHistory => actionHistory;
         public IReadOnlyList<Battle> Battles => battles;
-        public Battle CurrentBattle => battles.Last();
+        public Battle CurrentBattle => battles.Count > 0 ? battles.Last() : throw new GameLogicException("Game has no battle round yet.");
         public PlayerAccount? Winner
         {
             get 
@@ -92,7 +92,11 @@ namespace OverroidModel.Game
             {
                 return true;
             }
-            return CurrentBattle.Round == maxRound && CurrentBattle.HasFinished();
+            if (Battles.Count > maxRound)
+            {
+                throw new GameLogicException("Number of battles in the game exceeds max round");
+            }
+            return Battles.Count == maxRound && CurrentBattle.HasFinished();
                 
         }
 
@@ -139,7 +143,7 @@ namespace OverroidModel.Game
             {
                 throw new UnavailableActionException("New round cannot start. This is last round");
             }
-            var newRound = (ushort)(CurrentBattle.Round + 1);
+            var newRound = Battles.Count > 0 ? (ushort)(CurrentBattle.Round + 1) : (ushort)1;
             var attackingPlayer = newRound % 2 == 1 ? overroidPlayer : humanPlayer;
             var defendingPlayer = newRound % 2 == 1 ? humanPlayer : overroidPlayer;
             battles.Add(new Battle(newRound, attackingPlayer, defendingPlayer));
@@ -170,8 +174,8 @@ namespace OverroidModel.Game
                     break;
                 }
                 var a = actionStack.Pop();
-                var effectsDisabled = effectDisabledPlayers[CurrentBattle.Round] == a.Controller;
-                if (effectsDisabled && a.IsCardEffect())
+
+                if (a.IsCardEffect() && effectDisabledPlayers[CurrentBattle.Round] == a.Controller)
                 {
                     continue;
                 }
