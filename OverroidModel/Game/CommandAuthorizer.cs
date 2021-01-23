@@ -13,7 +13,7 @@ namespace OverroidModel.Game
         /// <summary>
         /// Indicate which type of GameCommand class and which commanding player is expected to be given.
         /// </summary>
-        public (Type, PlayerAccount) RequiredCommandInfo { get; }
+        public (Type type, PlayerAccount player) RequiredCommandInfo { get; }
 
         /// <summary>
         /// Checks if given command is acceptable for current game state.
@@ -38,7 +38,7 @@ namespace OverroidModel.Game
             this.expectedPlayer = expectedPlayer;
         }
 
-        public (Type, PlayerAccount) RequiredCommandInfo => (typeof(T), expectedPlayer);
+        public (Type type, PlayerAccount player) RequiredCommandInfo => (typeof(T), expectedPlayer);
 
         public void Authorize(IGameCommand command)
         {

@@ -83,7 +83,7 @@ namespace OverroidModel.Game
         }
 
         public bool DetectionAvailable => config.DetectionAvailable;
-        public (Type, PlayerAccount)? RequiredCommandInfo => commandAuthorizer?.RequiredCommandInfo;
+        public (Type type, PlayerAccount player)? ExpectedCommandInfo => commandAuthorizer?.RequiredCommandInfo;
 
 
         public bool HasFinished()

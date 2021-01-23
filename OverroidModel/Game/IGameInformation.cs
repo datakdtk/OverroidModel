@@ -49,7 +49,7 @@ namespace OverroidModel.Game
         /// <summary>
         /// Tells whose and which command is expected to be given. If no command is expected, returns null.
         /// </summary>
-        public (Type, PlayerAccount)? RequiredCommandInfo { get; }
+        public (Type type, PlayerAccount player)? ExpectedCommandInfo { get; }
 
         /// <summary>
         /// Check if the game winner is already determined.
