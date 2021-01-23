@@ -5,7 +5,7 @@
     /// </summary>
     public enum CardName
     {
-        Unknown, // Dummy card name of unrevealed card.
+        Unknown, // Dummy card name will not be used in the production.
         Inocence,
         Hacker,
         Creator,

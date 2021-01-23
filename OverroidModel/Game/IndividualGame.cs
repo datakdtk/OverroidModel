@@ -11,7 +11,7 @@ namespace OverroidModel.Game
     /// <summary>
     /// Implementation of one-to-one game.
     /// </summary>
-    internal class IndividualGame : IMutableGame
+    public class IndividualGame : IMutableGame
     {
         readonly PlayerAccount humanPlayer;
         readonly PlayerAccount overroidPlayer;
@@ -23,8 +23,6 @@ namespace OverroidModel.Game
         readonly PlayerAccount?[] effectDisabledPlayers;
         ICommandAuthorizer? commandAuthorizer;
         PlayerAccount? specialWinner;
-
-        const ushort maxRound = 6;
 
         /// <param name="humanPlayer"> Player who plays Human force,</param>
         /// <param name="overroidPlayer">Player who plays Overroid force.</param>
@@ -39,6 +37,10 @@ namespace OverroidModel.Game
             IGameConfig config
         )
         {
+            if (humanPlayer == overroidPlayer)
+            {
+                throw new ArgumentException("Two game players are same.");
+            }
             this.humanPlayer = humanPlayer;
             this.overroidPlayer = overroidPlayer;
             this.config = config;
@@ -49,10 +51,10 @@ namespace OverroidModel.Game
                 [overroidPlayer] = overroidPlayerHand,
             };
             
-            battles = new List<Battle>();
+            this.battles = battles ?? new List<Battle>();
             actionStack = new Stack<IGameAction>();
             actionHistory = new List<IGameAction>();
-            effectDisabledPlayers = new PlayerAccount?[maxRound];
+            effectDisabledPlayers = new PlayerAccount?[IGameInformation.maxRound];
         }
 
         public PlayerAccount HumanPlayer => humanPlayer;
@@ -92,11 +94,11 @@ namespace OverroidModel.Game
             {
                 return true;
             }
-            if (Battles.Count > maxRound)
+            if (Battles.Count > IGameInformation.maxRound)
             {
                 throw new GameLogicException("Number of battles in the game exceeds max round");
             }
-            return Battles.Count == maxRound && CurrentBattle.HasFinished();
+            return Battles.Count == IGameInformation.maxRound && CurrentBattle.HasFinished();
                 
         }
 
@@ -153,7 +155,7 @@ namespace OverroidModel.Game
 
         void IMutableGame.DisableRoundEffects(PlayerAccount targetPlayer, ushort round)
         {
-            if (round == 0 || round > maxRound)
+            if (round == 0 || round > IGameInformation.maxRound)
             {
                 throw new ArgumentOutOfRangeException("Failed to disable round effect because out of round value");
             }

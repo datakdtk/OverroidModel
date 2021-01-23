@@ -6,18 +6,16 @@ namespace OverroidModel.Test.TestLib
 {
     class DummyCard : ICardMaster
     {
-        readonly CardName name;
         readonly ushort value;
 
-        public DummyCard(CardName name, ushort value)
+        public DummyCard(ushort value)
         {
-            this.name = name;
             this.value = value;
         }
 
         public ushort Value => value;
 
-        public CardName Name => name;
+        public CardName Name => CardName.Unknown;
 
         public ICardEffect Effect => new NoEffect();
     }

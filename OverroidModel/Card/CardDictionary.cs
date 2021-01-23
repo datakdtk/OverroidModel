@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using OverroidModel.Card.Master;
+using OverroidModel.Exceptions;
 
 namespace OverroidModel.Card
 {
@@ -30,6 +31,10 @@ namespace OverroidModel.Card
 
         public static ICardMaster GetMaster(CardName n)
         {
+            if (n == CardName.Unknown)
+            {
+                throw new GameLogicException("Cannot get unknown card by name");
+            }
             return dic[n];
         }
 

@@ -11,6 +11,8 @@ namespace OverroidModel.Game
     /// </summary>
     public interface IGameInformation
     {
+        const ushort maxRound = 6;
+
         /// <summary>
         /// Player who plays Human force.
         /// </summary>
