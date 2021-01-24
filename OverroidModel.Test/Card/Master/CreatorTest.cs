@@ -42,21 +42,6 @@ namespace OverroidModel.Test.Card.Master
         }
 
         [Fact]
-        public void Test_LosesToDiva()
-        {
-            var game = TestGameBuilder.CreateIndividualGame(
-                round: 1,
-                cardNamesInOverroidHand: new List<CardName>() { CardName.Creator }, // Attacking
-                cardNamesInHumanHand: new List<CardName>() { CardName.Diva } // Defending
-                );
-
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Creator, CardName.Diva, game);
-
-            CustomAssertion.LosesInLastRound(CardName.Creator, game);
-            CustomAssertion.ActionIsNotInHistory<LifemakerEffect>(game.ActionHistory);
-        }
-
-        [Fact]
         public void Test_WinsToBeastByEffect()
         {
             var game = TestGameBuilder.CreateIndividualGame(
