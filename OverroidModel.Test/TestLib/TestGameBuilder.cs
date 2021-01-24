@@ -4,6 +4,7 @@ using System.Linq;
 using OverroidModel.Card;
 using OverroidModel.Game;
 using OverroidModel.Game.Actions;
+using OverroidModel.Game.Actions.Commands;
 
 namespace OverroidModel.Test.TestLib
 {
@@ -55,5 +56,13 @@ namespace OverroidModel.Test.TestLib
 
             return new PlayerHand(cards);
         }
+
+        public static void SetCardsToCurrentBattle(CardName attakingCardName, CardName defendingCardName, IMutableGame game)
+        {
+            var battle = game.CurrentBattle;
+            game.ReceiveCommand(new CardPlacement(battle.AttackingPlayer, attakingCardName, null));
+            game.ReceiveCommand(new CardPlacement(battle.DefendingPlayer, defendingCardName, null));
+        }
+
     }
 }
