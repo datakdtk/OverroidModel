@@ -1,5 +1,5 @@
-﻿using OverroidModel.GameAction;
-using OverroidModel.GameAction.Commands;
+﻿using OverroidModel.GameAction.Commands;
+using OverroidModel.GameAction.Effects;
 
 namespace OverroidModel.Card.Effects
 {
@@ -18,7 +18,7 @@ namespace OverroidModel.Card.Effects
             return battle.Winner == player && g.HandOf(player).Count >= 1;
         }
 
-        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
+        ICardEffectAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
         {
             var player = g.CurrentBattle.PlayerOf(sourceCardName);
             return new CommandStandbyEffect<EspionageCommand>(sourceCardName, player);

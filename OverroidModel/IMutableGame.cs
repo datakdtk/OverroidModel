@@ -29,9 +29,9 @@ namespace OverroidModel
         /// <summary>
         /// Disable card effects of given player and given battle round.
         /// </summary>
-        /// <param name="targetPlayer">Player whose card effect is to be disabled.</param>
         /// <param name="round">Disabled battle round.</param>
-        internal void DisableRoundEffects(PlayerAccount targetPlayer, ushort round);
+        /// <param name="targetPlayer">Player whose card effect is to be disabled.</param>
+        internal void DisableRoundEffects(ushort round, PlayerAccount targetPlayer);
 
         /// <summary>
         /// Reserve a game action to be resolved.

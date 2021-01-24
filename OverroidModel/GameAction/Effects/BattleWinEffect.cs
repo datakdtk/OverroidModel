@@ -1,18 +1,18 @@
 ﻿using OverroidModel.Card;
 
-namespace OverroidModel.GameAction
+namespace OverroidModel.GameAction.Effects
 {
     /// <summary>
-    /// Effect resolving action of Doctor (4).
+    /// Common implement for auto-win card effects.
     /// </summary>
-    public class JammingEffect : IGameAction
+    public abstract class BattleWinEffect : ICardEffectAction
     {
         readonly PlayerAccount controller;
         readonly CardName sourceCardName;
 
         /// <param name="controller">Card controller of the source card of the effect.</param>
         /// <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
-        internal JammingEffect(PlayerAccount controller, CardName sourceCardName)
+        protected BattleWinEffect(PlayerAccount controller, CardName sourceCardName)
         {
             this.controller = controller;
             this.sourceCardName = sourceCardName;
@@ -20,15 +20,14 @@ namespace OverroidModel.GameAction
 
         public PlayerAccount Controller => controller;
 
-        public CardName? TargetCardName => null;
+        public CardName? TargetCardName => throw new System.NotImplementedException();
 
-        public bool HasVisualEffect() => true;
-
-        public bool IsCardEffect() => true;
+        CardName ICardEffectAction.SourceCardName => sourceCardName;
 
         void IGameAction.Resolve(IMutableGame g)
         {
-            g.DisableRoundEffects(g.OpponentOf(controller), g.CurrentBattle.Round);
+            var battle = g.CurrentBattle;
+            battle.SetSpecialWinner(sourceCardName);
         }
     }
 }

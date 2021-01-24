@@ -1,18 +1,18 @@
 ﻿using OverroidModel.Card;
 
-namespace OverroidModel.GameAction
+namespace OverroidModel.GameAction.Effects
 {
     /// <summary>
-    /// Effect resolving action of Death (13).
+    /// Effect resolving action of Trickster (6).
     /// </summary>
-    public class SnipeEffect : IGameAction
+    public class ReversalEffect : ICardEffectAction
     {
         readonly PlayerAccount controller;
         readonly CardName sourceCardName;
 
         /// <param name="controller">Card controller of the source card of the effect.</param>
         /// <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
-        internal SnipeEffect(PlayerAccount controller, CardName sourceCardName)
+        internal ReversalEffect(PlayerAccount controller, CardName sourceCardName)
         {
             this.controller = controller;
             this.sourceCardName = sourceCardName;
@@ -22,13 +22,11 @@ namespace OverroidModel.GameAction
 
         public CardName? TargetCardName => null;
 
-        public bool HasVisualEffect() => true;
-
-        public bool IsCardEffect() => true;
+        CardName ICardEffectAction.SourceCardName => sourceCardName;
 
         void IGameAction.Resolve(IMutableGame g)
         {
-            g.CurrentBattle.CardOf(sourceCardName).OverrideValue(0);
+            g.CurrentBattle.SetToReverseCardValues();
         }
     }
 }

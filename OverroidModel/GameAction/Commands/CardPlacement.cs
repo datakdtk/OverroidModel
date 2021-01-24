@@ -30,10 +30,6 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName? TargetCardName => detectedCardName; // placedCardName should be unknown until card open.
 
-        public bool HasVisualEffect() => true;
-
-        public bool IsCardEffect() => false;
-
         public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
         {
             ["cardNameToPlace"] = cardNameToPlace.ToString(),

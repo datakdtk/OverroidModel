@@ -1,18 +1,18 @@
 ﻿using OverroidModel.Card;
 
-namespace OverroidModel.GameAction
+namespace OverroidModel.GameAction.Effects
 {
     /// <summary>
-    /// Effect resolving action of Innocence (1).
+    /// Effect resolving action of Overroid (12).
     /// </summary>
-    public class MiracleEffect : IGameAction
+    public class SingularityEffect : ICardEffectAction
     {
         readonly PlayerAccount controller;
         readonly CardName sourceCardName;
 
         /// <param name="controller">Card controller of the source card of the effect.</param>
         /// <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
-        internal MiracleEffect(PlayerAccount controller, CardName sourceCardName)
+        internal SingularityEffect(PlayerAccount controller, CardName sourceCardName)
         {
             this.controller = controller;
             this.sourceCardName = sourceCardName;
@@ -22,15 +22,11 @@ namespace OverroidModel.GameAction
 
         public CardName? TargetCardName => null;
 
-        public bool HasVisualEffect() => true;
-
-        public bool IsCardEffect() => true;
+        CardName ICardEffectAction.SourceCardName => sourceCardName;
 
         void IGameAction.Resolve(IMutableGame g)
         {
-            var battle = g.CurrentBattle;
-            battle.SetSpecialWinner(sourceCardName);
-            g.SetSpecialWinner(battle.PlayerOf(sourceCardName));
+            g.SetSpecialWinner(g.CurrentBattle.PlayerOf(sourceCardName));
         }
     }
 }

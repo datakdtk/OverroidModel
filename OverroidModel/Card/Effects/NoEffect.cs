@@ -1,4 +1,4 @@
-﻿using OverroidModel.GameAction;
+﻿using OverroidModel.GameAction.Effects;
 
 namespace OverroidModel.Card.Effects
 {
@@ -9,7 +9,10 @@ namespace OverroidModel.Card.Effects
 
         bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGameInformation g) => false;
 
-        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g) => new NoAction();
+        ICardEffectAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
+        {
+            return new NoEffectAction(g.CurrentBattle.PlayerOf(sourceCardName), sourceCardName);
+        }
 
     }
 }

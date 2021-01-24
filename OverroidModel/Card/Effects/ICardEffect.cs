@@ -1,5 +1,5 @@
 ﻿using System;
-using OverroidModel.GameAction;
+using OverroidModel.GameAction.Effects;
 
 namespace OverroidModel.Card.Effects
 {
@@ -43,7 +43,7 @@ namespace OverroidModel.Card.Effects
         /// <param name="sourceCardName">Name of the card from which this effect was triggered.</param>
         /// <param name="g">Current game object</param>
         /// <returns></returns>
-        internal IGameAction GetAction(CardName sourceCardName, IGameInformation g);
+        internal ICardEffectAction GetAction(CardName sourceCardName, IGameInformation g);
 
         /// <summary>
         /// Checks if this effect triggers on current game state. But does not consider effect timing.

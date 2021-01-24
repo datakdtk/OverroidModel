@@ -1,15 +1,15 @@
 ﻿using OverroidModel.Card;
 
-namespace OverroidModel.GameAction
+namespace OverroidModel.GameAction.Effects
 {
     /// <summary>
-    /// Effect resolving action of Diva (8).
+    /// Effect resolving action of Creator (3).
     /// </summary>
-    public class InspirationEfect : BattleWinEffect
+    public class LifemakerEffect : BattleWinEffect
     {
         /// <param name="controller">Card controller of the source card of the effect.</param>
         /// <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
-        internal InspirationEfect(PlayerAccount controller, CardName sourceCardName) : base(controller, sourceCardName)
+        internal LifemakerEffect(PlayerAccount controller, CardName sourceCardName) : base(controller, sourceCardName)
         {
         }
     }

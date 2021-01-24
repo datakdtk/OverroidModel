@@ -1,13 +1,13 @@
 ﻿using OverroidModel.Card;
 using OverroidModel.GameAction.Commands;
 
-namespace OverroidModel.GameAction
+namespace OverroidModel.GameAction.Effects
 {
     /// <summary>
     /// Action to get readied to accept external commands.
     /// </summary>
     /// <typeparam name="T">Expected command class.</typeparam>
-    public class CommandStandbyEffect<T> : IGameAction where T : IGameCommand
+    public class CommandStandbyEffect<T> : ICardEffectAction where T : IGameCommand
     {
         readonly CardName sourceCardName;
         readonly PlayerAccount player;
@@ -22,9 +22,7 @@ namespace OverroidModel.GameAction
 
         public CardName? TargetCardName => null;
 
-        public bool HasVisualEffect() => false;
-
-        public bool IsCardEffect() => true;
+        CardName ICardEffectAction.SourceCardName => sourceCardName;
 
         void IGameAction.Resolve(IMutableGame g)
         {

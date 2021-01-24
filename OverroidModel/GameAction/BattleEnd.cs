@@ -13,10 +13,6 @@ namespace OverroidModel.GameAction
 
         public CardName? TargetCardName => null;
 
-        public bool HasVisualEffect() => true;
-
-        public bool IsCardEffect() => false;
-
         void IGameAction.Resolve(IMutableGame g)
         {
             var battle = g.CurrentBattle;

@@ -2,6 +2,7 @@
 using OverroidModel.Exceptions;
 using OverroidModel.GameAction;
 using OverroidModel.GameAction.Commands;
+using OverroidModel.GameAction.Effects;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -166,9 +167,7 @@ namespace OverroidModel
 
         void IMutableGame.AddCommandAuthorizer(ICommandAuthorizer a) => commandAuthorizer = a;
 
-        void IMutableGame.DisableRoundEffects(PlayerAccount targetPlayer, ushort round) => DisableRoundEffects(round, targetPlayer);
-
-        internal void DisableRoundEffects(ushort round, PlayerAccount targetPlayer)
+        void IMutableGame.DisableRoundEffects(ushort round, PlayerAccount targetPlayer)
         {
             if (round == 0 || round > IGameInformation.maxRound)
             {
@@ -193,10 +192,12 @@ namespace OverroidModel
                 }
                 var a = actionStack.Pop();
 
-                if (a.IsCardEffect() && EffectIsDisabled(CurrentBattle.Round, a.Controller))
+                var effect = a as ICardEffectAction;
+                if (effect != null && EffectIsDisabled(CurrentBattle.Round, CurrentBattle.PlayerOf(effect.SourceCardName)))
                 {
-                    continue;
+                    continue; // Effect gets disabled and ignored;
                 }
+
                 a.Resolve(this);
                 actionHistory.Add(a);
             }

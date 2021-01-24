@@ -32,10 +32,6 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName? SecondTargetCardName => targetOpponentCardName;
 
-        public bool HasVisualEffect() => true;
-
-        public bool IsCardEffect() => true;
-
         public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
         {
             ["targetMyCardName"] = targetMyCardName.ToString(),

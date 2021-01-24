@@ -1,4 +1,5 @@
 ﻿using OverroidModel.GameAction;
+using OverroidModel.GameAction.Effects;
 
 namespace OverroidModel.Card.Effects
 {
@@ -16,7 +17,7 @@ namespace OverroidModel.Card.Effects
             return sourceCardName == battle.CardOf(battle.AttackingPlayer).Name;
         }
 
-        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
+        ICardEffectAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
         {
             return new SnipeEffect(g.CurrentBattle.PlayerOf(sourceCardName), sourceCardName);
         }

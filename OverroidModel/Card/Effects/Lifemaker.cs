@@ -1,4 +1,4 @@
-﻿using OverroidModel.GameAction;
+﻿using OverroidModel.GameAction.Effects;
 
 namespace OverroidModel.Card.Effects
 {
@@ -17,7 +17,7 @@ namespace OverroidModel.Card.Effects
             return oppnentCard.Name == CardName.Beast || oppnentCard.Name == CardName.Overroid;
         }
 
-        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
+        ICardEffectAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
         {
             return new LifemakerEffect(g.CurrentBattle.PlayerOf(sourceCardName), sourceCardName);
         }

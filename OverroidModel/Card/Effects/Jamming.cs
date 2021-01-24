@@ -1,4 +1,4 @@
-﻿using OverroidModel.GameAction;
+﻿using OverroidModel.GameAction.Effects;
 
 namespace OverroidModel.Card.Effects
 {
@@ -12,7 +12,7 @@ namespace OverroidModel.Card.Effects
 
         bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGameInformation g) => true;
 
-        IGameAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
+        ICardEffectAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
         {
             return new JammingEffect(g.CurrentBattle.PlayerOf(sourceCardName), sourceCardName);
         }

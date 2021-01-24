@@ -24,16 +24,6 @@ namespace OverroidModel.GameAction
         public CardName? SecondTargetCardName => null;
 
         /// <summary>
-        /// Whether it is card effect.
-        /// </summary>
-        public bool IsCardEffect();
-
-        /// <summary>
-        /// Whether the result of the action has visual change.
-        /// </summary>
-        public bool HasVisualEffect();
-
-        /// <summary>
         /// Changes the state of Current game.
         /// </summary>
         /// <param name="g">Game that will be changed by the action.</param>

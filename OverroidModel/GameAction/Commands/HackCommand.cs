@@ -25,10 +25,6 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName? TargetCardName => targetCardName;
 
-        public bool HasVisualEffect() => true;
-
-        public bool IsCardEffect() => true;
-
         void IGameAction.Resolve(IMutableGame g)
         {
             var opponentHand = g.HandOf(g.OpponentOf(CommandingPlayer));

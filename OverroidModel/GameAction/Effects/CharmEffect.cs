@@ -1,6 +1,6 @@
 ﻿using OverroidModel.Card;
 
-namespace OverroidModel.GameAction
+namespace OverroidModel.GameAction.Effects
 {
     /// <summary>
     /// Effect resolving action of Idol (5).
