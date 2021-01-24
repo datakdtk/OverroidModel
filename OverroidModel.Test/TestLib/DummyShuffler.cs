@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using OverroidModel.Card.Master;
-using OverroidModel.Game;
 
 namespace OverroidModel.Test.TestLib
 {

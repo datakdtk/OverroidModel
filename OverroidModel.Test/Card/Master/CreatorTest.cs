@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using OverroidModel.Card;
-using OverroidModel.Game.Actions;
-using OverroidModel.Game.Actions.Commands;
+using OverroidModel.GameAction;
+using OverroidModel.GameAction.Commands;
 using OverroidModel.Test.TestLib;
 using Xunit;
 

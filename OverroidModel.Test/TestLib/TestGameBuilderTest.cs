@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using OverroidModel.Card;
-using OverroidModel.Game.Actions.Commands;
+using OverroidModel.GameAction.Commands;
 using Xunit;
 
 namespace OverroidModel.Test.TestLib

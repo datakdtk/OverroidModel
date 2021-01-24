@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OverroidModel.Card;
-using OverroidModel.Game.Actions;
+using OverroidModel.GameAction;
 using OverroidModel.Test.TestLib;
 using Xunit;
 

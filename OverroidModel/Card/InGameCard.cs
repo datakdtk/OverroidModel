@@ -1,6 +1,5 @@
 ﻿using OverroidModel.Card.Effects;
 using OverroidModel.Card.Master;
-using OverroidModel.Exceptions;
 
 namespace OverroidModel.Card
 {

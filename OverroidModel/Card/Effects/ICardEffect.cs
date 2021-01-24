@@ -1,6 +1,5 @@
 ﻿using System;
-using OverroidModel.Game;
-using OverroidModel.Game.Actions;
+using OverroidModel.GameAction;
 
 namespace OverroidModel.Card.Effects
 {

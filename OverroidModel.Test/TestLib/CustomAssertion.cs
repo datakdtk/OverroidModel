@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OverroidModel.Card;
-using OverroidModel.Game;
-using OverroidModel.Game.Actions;
+using OverroidModel.GameAction;
 using Xunit;
 
 namespace OverroidModel.Test.TestLib
