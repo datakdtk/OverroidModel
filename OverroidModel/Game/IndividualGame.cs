@@ -4,6 +4,7 @@ using OverroidModel.Game.Actions;
 using OverroidModel.Game.Actions.Commands;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace OverroidModel.Game
@@ -165,13 +166,16 @@ namespace OverroidModel.Game
 
         void IMutableGame.AddCommandAuthorizer(ICommandAuthorizer a) => commandAuthorizer = a;
 
-        void IMutableGame.DisableRoundEffects(PlayerAccount targetPlayer, ushort round)
+        void IMutableGame.DisableRoundEffects(PlayerAccount targetPlayer, ushort round) => DisableRoundEffects(round, targetPlayer);
+
+        internal void DisableRoundEffects(ushort round, PlayerAccount targetPlayer)
         {
             if (round == 0 || round > IGameInformation.maxRound)
             {
                 throw new ArgumentOutOfRangeException("Failed to disable round effect because out of round value");
             }
             effectDisabledPlayers[round] = targetPlayer;
+            Debug.Assert(EffectIsDisabled(round, targetPlayer));
         }
 
         void IMutableGame.PushToActionStack(IGameAction a) => PushToActionStack(a);

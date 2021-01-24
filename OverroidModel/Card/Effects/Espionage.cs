@@ -19,7 +19,8 @@ namespace OverroidModel.Card.Effects
 
         IGameAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
         {
-            return new CommandStandbyEffect<EspionageCommand>(sourceCardName);
+            var player = g.CurrentBattle.PlayerOf(sourceCardName);
+            return new CommandStandbyEffect<EspionageCommand>(sourceCardName, player);
         }
     }
 }

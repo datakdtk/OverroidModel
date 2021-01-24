@@ -64,10 +64,7 @@ namespace OverroidModel.Test.Game
                 config: config
                 );
 
-            var commandInfo = game.ExpectedCommandInfo;
-            Assert.NotNull(commandInfo);
-            Assert.Equal(overroidPlayer, commandInfo?.player);
-            Assert.Equal(typeof(CardPlacement), commandInfo?.type);
+            CustomAssertion.WaitingForCommand<CardPlacement>(overroidPlayer, game);
         }
 
         [Fact]

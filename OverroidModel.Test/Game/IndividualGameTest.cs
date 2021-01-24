@@ -61,11 +61,7 @@ namespace OverroidModel.Test.Game
             var command = new CardPlacement(player, CardName.Diva, null);
             game.ReceiveCommand(command);
 
-            var expected = game.ExpectedCommandInfo;
-
-            Assert.NotNull(expected);
-            Assert.Equal(game.OpponentOf(player), expected?.player);
-            Assert.Equal(typeof(CardPlacement), expected?.type);
+            CustomAssertion.WaitingForCommand<CardPlacement>(game.OpponentOf(player), game);
         }
 
         [Fact]
@@ -176,11 +172,7 @@ namespace OverroidModel.Test.Game
             var command2 = new CardPlacement(player2, CardName.Idol, null);
             game.ReceiveCommand(command2);
 
-            var expected = game.ExpectedCommandInfo;
-
-            Assert.NotNull(expected);
-            Assert.Equal(player2, expected?.player);
-            Assert.Equal(typeof(CardPlacement), expected?.type);
+            CustomAssertion.WaitingForCommand<CardPlacement>(player2, game);
         }
 
         [Fact]

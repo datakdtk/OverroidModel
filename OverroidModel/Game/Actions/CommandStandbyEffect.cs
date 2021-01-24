@@ -10,13 +10,15 @@ namespace OverroidModel.Game.Actions
     public class CommandStandbyEffect<T> : IGameAction where T : IGameCommand
     {
         readonly CardName sourceCardName;
+        readonly PlayerAccount player;
 
-        public CommandStandbyEffect(CardName sourceCardName)
+        public CommandStandbyEffect(CardName sourceCardName, PlayerAccount player)
         {
             this.sourceCardName = sourceCardName;
+            this.player = player;
         }
 
-        public PlayerAccount? Controller => null;
+        public PlayerAccount? Controller => player;
 
         public CardName? TargetCardName => null;
 

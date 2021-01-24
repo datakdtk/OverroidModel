@@ -15,7 +15,7 @@ namespace OverroidModel.Test.TestLib
 
             Assert.Equal(1, game.Battles.Count);
             Assert.Equal(1, game.CurrentBattle.Round);
-            Assert.Equal(typeof(CardPlacement), game.ExpectedCommandInfo?.type);
+            CustomAssertion.WaitingForCommand<CardPlacement>(game.OverroidPlayer, game);
             Assert.Equal(6, game.HandOf(game.HumanPlayer).Count);
             Assert.Equal(6, game.HandOf(game.OverroidPlayer).Count);
         }
@@ -27,7 +27,7 @@ namespace OverroidModel.Test.TestLib
 
             Assert.Equal(2, game.Battles.Count);
             Assert.Equal(2, game.CurrentBattle.Round);
-            Assert.Equal(typeof(CardPlacement), game.ExpectedCommandInfo?.type);
+            CustomAssertion.WaitingForCommand<CardPlacement>(game.HumanPlayer, game);
             Assert.Equal(5, game.HandOf(game.HumanPlayer).Count);
             Assert.Equal(5, game.HandOf(game.OverroidPlayer).Count);
         }

@@ -45,5 +45,23 @@ namespace OverroidModel.Test.TestLib
             }
             Assert.Equal(cardName, battle.CardOf(game.OpponentOf(battle.Winner!)).Name);
         }
+
+        public static void WaitingForCommand<T>(PlayerAccount player, IGameInformation game) where T : IGameAction
+        {
+            var expected = game.ExpectedCommandInfo;
+            Assert.NotNull(expected);
+            Assert.Equal(typeof(T), expected?.type);
+            Assert.Equal(player, expected?.player);
+        }
+
+        public static void NotWaitingForCommand<T>(IGameInformation game) where T : IGameAction
+        {
+            var expected = game.ExpectedCommandInfo;
+            if (expected == null)
+            {
+                return;
+            }
+            Assert.NotEqual(typeof(T), expected?.type);
+        }
     }
 }
