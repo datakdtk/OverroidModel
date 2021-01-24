@@ -126,6 +126,17 @@ namespace OverroidModel.Game
 
         public ushort WinningStarOf(PlayerAccount p) => (ushort)battles.Aggregate(0, (c, b) => (c + b.WinningStarOf(p)));
 
+        public bool EffectIsDisabled(ushort round, PlayerAccount? p)
+        {
+            // Make sure at least one battle has been created and player is not null.
+            if (p == null || Battles.Count == 0)
+            {
+                return false;
+            }
+
+            return p == effectDisabledPlayers[round];
+        }
+
         public void ReceiveCommand(IGameCommand command)
         {
             if (commandAuthorizer == null)
@@ -178,7 +189,7 @@ namespace OverroidModel.Game
                 }
                 var a = actionStack.Pop();
 
-                if (a.IsCardEffect() && effectDisabledPlayers[CurrentBattle.Round] == a.Controller)
+                if (a.IsCardEffect() && EffectIsDisabled(CurrentBattle.Round, a.Controller))
                 {
                     continue;
                 }

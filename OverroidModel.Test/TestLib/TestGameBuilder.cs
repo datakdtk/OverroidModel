@@ -51,7 +51,7 @@ namespace OverroidModel.Test.TestLib
                 : new List<InGameCard>();
             while (cards.Count < handSize)
             {
-                cards.Add(new InGameCard(new DummyCard(5)));
+                cards.Add(new InGameCard(new DummyCard(99)));
             }
 
             return new PlayerHand(cards);

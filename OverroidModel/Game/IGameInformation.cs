@@ -84,5 +84,13 @@ namespace OverroidModel.Game
         /// <exception cref="NonGamePlayerException"></exception>
         public ushort WinningStarOf(PlayerAccount p);
 
+        /// <summary>
+        /// Check if card effect will be triggered normally.
+        /// </summary>
+        /// <returns>
+        /// Returns true if card effect of given player is disabled in given round.
+        /// If player is null, returns false.
+        /// </returns>
+        public bool EffectIsDisabled(ushort round, PlayerAccount? p);
     }
 }
