@@ -22,7 +22,6 @@ namespace OverroidModel.Test.Card.Master
 
             CustomAssertion.LosesInLastRound(CardName.Innocence, game);
             CustomAssertion.ActionIsNotInHistory<MiracleEffect>(game.ActionHistory);
-            CustomAssertion.ActionIsNotInHistory<LifemakerEffect>(game.ActionHistory);
         }
 
         [Fact]
@@ -38,23 +37,6 @@ namespace OverroidModel.Test.Card.Master
 
             CustomAssertion.LosesInLastRound(CardName.Innocence, game);
             CustomAssertion.ActionIsNotInHistory<MiracleEffect>(game.ActionHistory);
-            CustomAssertion.ActionIsNotInHistory<CharmEffect>(game.ActionHistory);
-        }
-
-        [Fact]
-        public void Test_WinsToTrickster()
-        {
-            var game = TestGameBuilder.CreateIndividualGame(
-                round: 1,
-                cardNamesInOverroidHand: new List<CardName>() { CardName.Trickster }, // Attacking
-                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Defending
-                );
-
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Trickster, CardName.Innocence, game);
-
-            CustomAssertion.WinsInLastRound(CardName.Innocence, game);
-            CustomAssertion.ActionIsNotInHistory<MiracleEffect>(game.ActionHistory);
-            CustomAssertion.ActionIsInHistory<ReversalEffect>(game.ActionHistory);
         }
 
         [Fact]
@@ -70,7 +52,6 @@ namespace OverroidModel.Test.Card.Master
 
             CustomAssertion.LosesInLastRound(CardName.Innocence, game);
             CustomAssertion.ActionIsNotInHistory<MiracleEffect>(game.ActionHistory);
-            CustomAssertion.ActionIsNotInHistory<InspirationEfect>(game.ActionHistory);
         }
 
         [Fact]
@@ -86,7 +67,6 @@ namespace OverroidModel.Test.Card.Master
 
             CustomAssertion.WinsInLastRound(CardName.Innocence, game);
             CustomAssertion.ActionIsInHistory<MiracleEffect>(game.ActionHistory);
-            CustomAssertion.ActionIsNotInHistory<InspirationEfect>(game.ActionHistory);
         }
 
         [Fact]
@@ -103,6 +83,7 @@ namespace OverroidModel.Test.Card.Master
             Assert.True(game.HasFinished());
             Assert.Equal(game.HumanPlayer, game.Winner);
             Assert.Equal(1, game.Battles.Count);
+            CustomAssertion.ActionIsNotInHistory<SingularityEffect>(game.ActionHistory);
         }
     }
 }
