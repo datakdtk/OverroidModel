@@ -88,9 +88,9 @@ namespace OverroidModel.Test.Game
 
             var hand= game.HandOf(humanPlayer);
             Assert.Equal(6, hand.Count);
-            Assert.True(hand.HasCard(CardName.Inocence));
+            Assert.True(hand.HasCard(CardName.Innocence));
 
-            var card = hand.CardOf(CardName.Inocence);
+            var card = hand.CardOf(CardName.Innocence);
             Assert.Equal(CardVisibility.Guessed, card?.Visibility);
         }
 

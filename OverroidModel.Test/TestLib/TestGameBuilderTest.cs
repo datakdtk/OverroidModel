@@ -35,7 +35,7 @@ namespace OverroidModel.Test.TestLib
         [Fact]
         public void TestCreateIndividualGame_CanSpecifyCardInHumanHand()
         {
-            var cardNames = new List<CardName>() { CardName.Inocence, CardName.Hacker };
+            var cardNames = new List<CardName>() { CardName.Innocence, CardName.Hacker };
             var game = TestGameBuilder.CreateIndividualGame(cardNamesInHumanHand: cardNames);
 
             var hand = game.HandOf(game.HumanPlayer);

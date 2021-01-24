@@ -49,7 +49,7 @@ namespace OverroidModel.Test.Game
             var p = new PlayerAccount(attackingPlayerId);
             Assert.False(b.HasCardOf(p));
 
-            var c = CardDictionary.GetInGameCard(CardName.Inocence);
+            var c = CardDictionary.GetInGameCard(CardName.Innocence);
             var detectedCardName = CardName.Hacker; // should be ignored
             b.SetCard(p, c, detectedCardName);
 
@@ -68,7 +68,7 @@ namespace OverroidModel.Test.Game
             var p = new PlayerAccount(defendingPlayerId);
             Assert.False(b.HasCardOf(p));
 
-            var c = CardDictionary.GetInGameCard(CardName.Inocence);
+            var c = CardDictionary.GetInGameCard(CardName.Innocence);
             var detectedCardName = CardName.Hacker;
             b.SetCard(p, c, detectedCardName);
 
@@ -86,7 +86,7 @@ namespace OverroidModel.Test.Game
             var b = GetBattle();
             var p = new PlayerAccount(defendingPlayerId);
 
-            var c1 = CardDictionary.GetInGameCard(CardName.Inocence);
+            var c1 = CardDictionary.GetInGameCard(CardName.Innocence);
             var c2 = CardDictionary.GetInGameCard(CardName.Hacker);
             var detectedCardName = CardName.Creator;
             b.SetCard(p, c1, detectedCardName);

@@ -15,12 +15,12 @@ namespace OverroidModel.Test.Card.Master
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Creator }, // Attacking
-                cardNamesInHumanHand: new List<CardName>() { CardName.Inocence } // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Defending
                 );
 
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Creator, CardName.Inocence, game);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Creator, CardName.Innocence, game);
 
-            CustomAssertion.LosesInLastRound(CardName.Inocence, game);
+            CustomAssertion.LosesInLastRound(CardName.Innocence, game);
             CustomAssertion.ActionIsNotInHistory<MiracleEffect>(game.ActionHistory);
             CustomAssertion.ActionIsNotInHistory<LifemakerEffect>(game.ActionHistory);
         }
@@ -31,12 +31,12 @@ namespace OverroidModel.Test.Card.Master
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Idol }, // Attacking
-                cardNamesInHumanHand: new List<CardName>() { CardName.Inocence } // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Defending
                 );
 
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Inocence, game);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Innocence, game);
 
-            CustomAssertion.LosesInLastRound(CardName.Inocence, game);
+            CustomAssertion.LosesInLastRound(CardName.Innocence, game);
             CustomAssertion.ActionIsNotInHistory<MiracleEffect>(game.ActionHistory);
             CustomAssertion.ActionIsNotInHistory<CharmEffect>(game.ActionHistory);
         }
@@ -47,12 +47,12 @@ namespace OverroidModel.Test.Card.Master
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Trickster }, // Attacking
-                cardNamesInHumanHand: new List<CardName>() { CardName.Inocence } // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Defending
                 );
 
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Trickster, CardName.Inocence, game);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Trickster, CardName.Innocence, game);
 
-            CustomAssertion.WinsInLastRound(CardName.Inocence, game);
+            CustomAssertion.WinsInLastRound(CardName.Innocence, game);
             CustomAssertion.ActionIsNotInHistory<MiracleEffect>(game.ActionHistory);
             CustomAssertion.ActionIsInHistory<ReversalEffect>(game.ActionHistory);
         }
@@ -63,12 +63,12 @@ namespace OverroidModel.Test.Card.Master
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva }, // Attacking
-                cardNamesInHumanHand: new List<CardName>() { CardName.Inocence } // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Defending
                 );
 
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Diva, CardName.Inocence, game);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Diva, CardName.Innocence, game);
 
-            CustomAssertion.LosesInLastRound(CardName.Inocence, game);
+            CustomAssertion.LosesInLastRound(CardName.Innocence, game);
             CustomAssertion.ActionIsNotInHistory<MiracleEffect>(game.ActionHistory);
             CustomAssertion.ActionIsNotInHistory<InspirationEfect>(game.ActionHistory);
         }
@@ -79,12 +79,12 @@ namespace OverroidModel.Test.Card.Master
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Overroid }, // Attacking
-                cardNamesInHumanHand: new List<CardName>() { CardName.Inocence } // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Defending
                 );
 
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Overroid, CardName.Inocence, game);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Overroid, CardName.Innocence, game);
 
-            CustomAssertion.WinsInLastRound(CardName.Inocence, game);
+            CustomAssertion.WinsInLastRound(CardName.Innocence, game);
             CustomAssertion.ActionIsInHistory<MiracleEffect>(game.ActionHistory);
             CustomAssertion.ActionIsNotInHistory<InspirationEfect>(game.ActionHistory);
         }
@@ -95,10 +95,10 @@ namespace OverroidModel.Test.Card.Master
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Overroid }, // Attacking
-                cardNamesInHumanHand: new List<CardName>() { CardName.Inocence } // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Defending
                 );
 
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Overroid, CardName.Inocence, game);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Overroid, CardName.Innocence, game);
 
             Assert.True(game.HasFinished());
             Assert.Equal(game.HumanPlayer, game.Winner);

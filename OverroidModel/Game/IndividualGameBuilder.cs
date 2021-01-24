@@ -40,7 +40,7 @@ namespace OverroidModel.Game
 
             var humanHand = new PlayerHand(shuffledDeck.GetRange(0, 5).Select(c => new InGameCard(c)));
             var overroidHand = new PlayerHand(shuffledDeck.GetRange(5, 5).Select(c => new InGameCard(c)));
-            humanHand.AddCard(CardDictionary.GetInGameCard(CardName.Inocence));
+            humanHand.AddCard(CardDictionary.GetInGameCard(CardName.Innocence));
             overroidHand.AddCard(CardDictionary.GetInGameCard(CardName.Overroid));
 
             var game = new IndividualGame(humanPlayer, overroidPlayer, humanHand, overroidHand, config);
