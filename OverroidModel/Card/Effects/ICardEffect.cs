@@ -21,9 +21,13 @@ namespace OverroidModel.Card.Effects
         /// </summary>
         PRE_BATTLE = 2,
         /// <summary>
+        /// Singularity effect triggers before other post-battle effects because battle ends immediately
+        /// </summary>
+        SINGULARITY = 3,
+        /// <summary>
         /// For most card effects that will triggers after comparing card values.
         /// </summary>
-        POST_BATTLE = 3,
+        POST_BATTLE = 4,
     }
 
     /// <summary>

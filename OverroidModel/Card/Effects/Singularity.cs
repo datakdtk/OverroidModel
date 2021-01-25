@@ -8,7 +8,7 @@ namespace OverroidModel.Card.Effects
     public class Singularity : ICardEffect
     {
 
-        EffectTiming ICardEffect.Timing => EffectTiming.POST_BATTLE;
+        EffectTiming ICardEffect.Timing => EffectTiming.SINGULARITY;
 
         bool ICardEffect.ConditionIsSatisfied(CardName sourceCardName, IGameInformation g)
         {

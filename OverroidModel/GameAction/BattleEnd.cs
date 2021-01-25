@@ -22,12 +22,16 @@ namespace OverroidModel.GameAction
             {
                 g.PushToActionStack(new RoundStart());
             }
+            var timings = new EffectTiming[2] { EffectTiming.POST_BATTLE, EffectTiming.SINGULARITY };
             var cards = new InGameCard[2] { battle.CardOf(battle.DefendingPlayer), battle.CardOf(battle.AttackingPlayer) };
-            foreach (var c in cards)
+            foreach (var t in timings)
             {
-                if (c.Effect.Timing == EffectTiming.POST_BATTLE && c.Effect.ConditionIsSatisfied(c.Name, g))
+                foreach (var c in cards)
                 {
-                    g.PushToActionStack(c.Effect.GetAction(c.Name, g));
+                    if (c.Effect.Timing == t && c.Effect.ConditionIsSatisfied(c.Name, g))
+                    {
+                        g.PushToActionStack(c.Effect.GetAction(c.Name, g));
+                    }
                 }
             }
         }
