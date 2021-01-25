@@ -27,9 +27,9 @@ namespace OverroidModel.GameAction.Commands
 
         void IGameAction.Resolve(IMutableGame g)
         {
+            g.HandOf(player).AddCard(g.CurrentBattle.CardOf(player));
             var targetCard = g.HandOf(player).RemoveCard(targetCardName);
             g.CurrentBattle.ReplaceCard(player, targetCard);
-            g.HandOf(player).AddCard(targetCard);
         }
 
         void IGameCommand.Validate(IGameInformation g)
