@@ -99,13 +99,13 @@ namespace OverroidModel.Test.Card.Master
         {
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 4,
-                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence, CardName.Creator, CardName.Idol } // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence, CardName.Idol } // Defending
                 );
             var hand = game.HandOf(game.HumanPlayer);
             hand.CardOf(CardName.Innocence)!.RevealByHack();
 
             var command = CommandGenerate.CreateHackCommand(game, game.OverroidPlayer);
-            Assert.True(command.TargetCardName == CardName.Innocence || command.TargetCardName == CardName.Creator);
+            Assert.Equal(CardName.Idol, command.TargetCardName);
 
 
         }
