@@ -19,7 +19,7 @@ namespace OverroidModel.Card.Effects
         ICardEffectAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)
         {
             var player = g.CurrentBattle.PlayerOf(sourceCardName);
-            return new CommandStandbyEffect<EspionageCommand>(sourceCardName, player);
+            return new CommandStandbyEffect<MorphCommand>(sourceCardName, player);
         }
     }
 }
