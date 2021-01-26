@@ -1,4 +1,6 @@
-﻿using OverroidModel.Config;
+﻿using OverroidModel.Card;
+using OverroidModel.Card.Master;
+using OverroidModel.Config;
 using OverroidModel.Exceptions;
 using OverroidModel.GameAction;
 using OverroidModel.GameAction.Commands;
@@ -18,6 +20,8 @@ namespace OverroidModel
         readonly PlayerAccount humanPlayer;
         readonly PlayerAccount overroidPlayer;
         readonly Dictionary<PlayerAccount, PlayerHand> playerHands;
+        readonly OutsideCard hiddendCard;
+        readonly OutsideCard? triggerCard;
         readonly IGameConfig config;
         readonly List<Battle> battles;
         readonly Stack<IGameAction> actionStack;
@@ -30,12 +34,16 @@ namespace OverroidModel
         /// <param name="overroidPlayer">Player who plays Overroid force.</param>
         /// <param name="humanPlayerHand">Hand cards of Human player.</param>
         /// <param name="overroidPlayerHand">Hand card of Overroid player.</param>
+        /// <param name="hiddenCardMaster">Card that was not distributed to hands</param>
+        /// <param name="triggerCardMaster">Another card that was not distributed to hand if exists.</param>
         /// <param name="config">Customized rule of the game</param>
         internal IndividualGame(
             PlayerAccount humanPlayer,
             PlayerAccount overroidPlayer,
             PlayerHand humanPlayerHand,
             PlayerHand overroidPlayerHand,
+            ICardMaster hiddenCardMaster,
+            ICardMaster? triggerCardMaster,
             IGameConfig config
         )
         {
@@ -46,6 +54,14 @@ namespace OverroidModel
             this.humanPlayer = humanPlayer;
             this.overroidPlayer = overroidPlayer;
             this.config = config;
+            
+            hiddendCard = new OutsideCard(hiddenCardMaster);
+            if (triggerCardMaster != null)
+            {
+                triggerCard = new OutsideCard(triggerCardMaster);
+                triggerCard.RevealTo(humanPlayer);
+                triggerCard.RevealTo(overroidPlayer);
+            }
 
             playerHands = new Dictionary<PlayerAccount, PlayerHand>()
             {
@@ -61,6 +77,11 @@ namespace OverroidModel
 
         public PlayerAccount HumanPlayer => humanPlayer;
         public PlayerAccount OverroidPlayer => overroidPlayer;
+
+        public OutsideCard HiddenCard => hiddendCard;
+
+        public OutsideCard? TriggerCard => triggerCard;
+
         public IReadOnlyList<IGameAction> ActionHistory => actionHistory;
         public IReadOnlyList<Battle> Battles => battles;
         public Battle CurrentBattle => battles.Count > 0 ? battles.Last() : throw new GameLogicException("Game has no battle round yet.");
@@ -88,7 +109,6 @@ namespace OverroidModel
 
         public bool DetectionAvailable => config.DetectionAvailable;
         public (Type type, PlayerAccount player)? ExpectedCommandInfo => commandAuthorizer?.RequiredCommandInfo;
-
 
         public bool HasFinished()
         {

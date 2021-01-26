@@ -35,7 +35,9 @@ namespace OverroidModel
             IGameConfig config
         )
         {
-            var cardSet = CardDictionary.DefaultCardList;
+            var cardSet = config.UsesWatcher
+                ? CardDictionary.DefaultCardListPlusWatcher
+                : CardDictionary.DefaultCardList;
             var shuffledDeck = shuffler.Shuffle(cardSet, shufflingSeed);
 
             var humanHand = new PlayerHand(shuffledDeck.GetRange(0, 5).Select(c => new InGameCard(c)));
@@ -43,7 +45,18 @@ namespace OverroidModel
             humanHand.AddCard(CardDictionary.GetInGameCard(CardName.Innocence));
             overroidHand.AddCard(CardDictionary.GetInGameCard(CardName.Overroid));
 
-            var game = new IndividualGame(humanPlayer, overroidPlayer, humanHand, overroidHand, config);
+            var hiddenCard = shuffledDeck[10];
+            var triggerCard = shuffledDeck.Count >= 12 ? shuffledDeck[11] : null;
+
+            var game = new IndividualGame(
+                humanPlayer,
+                overroidPlayer,
+                humanHand,
+                overroidHand,
+                hiddenCard,
+                triggerCard,
+                config
+                );
             game.PushToActionStack(new RoundStart());
             game.ResolveStacks();
             return game;

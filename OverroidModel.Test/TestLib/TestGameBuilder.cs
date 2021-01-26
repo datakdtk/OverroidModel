@@ -30,6 +30,8 @@ namespace OverroidModel.Test.TestLib
                 overroidPlayer: overroidPlayer,
                 humanPlayerHand: humanHand,
                 overroidPlayerHand: overroidHand,
+                hiddenCardMaster: new DummyCard(99),
+                triggerCardMaster: null,
                 config: config);
 
             while (ig.Battles.Count < round - 1)

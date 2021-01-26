@@ -13,6 +13,7 @@ namespace OverroidModel.Card
         {
             dic = new Dictionary<CardName, ICardMaster>()
             {
+                [CardName.Watcher] = new Watcher(),
                 [CardName.Innocence] = new Innocence(),
                 [CardName.Hacker] = new Hacker(),
                 [CardName.Creator] = new Creator(),
@@ -57,6 +58,16 @@ namespace OverroidModel.Card
                 new Soldier(),
                 new Death(),
             };
+
+        public static List<ICardMaster> DefaultCardListPlusWatcher
+        {
+            get
+            {
+                var set = DefaultCardList;
+                set.Add(GetMaster(CardName.Watcher));
+                return set;
+            }
+        }
     }
 }
 

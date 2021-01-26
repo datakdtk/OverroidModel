@@ -1,4 +1,5 @@
-﻿using OverroidModel.Exceptions;
+﻿using OverroidModel.Card;
+using OverroidModel.Exceptions;
 using OverroidModel.GameAction;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,17 @@ namespace OverroidModel
         /// Battle of current round.
         /// </summary>
         public Battle CurrentBattle { get; }
+
+        /// <summary>
+        /// Card that was not distributed to player's hands.
+        /// </summary>
+        public OutsideCard HiddenCard { get;  }
+
+        /// <summary>
+        /// Another card that was not distributed to player's hands.
+        /// Set only when card set includes Watcher card. Otherwise, always null.
+        /// </summary>
+        public OutsideCard? TriggerCard { get;  }
 
         /// <summary>
         /// Winner of the game if already determined.

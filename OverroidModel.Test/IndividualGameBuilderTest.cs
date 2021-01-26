@@ -113,5 +113,91 @@ namespace OverroidModel.Test
             var card = hand.CardOf(CardName.Overroid);
             Assert.Equal(CardVisibility.Guessed, card?.Visibility);
         }
+
+        [Fact]
+        public void Test_InitializeGame_CheckHiddenCardWhenWatcherIsNotUsed()
+        {
+            var builder = new IndividualGameBuilder(new DummyShuffler());
+
+            var humanPlayer = new PlayerAccount("hoge");
+            var overroidPlayer = new PlayerAccount("fuga");
+            var config = new TestConfig();
+
+            var game = builder.InitializeGame(
+                humanPlayer: humanPlayer,
+                overroidPlayer: overroidPlayer,
+                shufflingSeed: "dummySeed",
+                config: config
+                );
+
+            var hiddenCard = game.HiddenCard;
+            Assert.False(hiddenCard.IsViewableTo(humanPlayer));
+            Assert.False(hiddenCard.IsViewableTo(overroidPlayer));
+        }
+ 
+        [Fact]
+        public void Test_InitializeGame_CheckTriggerCardWhenWatcherIsNotUsed()
+        {
+            var builder = new IndividualGameBuilder(new DummyShuffler());
+
+            var humanPlayer = new PlayerAccount("hoge");
+            var overroidPlayer = new PlayerAccount("fuga");
+            var config = new TestConfig();
+
+            var game = builder.InitializeGame(
+                humanPlayer: humanPlayer,
+                overroidPlayer: overroidPlayer,
+                shufflingSeed: "dummySeed",
+                config: config
+                );
+
+            var triggerCard = game.TriggerCard;
+            Assert.Null(triggerCard);
+        }
+
+        [Fact]
+        public void Test_InitializeGame_CheckHiddenCardWhenWatcherIsUsed()
+        {
+            var builder = new IndividualGameBuilder(new DummyShuffler());
+
+            var humanPlayer = new PlayerAccount("hoge");
+            var overroidPlayer = new PlayerAccount("fuga");
+            var config = new TestConfig();
+            config.UsesWatcher = true;
+
+            var game = builder.InitializeGame(
+                humanPlayer: humanPlayer,
+                overroidPlayer: overroidPlayer,
+                shufflingSeed: "dummySeed",
+                config: config
+                );
+
+            var hiddenCard = game.HiddenCard;
+            Assert.False(hiddenCard.IsViewableTo(humanPlayer));
+            Assert.False(hiddenCard.IsViewableTo(overroidPlayer));
+        }
+ 
+        [Fact]
+        public void Test_InitializeGame_CheckTriggerCardWhenWatcherIsUsed()
+        {
+            var builder = new IndividualGameBuilder(new DummyShuffler());
+
+            var humanPlayer = new PlayerAccount("hoge");
+            var overroidPlayer = new PlayerAccount("fuga");
+            var config = new TestConfig();
+            config.UsesWatcher = true;
+
+            var game = builder.InitializeGame(
+                humanPlayer: humanPlayer,
+                overroidPlayer: overroidPlayer,
+                shufflingSeed: "dummySeed",
+                config: config
+                );
+
+            var triggerCard = game.TriggerCard;
+            Assert.NotNull(triggerCard);
+            Assert.True(triggerCard!.IsViewableTo(humanPlayer));
+            Assert.True(triggerCard!.IsViewableTo(overroidPlayer));
+        }
     }
 }
