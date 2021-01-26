@@ -103,5 +103,21 @@ namespace OverroidModel.Test.Card.Master
             CustomAssertion.ActionIsNotInHistory<SnipeEffect>(game.ActionHistory);
             CustomAssertion.ActionIsNotInHistory<SingularityEffect>(game.ActionHistory);
         }
+
+        [Fact]
+        public void Test_DrawsWithWatcherWhenAttcking()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 1,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Death }, // Attacking
+                cardNamesInHumanHand: new List<CardName>() { CardName.Watcher } // Defending
+                );
+
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Death, CardName.Watcher, game);
+
+            Assert.True(game.Battles[0].IsDrawBattle());
+            CustomAssertion.ActionIsInHistory<SnipeEffect>(game.ActionHistory);
+            CustomAssertion.ActionIsInHistory<PredictEffect>(game.ActionHistory);
+        }
     }
 }

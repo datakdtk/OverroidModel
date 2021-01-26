@@ -10,6 +10,6 @@ namespace OverroidModel.Card.Master
 
         public CardName Name => CardName.Watcher;
 
-        public ICardEffect Effect => effect ??= new NoEffect(); // Temporal implement
+        public ICardEffect Effect => effect ??= new Predict(); // Temporal implement
     }
 }
