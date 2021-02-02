@@ -1,0 +1,1039 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OverroidModel</name>
+    </assembly>
+    <members>
+        <member name="T:OverroidModel.Battle">
+            <summary>
+            Battle of cards by comparing their values.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Battle.#ctor(System.UInt16,OverroidModel.PlayerAccount,OverroidModel.PlayerAccount)">
+            <param name="round">Current battle number</param>
+            <param name="attackingPlayer">Player who places battle card first,</param>
+            <param name="defendingPlayer">Player who places battle card second.</param>
+        </member>
+        <member name="P:OverroidModel.Battle.Round">
+            <summary>
+            Current battle number.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Battle.AttackingPlayer">
+            <summary>
+            Player who places battle card first.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Battle.DefendingPlayer">
+            <summary>
+            Player who places battle card second.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Battle.DetectedCardName">
+            <summary>
+            Card name detected by defending player if he did.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Battle.Winner">
+            <summary>
+            Owner of the card that won this battle.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Battle.PlayerOf(OverroidModel.Card.CardName)">
+            <summary>
+            Get Owner of the named card that is placed in this battle.
+            </summary>
+            <param name="cn">Name of one of the cards that are placed in this game.</param>
+            <exception cref="T:OverroidModel.Exceptions.CardNotFoundException">Thrown when named card is not placed in this battle.</exception>
+        </member>
+        <member name="M:OverroidModel.Battle.CardOf(OverroidModel.PlayerAccount)">
+            <summary>
+            Get the card placed by given player.
+            </summary>
+            <param name="p">one of the game players.</param>
+            <exception cref="T:OverroidModel.Exceptions.CardNotFoundException">Thrown when given player has not placed a card yet..</exception>
+        </member>
+        <member name="M:OverroidModel.Battle.CardOf(OverroidModel.Card.CardName)">
+            <summary>
+            Get the Card with given name that is placed in this battle.
+            </summary>
+            <param name="cn">Name of one of the cards that are placed in this game.</param>
+            <exception cref="T:OverroidModel.Exceptions.CardNotFoundException">Thrown when named card is not placed in this battle.</exception>
+        </member>
+        <member name="M:OverroidModel.Battle.HasCardOf(OverroidModel.PlayerAccount)">
+            <summary>
+            Check if named card has been set in this battle.
+            </summary>
+            <param name="p">Name of a card to check.</param>
+        </member>
+        <member name="M:OverroidModel.Battle.HasBothPlayersCards">
+            <summary>
+            Check if both attacking and defending players have placed a card.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Battle.HasFinished">
+            <summary>
+            Check if the battle has already decided its winner.
+            Additional card effects might be triggered even if this method returns true.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Battle.IsDrawBattle">
+            <summary>
+            Returns true if battle has ended and there is no winner. 
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Battle.WinningStarOf(OverroidModel.PlayerAccount)">
+            <summary>
+            Get number of stars that given player got in this battle.
+            </summary>
+            <param name="p">A Player in this game.</param>
+            <exception cref="T:OverroidModel.Exceptions.NonGamePlayerException"></exception>
+        </member>
+        <member name="M:OverroidModel.Battle.SetCard(OverroidModel.PlayerAccount,OverroidModel.Card.InGameCard,System.Nullable{OverroidModel.Card.CardName})">
+            <summary>
+            Set a card to this battle.
+            </summary>
+            <param name="p">Player who places a card.</param>
+            <param name="c">Card to be placed.</param>
+            <param name="detectedCardName">The card name if the player is detecting a card.</param>
+            <exception cref="T:OverroidModel.Exceptions.GameLogicException">Thrown if the player has already set a card.</exception>
+        </member>
+        <member name="M:OverroidModel.Battle.ReplaceCard(OverroidModel.PlayerAccount,OverroidModel.Card.InGameCard)">
+            <summary>
+            Replace the card in this battle with another card.
+            </summary>
+            <param name="p">Player who places a card.</param>
+            <param name="c">Card to be newly placed.</param>
+            <exception cref="T:OverroidModel.Exceptions.GameLogicException">Thrown if the player has not set any card yet.</exception>
+        </member>
+        <member name="M:OverroidModel.Battle.JudgeWinnerByValues">
+            <summary>
+            Compares card values and determines the battle winner if not determined yet.
+            </summary>
+            <exception cref="T:OverroidModel.Exceptions.CardNotFoundException">Thrown if any player did not set a card..</exception>
+        </member>
+        <member name="M:OverroidModel.Battle.SetToReverseCardValues">
+            <summary>
+            Changes the rule of this battle from greater-wins to lesser-wins.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Battle.SetSpecialWinner(OverroidModel.Card.CardName)">
+            <summary>
+            Set a card that wins by its effect.
+            </summary>
+            <param name="cn">Name of card to win,</param>
+        </member>
+        <member name="T:OverroidModel.Card.CardName">
+            <summary>
+            Card name that identifies each card in game.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Charm">
+            <summary>
+            Effect of Idol (5).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Espionage">
+            <summary>
+            Effect of Spy (7).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Hack">
+            <summary>
+            Effect of Hacker (2).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.EffectTiming">
+            <summary>
+            Value that determines when card abilities will be triggered. 
+            </summary>
+        </member>
+        <member name="F:OverroidModel.Card.Effects.EffectTiming.FIRST">
+            <summary>
+            Just after battle cards are opened, mainly for disabling other card effects.
+            /// </summary>
+        </member>
+        <member name="F:OverroidModel.Card.Effects.EffectTiming.SECOND">
+            <summary>
+            Next of FIRST timing, mainly for copying another card effect.
+            </summary>
+        </member>
+        <member name="F:OverroidModel.Card.Effects.EffectTiming.PRE_BATTLE">
+            <summary>
+            For most card effects that will triggers before comparing card values.
+            </summary>
+        </member>
+        <member name="F:OverroidModel.Card.Effects.EffectTiming.SINGULARITY">
+            <summary>
+            Singularity effect triggers before other post-battle effects because battle ends immediately
+            </summary>
+        </member>
+        <member name="F:OverroidModel.Card.Effects.EffectTiming.POST_BATTLE">
+            <summary>
+            For most card effects that will triggers after comparing card values.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.ICardEffect">
+            <summary>
+            Common interface for card effect classes.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Card.Effects.ICardEffect.Timing">
+            <summary>
+            Value that determines when card abilities will be triggered. 
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Card.Effects.ICardEffect.GetAction(OverroidModel.Card.CardName,OverroidModel.IGameInformation)">
+            <summary>
+            Gets action object that changes game state.
+            </summary>
+            <param name="sourceCardName">Name of the card from which this effect was triggered.</param>
+            <param name="g">Current game object</param>
+            <returns></returns>
+        </member>
+        <member name="M:OverroidModel.Card.Effects.ICardEffect.ConditionIsSatisfied(OverroidModel.Card.CardName,OverroidModel.IGameInformation)">
+            <summary>
+            Checks if this effect triggers on current game state. But does not consider effect timing.
+            </summary>
+            <param name="sourceCardName">Name of the card from which this effect will be triggered.</param>
+            <param name="g">Current game object</param>
+            <returns>Returns true if the trigger condition is satisfied.</returns>
+        </member>
+        <member name="M:OverroidModel.Card.Effects.ICardEffect.System#IEquatable{OverroidModel#Card#Effects#ICardEffect}#Equals(OverroidModel.Card.Effects.ICardEffect)">
+            <summary>
+            Just if they are same class, they are equal. Overriding mainly for test assertion.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Inspiration">
+            <summary>
+            Effect of Diva (8).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Jamming">
+            <summary>
+            Effect of Doctor (4).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Lifemaker">
+            <summary>
+            Effect of Creator (3).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Miracle">
+            <summary>
+            Effect of Innocence (1).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Morph">
+            <summary>
+            Effect of Beast (9).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Predict">
+            <summary>
+            Effect of Watcher (0). Effect name is not official.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Reversal">
+            <summary>
+            Effect of Trickster (6).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Rush">
+            <summary>
+            Effect of Soldier (11).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Singularity">
+            <summary>
+            Effect of Overroid (12).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Snipe">
+            <summary>
+            Effect of Death (13).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Effects.Trample">
+            <summary>
+            Effect of Legion (10).
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.CardVisibility">
+            <summary>
+            Value that determines how cards in player's hand looks from the opponent.
+            </summary>
+        </member>
+        <member name="F:OverroidModel.Card.CardVisibility.Hidden">
+            <summary>
+            Opponent cannot see at all.
+            </summary>
+        </member>
+        <member name="F:OverroidModel.Card.CardVisibility.Guessed">
+            <summary>
+            Opponent can guess you have the card but cannot see where it is.
+            </summary>
+        </member>
+        <member name="F:OverroidModel.Card.CardVisibility.Hacked">
+            <summary>
+            Revealed by card effect. Opponent can see the card and tell where it is.
+            </summary>
+        </member>
+        <member name="F:OverroidModel.Card.CardVisibility.Opened">
+            <summary>
+            Revealed in battles.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.InGameCard">
+            <summary>
+            Cards used in game. It may have temporal state.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Card.InGameCard.#ctor(OverroidModel.Card.Master.ICardMaster)">
+            <param name="data">Master data of the card</param>
+        </member>
+        <member name="P:OverroidModel.Card.InGameCard.Name">
+            <summary>
+            Card name that identifies each card in game.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Card.InGameCard.Value">
+            <summary>
+            Strength of the card. It may be changed by card effects.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Card.InGameCard.Effect">
+            <summary>
+            Unique effect of the cards. It may be changed by card effects.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Card.InGameCard.DefaultValue">
+            <summary>
+            Card Value on initial state that is same as the master data.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Card.InGameCard.DefaultEffect">
+            <summary>
+            Card Value on initial state that is same as the master data.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Card.InGameCard.Visibility">
+            <summary>
+            How cards in player's hand looks from the opponent.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Card.InGameCard.SetGuessed">
+            <summary>
+            Marks the card guessable.
+            Used when card moves from visible area to invisible area for any player's point of view.
+            If the card has already been revealed, it is still revealed.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Card.InGameCard.RevealByHack">
+            <summary>
+            Reveals the card by card effect and make it visible from all players.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Card.InGameCard.Open">
+            <summary>
+            Reveals the card in the battle.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Card.InGameCard.OverrideValue(System.UInt16)">
+            <summary>
+            Change the card's value temporally.
+            </summary>
+            <param name="v">New value of the card.</param>
+        </member>
+        <member name="M:OverroidModel.Card.InGameCard.OverrideEffect(OverroidModel.Card.Effects.ICardEffect)">
+            <summary>
+            Change the card's effect temporally.
+            </summary>
+            <param name="e">New effect of the card.</param>
+        </member>
+        <member name="M:OverroidModel.Card.InGameCard.ReturnToDefault">
+            <summary>
+            Cancels temporal state changes.
+            If cards return to hand, call this method.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Beast">
+            <summary>
+            Card with value 9.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Creator">
+            <summary>
+            Card with value 3.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Death">
+            <summary>
+            Card with value 13.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Diva">
+            <summary>
+            Card with value 8.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Doctor">
+            <summary>
+            Card with value 4.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Hacker">
+            <summary>
+            Card with
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.ICardMaster">
+            <summary>
+            interface that provides what is written on cards.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Card.Master.ICardMaster.Value">
+            <summary>
+            Strength of the card.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Card.Master.ICardMaster.Name">
+            <summary>
+            Card name that identifies each card in game.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Card.Master.ICardMaster.Effect">
+            <summary>
+            Unique effect of the card.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Idol">
+            <summary>
+            Card with value 5.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Innocence">
+            <summary>
+            Card with value 1.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Legion">
+            <summary>
+            Card with value 10.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Overroid">
+            <summary>
+            Card with value 12.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Soldier">
+            <summary>
+            Card with value 11.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Spy">
+            <summary>
+            Card with value 7.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.Master.Trickster">
+            <summary>
+            Card with value 6.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Card.OutsideCard">
+            <summary>
+            Card that is not used in the game. 
+            </summary>
+        </member>
+        <member name="M:OverroidModel.Card.OutsideCard.#ctor(OverroidModel.Card.Master.ICardMaster)">
+            <param name="card">Data of the card.</param>
+        </member>
+        <member name="M:OverroidModel.Card.OutsideCard.IsViewableTo(OverroidModel.PlayerAccount)">
+            <summary>
+            Check if player can see what the card is.
+            </summary>
+            <param name="player">Player trying to see the card.</param>
+            <returns>Returns true if the player can see the card.</returns>
+        </member>
+        <member name="M:OverroidModel.Card.OutsideCard.LookedAtBy(OverroidModel.PlayerAccount)">
+            <summary>
+            Get card data if available by given player
+            </summary>
+            <param name="player">Player trying to see the card.</param>
+            <returns>Card data,</returns>
+            <exception cref="T:OverroidModel.Exceptions.UnavailableActionException">Thrown when the player is not authorized to look at the card.</exception>
+        </member>
+        <member name="M:OverroidModel.Card.OutsideCard.RevealTo(OverroidModel.PlayerAccount)">
+            <summary>
+            Make given player be able to look at the card
+            </summary>
+            <param name="player">Player who gets access to the card.</param>
+        </member>
+        <member name="T:OverroidModel.ICommandAuthorizer">
+            <summary>
+            Interface to external game command is applicable for current game state.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.ICommandAuthorizer.RequiredCommandInfo">
+            <summary>
+            Indicate which type of GameCommand class and which commanding player is expected to be given.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.ICommandAuthorizer.Authorize(OverroidModel.GameAction.Commands.IGameCommand)">
+            <summary>
+            Checks if given command is acceptable for current game state.
+            </summary>
+            <param name="command"> Command from a player.</param>
+            <exception cref="T:OverroidModel.Exceptions.UnavailableActionException"> Thrown if given command is not acceptable.</exception>
+        </member>
+        <member name="T:OverroidModel.CommandAuthorizer`1">
+            <summary>
+            Implementation of ICommandAuthorizer
+            </summary>
+            <typeparam name="T">GameCommand class that expected to be passed to the game.</typeparam>
+        </member>
+        <member name="M:OverroidModel.CommandAuthorizer`1.#ctor(OverroidModel.PlayerAccount)">
+            <param name="expectedPlayer">Player expected to command.</param>
+        </member>
+        <member name="T:OverroidModel.Config.IGameConfig">
+            <summary>
+            Interface to get customized game rule.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Config.IGameConfig.DetectionAvailable">
+            <summary>
+            Whether defending player detect a card in battles.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.Config.IGameConfig.UsesWatcher">
+            <summary>
+            Whether adds Watcher card to first deck and uses 14 cards for the game.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Exceptions.CardNotFoundException">
+            <summary>
+            Thrown when a card is not found in expected zone.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Exceptions.GameLogicException">
+            <summary>
+            Error of game logic implementation. Should not be thrown from public method.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Exceptions.NonGamePlayerException">
+            <summary>
+            Thrown when given player does not participate in the game.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.Exceptions.UnavailableActionException">
+            <summary>
+            Thrown when given action cannot be resolved.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.GameAction.BattleEnd">
+            <summary>
+            Action to compare the card values and determine the battle winner.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.GameAction.CardOpen">
+            <summary>
+            Action to open faced down battle cards.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.GameAction.Commands.CardPlacement">
+            <summary>
+            Action to place battle card from hand.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Commands.CardPlacement.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName,System.Nullable{OverroidModel.Card.CardName})">
+            <param name="player">Player who places a card.</param>
+            <param name="cardNameToPlace">Card to be placed.</param>
+            <param name="detectedCardName">Called card name for detection if detected by defending player.</param>
+        </member>
+        <member name="M:OverroidModel.GameAction.Commands.CommandGenerate.CreateHackCommand(OverroidModel.IGameInformation,OverroidModel.PlayerAccount)">
+            <summary>
+            Choose target of Hack effect at random.
+            </summary>
+            <param name="g">Current game object.</param>
+            <param name="commandingPlayer">Controller of Hacker card.</param>
+            <exception cref="T:OverroidModel.Exceptions.UnavailableActionException">Thrown when the opponent has no unrevealed card.</exception>
+        </member>
+        <member name="M:OverroidModel.GameAction.Commands.CommandGenerate.CreateRamdomEspionageCommand(OverroidModel.IGameInformation,OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <summary>
+            Choose target opponent card of Espionage at random.
+            Used when player choose not get opponent's revealed card by the effect.
+            </summary>
+            <param name="g">Current game object.</param>
+            <param name="commandingPlayer">Controller of Spy card.</param>
+            <param name="targetMyCardName">Name of card in controller's hand that will be given to the opponent.</param>
+            <exception cref="T:OverroidModel.Exceptions.UnavailableActionException">Thrown when the opponent has no unrevealed card.</exception>
+        </member>
+        <member name="T:OverroidModel.GameAction.Commands.EspionageCommand">
+            <summary>
+            Effect resolving action of Spy (7).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Commands.EspionageCommand.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName,OverroidModel.Card.CardName)">
+            <param name="player">Card controller of the source card of the effect.</param>
+            <param name="targetMyCardName">Name of card which will be chosen from the card controller's hand.</param>
+            <param name="targetOpponentCardName">Name of card which will be chosen from the opponent's hand.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Commands.HackCommand">
+            <summary>
+            Effect resolving action of Hack (2).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Commands.HackCommand.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="targetCardName">Card name to reveal</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Commands.IGameCommand">
+            <summary>
+            Interface of actions that require player's choice.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.GameAction.Commands.IGameCommand.CommandingPlayer">
+            <summary>
+            Player who chooses action's details.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.GameAction.Commands.IGameCommand.ParametersToSave">
+            <summary>
+            Parameters that are required for restoring other than CommandingPlayer.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Commands.IGameCommand.Validate(OverroidModel.IGameInformation)">
+            <summary>
+            Checks if the command's detail is applicable to the game.
+            </summary>
+            <param name="g">Current game object.</param>
+            <exception cref="T:OverroidModel.Exceptions.UnavailableActionException">Thrown when the command is inapplicable.</exception>
+        </member>
+        <member name="T:OverroidModel.GameAction.Commands.MorphCommand">
+            <summary>
+            Effect resolving action of Beast (9).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Commands.MorphCommand.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="player">Card controller of the source card of the effect.</param>
+            <param name="targetCardName">Name of target card from which an effect will be copied.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Commands.RushCommand">
+            <summary>
+            Effect resolving action of Solder (11).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Commands.RushCommand.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="player">Card controller of the source card of the effect.</param>
+            <param name="targetCardName"></param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.BattleWinEffect">
+            <summary>
+            Common implement for auto-win card effects.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.BattleWinEffect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.CharmEffect">
+            <summary>
+            Effect resolving action of Idol (5).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.CharmEffect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.CommandStandbyEffect`1">
+            <summary>
+            Action to get readied to accept external commands.
+            </summary>
+            <typeparam name="T">Expected command class.</typeparam>
+        </member>
+        <member name="P:OverroidModel.GameAction.Effects.ICardEffectAction.SourceCardName">
+            <summary>
+            Name of the card that this effect is triggered from
+            </summary>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.InspirationEfect">
+            <summary>
+            Effect resolving action of Diva (8).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.InspirationEfect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.JammingEffect">
+            <summary>
+            Effect resolving action of Doctor (4).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.JammingEffect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.LifemakerEffect">
+            <summary>
+            Effect resolving action of Creator (3).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.LifemakerEffect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.MiracleEffect">
+            <summary>
+            Effect resolving action of Innocence (1).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.MiracleEffect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.PredictEffect">
+            <summary>
+            Effect resolving action of Watcher (0). Effect name is not official.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.PredictEffect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.ReversalEffect">
+            <summary>
+            Effect resolving action of Trickster (6).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.ReversalEffect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.SingularityEffect">
+            <summary>
+            Effect resolving action of Overroid (12).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.SingularityEffect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.SnipeEffect">
+            <summary>
+            Effect resolving action of Death (13).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.SnipeEffect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.Effects.TrampleEffect">
+            <summary>
+            Effect resolving action of Legion (10).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.Effects.TrampleEffect.#ctor(OverroidModel.PlayerAccount,OverroidModel.Card.CardName)">
+            <param name="controller">Card controller of the source card of the effect.</param>
+            <param name="sourceCardName">Name of the card from which the effect was triggered.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.IGameAction">
+            <summary>
+            interfaces for classes that represent game transition.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.GameAction.IGameAction.Controller">
+            <summary>
+            Player who is responsible for the action if exists. 
+            </summary>
+        </member>
+        <member name="P:OverroidModel.GameAction.IGameAction.TargetCardName">
+            <summary>
+            Name of the card that is mainly affected by action if exists.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.GameAction.IGameAction.SecondTargetCardName">
+            <summary>
+            Name of the card that is secondary affected by action if exists.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.GameAction.IGameAction.Resolve(OverroidModel.IMutableGame)">
+            <summary>
+            Changes the state of Current game.
+            </summary>
+            <param name="g">Game that will be changed by the action.</param>
+        </member>
+        <member name="T:OverroidModel.GameAction.RoundStart">
+            <summary>
+            Action to start new battle round.
+            </summary>
+        </member>
+        <member name="T:OverroidModel.ICardShuffler">
+            <summary>
+            Interface to prepare shuffled card deck.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.ICardShuffler.Shuffle(System.Collections.Generic.IEnumerable{OverroidModel.Card.Master.ICardMaster},System.String)">
+            <summary>
+            Shuffle cards according to seed string,
+            </summary>
+            <param name="cards">List of cards used in the game.</param>
+            <param name="seed">Parameter for randomizing card order.</param>
+            <returns>Shuffled card deck.</returns>
+        </member>
+        <member name="T:OverroidModel.IGameInformation">
+            <summary>
+            Common interface for taking all kinds of games.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.IGameInformation.HumanPlayer">
+            <summary>
+            Player who plays Human force.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.IGameInformation.OverroidPlayer">
+            <summary>
+            Player who plays Overroid force.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.IGameInformation.ActionHistory">
+            <summary>
+            Game actions from the beginning to current game state.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.IGameInformation.Battles">
+            <summary>
+            List of battles in this game.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.IGameInformation.CurrentBattle">
+            <summary>
+            Battle of current round.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.IGameInformation.HiddenCard">
+            <summary>
+            Card that was not distributed to player's hands.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.IGameInformation.TriggerCard">
+            <summary>
+            Another card that was not distributed to player's hands.
+            Set only when card set includes Watcher card. Otherwise, always null.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.IGameInformation.Winner">
+            <summary>
+            Winner of the game if already determined.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.IGameInformation.DetectionAvailable">
+            <summary>
+            Whether defending player detect a card in battles.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.IGameInformation.ExpectedCommandInfo">
+            <summary>
+            Tells whose and which command is expected to be given. If no command is expected, returns null.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.IGameInformation.HasFinished">
+            <summary>
+            Check if the game winner is already determined.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.IGameInformation.IsDrawGame">
+            <summary>
+            Check if the game winner finished and is draw game.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.IGameInformation.OpponentOf(OverroidModel.PlayerAccount)">
+            <summary>
+            Get opponent player of given player.
+            </summary>
+            <param name="p">Player in the game.</param>
+            <exception cref="T:OverroidModel.Exceptions.NonGamePlayerException"></exception>
+        </member>
+        <member name="M:OverroidModel.IGameInformation.HandOf(OverroidModel.PlayerAccount)">
+            <summary>
+            Get hand cards of given player.
+            </summary>
+            <param name="p">Player in the game.</param>
+            <exception cref="T:OverroidModel.Exceptions.NonGamePlayerException"></exception>
+        </member>
+        <member name="M:OverroidModel.IGameInformation.WinningStarOf(OverroidModel.PlayerAccount)">
+            <summary>
+            Get hand cards of given player.
+            </summary>
+            <param name="p">Player in the game.</param>
+            <exception cref="T:OverroidModel.Exceptions.NonGamePlayerException"></exception>
+        </member>
+        <member name="M:OverroidModel.IGameInformation.EffectIsDisabled(System.UInt16,OverroidModel.PlayerAccount)">
+            <summary>
+            Check if card effect will be triggered normally.
+            </summary>
+            <returns>
+            Returns true if card effect of given player is disabled in given round.
+            If player is null, returns false.
+            </returns>
+        </member>
+        <member name="T:OverroidModel.IMutableGame">
+            <summary>
+            Interface to modify all kind of games.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.IMutableGame.ReceiveCommand(OverroidModel.GameAction.Commands.IGameCommand)">
+            <summary>
+            Receive and resolve a game command by a player in game.
+            </summary>
+            <exception cref="T:OverroidModel.Exceptions.UnavailableActionException">Thrown when the command is not applicable in the current game state.</exception>
+        </member>
+        <member name="M:OverroidModel.IMutableGame.AddNewRound">
+            <summary>
+            Create new battle and add it to the game.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.IMutableGame.AddCommandAuthorizer(OverroidModel.ICommandAuthorizer)">
+            <summary>
+            Be ready to accept game command.
+            </summary>
+            <param name="a">Object to check commands is applicable.</param>
+        </member>
+        <member name="M:OverroidModel.IMutableGame.DisableRoundEffects(System.UInt16,OverroidModel.PlayerAccount)">
+            <summary>
+            Disable card effects of given player and given battle round.
+            </summary>
+            <param name="round">Disabled battle round.</param>
+            <param name="targetPlayer">Player whose card effect is to be disabled.</param>
+        </member>
+        <member name="M:OverroidModel.IMutableGame.PushToActionStack(OverroidModel.GameAction.IGameAction)">
+            <summary>
+            Reserve a game action to be resolved.
+            The first reserved action will be resolved last (resolved in stack-order).
+            </summary>
+        </member>
+        <member name="M:OverroidModel.IMutableGame.SetSpecialWinner(OverroidModel.PlayerAccount)">
+            <summary>
+            Set a Payer who wins by a card effect.
+            </summary>
+            <param name="p">Player to win.</param>
+        </member>
+        <member name="T:OverroidModel.IndividualGame">
+            <summary>
+            Implementation of one-to-one game.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.IndividualGame.#ctor(OverroidModel.PlayerAccount,OverroidModel.PlayerAccount,OverroidModel.PlayerHand,OverroidModel.PlayerHand,OverroidModel.Card.Master.ICardMaster,OverroidModel.Card.Master.ICardMaster,OverroidModel.Config.IGameConfig)">
+            <param name="humanPlayer"> Player who plays Human force,</param>
+            <param name="overroidPlayer">Player who plays Overroid force.</param>
+            <param name="humanPlayerHand">Hand cards of Human player.</param>
+            <param name="overroidPlayerHand">Hand card of Overroid player.</param>
+            <param name="hiddenCardMaster">Card that was not distributed to hands</param>
+            <param name="triggerCardMaster">Another card that was not distributed to hand if exists.</param>
+            <param name="config">Customized rule of the game</param>
+        </member>
+        <member name="T:OverroidModel.IndividualGameBuilder">
+            <summary>
+            Builder class to create IGameInformation implementations.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.IndividualGameBuilder.#ctor(OverroidModel.ICardShuffler)">
+            <param name="shuffler">Determines how to shuffle initial card deck.</param>
+        </member>
+        <member name="M:OverroidModel.IndividualGameBuilder.InitializeGame(OverroidModel.PlayerAccount,OverroidModel.PlayerAccount,System.String,OverroidModel.Config.IGameConfig)">
+            <summary>
+            Create a new individual game.
+            </summary>
+            <param name="humanPlayer">Player who plays human force.</param>
+            <param name="overroidPlayer">Player who plays overroid force.</param>
+            <param name="shufflingSeed">Randomizing seed to determine order of card deck.</param>
+            <param name="config">Customized game rule.</param>
+        </member>
+        <member name="M:OverroidModel.IndividualGameBuilder.LordGame(OverroidModel.PlayerAccount,OverroidModel.PlayerAccount,System.String,OverroidModel.Config.IGameConfig,System.Collections.Generic.IEnumerable{OverroidModel.GameAction.Commands.IGameCommand})">
+            <summary>
+             Restore latest game state from initial state and commands.
+            </summary>
+            <param name="humanPlayer">Player who plays human force.</param>
+            <param name="overroidPlayer">Player who plays overroid force.</param>
+            <param name="shufflingSeed">Randomizing seed to determine order of card deck.</param>
+            <param name="config">Customized game rule.</param>
+            <param name="commandHistory">History of the choices of the players from beginning of the game.</param>
+            <exception cref="T:OverroidModel.Exceptions.UnavailableActionException">Thrown when commandHistory is invalid.</exception>
+        </member>
+        <member name="T:OverroidModel.PlayerAccount">
+            <summary>
+            Class to represent a player.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.PlayerAccount.ID">
+            <summary>
+            ID string to identify a player.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.PlayerAccount.#ctor(System.String)">
+            <param name="iD">ID string to identify a player.</param>
+        </member>
+        <member name="T:OverroidModel.PlayerHand">
+            <summary>
+            Hand cards of a game player,
+            </summary>
+        </member>
+        <member name="M:OverroidModel.PlayerHand.#ctor(System.Collections.Generic.IEnumerable{OverroidModel.Card.InGameCard})">
+            <param name="cards">Cards in the hand.</param>
+        </member>
+        <member name="P:OverroidModel.PlayerHand.Cards">
+            <summary>
+            Cards in the hand.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.PlayerHand.Count">
+            <summary>
+            The number of all cards.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.PlayerHand.UnrevealedCardCount">
+            <summary>
+            The number of cards that are not revealed.
+            </summary>
+        </member>
+        <member name="P:OverroidModel.PlayerHand.GuessableCardNames">
+            <summary>
+            Names of cards that are guessable by the opponent.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.PlayerHand.CardOf(OverroidModel.Card.CardName)">
+            <summary>
+            Try to get card with given name.
+            </summary>
+            <returns>returns null if named card is not in the hand.</returns>
+        </member>
+        <member name="M:OverroidModel.PlayerHand.HasCard(OverroidModel.Card.CardName)">
+            <summary>
+            Check if a card with given name is in the hand.
+            </summary>
+        </member>
+        <member name="M:OverroidModel.PlayerHand.SelectRandomUnrevealCard">
+            <summary>
+            Selects an unrevealed card at random and returns it.
+            </summary>
+            <returns>Removed card.</returns>
+            <exception cref="T:OverroidModel.Exceptions.UnavailableActionException">Thrown when there is no unrevealed card in the hand.</exception>
+        </member>
+        <member name="M:OverroidModel.PlayerHand.RemoveCard(OverroidModel.Card.CardName)">
+            <summary>
+            Remove a card with given name from the hand.
+            </summary>
+            <returns>Removed card.</returns>
+            <exception cref="T:OverroidModel.Exceptions.GameLogicException">Thrown if a card with given name is not in the hand.</exception>
+        </member>
+        <member name="M:OverroidModel.PlayerHand.AddCard(OverroidModel.Card.InGameCard)">
+            <summary>
+            Add a card to the hand.
+            Value and effect of the card to add return to default.
+            </summary>
+            <param name="c">Card to add</param>
+        </member>
+    </members>
+</doc>

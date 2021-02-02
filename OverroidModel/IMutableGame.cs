@@ -1,4 +1,5 @@
-﻿using OverroidModel.GameAction;
+﻿using OverroidModel.Exceptions;
+using OverroidModel.GameAction;
 using OverroidModel.GameAction.Commands;
 
 namespace OverroidModel

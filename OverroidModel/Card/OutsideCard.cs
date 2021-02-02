@@ -34,7 +34,7 @@ namespace OverroidModel.Card
         /// </summary>
         /// <param name="player">Player trying to see the card.</param>
         /// <returns>Card data,</returns>
-        /// <exception cref="UnavaibleActionException">Thrown when the player is not authorized to look at the card.</exception>
+        /// <exception cref="UnavailableActionException">Thrown when the player is not authorized to look at the card.</exception>
         public ICardMaster LookedAtBy(PlayerAccount player)
         {
             if (!IsViewableTo(player))

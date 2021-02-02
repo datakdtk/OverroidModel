@@ -105,7 +105,7 @@ namespace OverroidModel.Card
         /// <summary>
         /// Change the card's effect temporally.
         /// </summary>
-        /// <param name="v">New effect of the card.</param>
+        /// <param name="e">New effect of the card.</param>
         internal void OverrideEffect(ICardEffect e) => overriddenEffect = e;
 
         /// <summary>
