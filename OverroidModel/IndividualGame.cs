@@ -12,11 +12,14 @@ using System.Linq;
 
 namespace OverroidModel
 {
+
     /// <summary>
     /// Implementation of one-to-one game.
     /// </summary>
     public class IndividualGame : IMutableGame
     {
+        public static readonly ushort maxRound = 6;
+
         readonly PlayerAccount humanPlayer;
         readonly PlayerAccount overroidPlayer;
         readonly Dictionary<PlayerAccount, PlayerHand> playerHands;
@@ -72,7 +75,7 @@ namespace OverroidModel
             battles = battles ?? new List<Battle>();
             actionStack = new Stack<IGameAction>();
             actionHistory = new List<IGameAction>();
-            effectDisabledPlayers = new PlayerAccount?[IGameInformation.maxRound];
+            effectDisabledPlayers = new PlayerAccount?[IndividualGame.maxRound];
         }
 
         public PlayerAccount HumanPlayer => humanPlayer;
@@ -116,11 +119,11 @@ namespace OverroidModel
             {
                 return true;
             }
-            if (Battles.Count > IGameInformation.maxRound)
+            if (Battles.Count > IndividualGame.maxRound)
             {
                 throw new GameLogicException("Number of battles in the game exceeds max round");
             }
-            return Battles.Count == IGameInformation.maxRound && CurrentBattle.HasFinished();
+            return Battles.Count == IndividualGame.maxRound && CurrentBattle.HasFinished();
 
         }
 
@@ -147,6 +150,8 @@ namespace OverroidModel
         }
 
         public ushort WinningStarOf(PlayerAccount p) => (ushort)battles.Aggregate(0, (c, b) => c + b.WinningStarOf(p));
+
+        public bool IsDrawGame() => HasFinished() && Winner == null;
 
         public bool EffectIsDisabled(ushort round, PlayerAccount? p)
         {
@@ -189,7 +194,7 @@ namespace OverroidModel
 
         void IMutableGame.DisableRoundEffects(ushort round, PlayerAccount targetPlayer)
         {
-            if (round == 0 || round > IGameInformation.maxRound)
+            if (round == 0 || round > IndividualGame.maxRound)
             {
                 throw new ArgumentOutOfRangeException("Failed to disable round effect because out of round value");
             }

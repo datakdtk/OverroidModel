@@ -6,12 +6,12 @@ using System.Collections.Generic;
 
 namespace OverroidModel
 {
+
     /// <summary>
     /// Common interface for taking all kinds of games.
     /// </summary>
     public interface IGameInformation
     {
-        const ushort maxRound = 6;
 
         /// <summary>
         /// Player who plays Human force.
@@ -72,7 +72,7 @@ namespace OverroidModel
         /// <summary>
         /// Check if the game winner finished and is draw game.
         /// </summary>
-        public bool IsDrawGame() => HasFinished() && Winner == null;
+        public bool IsDrawGame();
 
         /// <summary>
         /// Get opponent player of given player.

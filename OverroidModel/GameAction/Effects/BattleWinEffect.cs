@@ -22,6 +22,8 @@ namespace OverroidModel.GameAction.Effects
 
         public CardName? TargetCardName => throw new System.NotImplementedException();
 
+        public CardName? SecondTargetCardName => null;
+
         CardName ICardEffectAction.SourceCardName => sourceCardName;
 
         void IGameAction.Resolve(IMutableGame g)

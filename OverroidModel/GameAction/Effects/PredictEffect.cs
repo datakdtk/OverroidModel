@@ -24,6 +24,8 @@ namespace OverroidModel.GameAction.Effects
 
         public CardName? TargetCardName => null;
 
+        public CardName? SecondTargetCardName => null;
+
         void IGameAction.Resolve(IMutableGame g)
         {
             g.HiddenCard.RevealTo(controller);

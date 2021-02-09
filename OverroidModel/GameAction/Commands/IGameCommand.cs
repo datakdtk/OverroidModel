@@ -16,10 +16,7 @@ namespace OverroidModel.GameAction.Commands
         /// <summary>
         /// Parameters that are required for restoring other than CommandingPlayer.
         /// </summary>
-        public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
-        {
-            ["targetCardName"] = TargetCardName?.ToString() ?? "",
-        };
+        public Dictionary<string, string> ParametersToSave { get; }
 
         /// <summary>
         /// Checks if the command's detail is applicable to the game.

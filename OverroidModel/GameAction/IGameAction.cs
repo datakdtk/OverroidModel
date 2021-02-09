@@ -21,7 +21,7 @@ namespace OverroidModel.GameAction
         /// <summary>
         /// Name of the card that is secondary affected by action if exists.
         /// </summary>
-        public CardName? SecondTargetCardName => null;
+        public CardName? SecondTargetCardName { get; }
 
         /// <summary>
         /// Changes the state of Current game.

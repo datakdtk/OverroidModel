@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OverroidModel.Card;
+using OverroidModel.Card.Effects;
 using OverroidModel.GameAction;
 using Xunit;
 
@@ -9,6 +10,22 @@ namespace OverroidModel.Test.TestLib
 {
     static class CustomAssertion
     {
+        public static void SameEffect(ICardEffect expected, ICardEffect actual)
+        {
+            Assert.IsType(
+                expected.GetType(),
+                actual
+            ); 
+        }
+        
+        public static void NotSameEffect(ICardEffect expected, ICardEffect actual)
+        {
+            Assert.IsNotType(
+                expected.GetType(),
+                actual
+            ); 
+        }
+        
         public static void ActionIsInHistory<T>(IEnumerable<IGameAction>actions) where T : IGameAction
         {
             Assert.True(

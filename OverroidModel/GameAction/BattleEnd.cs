@@ -13,6 +13,8 @@ namespace OverroidModel.GameAction
 
         public CardName? TargetCardName => null;
 
+        public CardName? SecondTargetCardName => null;
+
         void IGameAction.Resolve(IMutableGame g)
         {
             var battle = g.CurrentBattle;

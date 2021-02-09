@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using OverroidModel.Card;
 using OverroidModel.Card.Effects;
 using OverroidModel.Exceptions;
@@ -26,6 +27,13 @@ namespace OverroidModel.GameAction.Commands
         public PlayerAccount CommandingPlayer => player;
 
         public CardName? TargetCardName => targetCardName;
+
+        public CardName? SecondTargetCardName => null;
+
+        public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
+        {
+            ["targetCardName"] = TargetCardName?.ToString() ?? "",
+        };
 
         void IGameAction.Resolve(IMutableGame g)
         {

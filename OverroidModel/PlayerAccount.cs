@@ -30,7 +30,7 @@ namespace OverroidModel
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ID);
+            return ID.GetHashCode();
         }
 
         public static bool operator ==(PlayerAccount? self, PlayerAccount? other)

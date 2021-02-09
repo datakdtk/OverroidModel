@@ -30,6 +30,8 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName? TargetCardName => detectedCardName; // placedCardName should be unknown until card open.
 
+        public CardName? SecondTargetCardName => null;
+
         public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
         {
             ["cardNameToPlace"] = cardNameToPlace.ToString(),

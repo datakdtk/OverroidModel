@@ -1,6 +1,6 @@
 ﻿using OverroidModel.Card;
 using OverroidModel.Card.Master;
-using OverroidModel.Exceptions;
+using OverroidModel.Test.TestLib;
 using Xunit;
 
 namespace OverroidModel.Test.Card
@@ -51,9 +51,9 @@ namespace OverroidModel.Test.Card
             var card = new InGameCard(master);
             var anotherMaster = new Overroid();
             card.OverrideEffect(anotherMaster.Effect);
-            Assert.NotEqual(master.Effect, card.Effect);
-            Assert.Equal(anotherMaster.Effect, card.Effect);
-            Assert.Equal(master.Effect, card.DefaultEffect);
+            CustomAssertion.NotSameEffect(master.Effect, card.Effect);
+            CustomAssertion.SameEffect(anotherMaster.Effect, card.Effect);
+            CustomAssertion.SameEffect(master.Effect, card.DefaultEffect);
         }
 
         [Fact]
@@ -152,12 +152,12 @@ namespace OverroidModel.Test.Card
             card.OverrideEffect(anotherMaster.Effect);
             
             Assert.NotEqual(master.Value, card.Value);
-            Assert.NotEqual(master.Effect, card.Effect);
+            CustomAssertion.NotSameEffect(master.Effect, card.Effect);
 
             card.ReturnToDefault();
             
             Assert.Equal(master.Value, card.Value);
-            Assert.Equal(master.Effect, card.Effect);
+            CustomAssertion.SameEffect(master.Effect, card.Effect);
         }
     }
 }

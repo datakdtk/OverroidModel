@@ -1,4 +1,5 @@
-﻿using OverroidModel.Card;
+﻿using System.Collections.Generic;
+using OverroidModel.Card;
 using OverroidModel.GameAction;
 using OverroidModel.GameAction.Commands;
 
@@ -18,6 +19,13 @@ namespace OverroidModel.Test.TestLib
         public PlayerAccount? Controller => player;
 
         public CardName? TargetCardName => null;
+
+        public CardName? SecondTargetCardName => null;
+
+        public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
+        {
+            ["targetCardName"] = TargetCardName?.ToString() ?? "",
+        };
 
         public bool HasVisualEffect() => false;
 
