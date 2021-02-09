@@ -32,12 +32,12 @@ namespace OverroidModel
         /// <summary>
         /// The number of cards that are not revealed.
         /// </summary>
-        public ushort UnrevealedCardCount => (ushort)cards.Where(c => c.Visibility != CardVisibility.Hacked).Count();
+        public ushort UnrevealedCardCount => (ushort)cards.Where( c => !c.IsHacked() ).Count();
 
         /// <summary>
         /// Names of cards that are guessable by the opponent.
         /// </summary>
-        public IReadOnlyList<CardName> GuessableCardNames => cards.Where(c => c.Visibility != CardVisibility.Hidden).Select(c => c.Name).ToList();
+        public IReadOnlyList<CardName> GuessableCardNames => cards.Where( c => c.IsGuessable() ).Select(c => c.Name).ToList();
 
         /// <summary>
         /// Try to get card with given name.
@@ -57,7 +57,7 @@ namespace OverroidModel
         /// <exception cref="UnavailableActionException">Thrown when there is no unrevealed card in the hand.</exception>
         public InGameCard SelectRandomUnrevealCard()
         {
-            var unrevealedCards = cards.FindAll(c => c.Visibility != CardVisibility.Hacked);
+            var unrevealedCards = cards.FindAll( c=> !c.IsHacked() );
             if (unrevealedCards.Count == 0)
             {
                 throw new UnavailableActionException("Unrevealed card does not exist. So cannot choose at random");

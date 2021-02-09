@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using OverroidModel.Card.Master;
-using OverroidModel.Exceptions;
 
 namespace OverroidModel.Card
 {
     /// <summary>
     /// Card that is not used in the game. 
     /// </summary>
-    public class OutsideCard
+    public class OutsideCard : ICardInfo
     {
         readonly ICardMaster card;
         readonly List<PlayerAccount> lookingPlayers;
+        bool isOpened = false;
 
         /// <param name="card">Data of the card.</param>
         public OutsideCard(ICardMaster card)
@@ -19,29 +19,13 @@ namespace OverroidModel.Card
             lookingPlayers = new List<PlayerAccount>();
         }
 
-        /// <summary>
-        /// Check if player can see what the card is.
-        /// </summary>
-        /// <param name="player">Player trying to see the card.</param>
-        /// <returns>Returns true if the player can see the card.</returns>
-        public bool IsViewableTo(PlayerAccount player)
-        {
-            return lookingPlayers.Contains(player);
-        }
+        public CardName Name => card.Name;
 
-        /// <summary>
-        /// Get card data if available by given player
-        /// </summary>
-        /// <param name="player">Player trying to see the card.</param>
-        /// <returns>Card data,</returns>
-        /// <exception cref="UnavailableActionException">Thrown when the player is not authorized to look at the card.</exception>
-        public ICardMaster LookedAtBy(PlayerAccount player)
+        public bool IsOpened() => isOpened;
+
+        public bool IsVisibleTo(PlayerAccount player)
         {
-            if (!IsViewableTo(player))
-            {
-                throw new UnavailableActionException("The card is not viewable to given player");
-            }
-            return card;
+            return isOpened || lookingPlayers.Contains(player);
         }
 
         /// <summary>
@@ -52,5 +36,10 @@ namespace OverroidModel.Card
         {
             lookingPlayers.Add(player);
         }
+
+        /// <summary>
+        /// Make the card face up and reveal to all players
+        /// </summary>
+        internal void Open() => isOpened = true;
     }
 }

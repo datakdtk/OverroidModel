@@ -87,7 +87,7 @@ namespace OverroidModel.Test
             Assert.True(hand.HasCard(CardName.Innocence));
 
             var card = hand.CardOf(CardName.Innocence);
-            Assert.Equal(CardVisibility.Guessed, card?.Visibility);
+            CustomAssertion.CardIsJustGuessable(card!);
         }
 
         [Fact]
@@ -111,7 +111,7 @@ namespace OverroidModel.Test
             Assert.True(hand.HasCard(CardName.Overroid));
 
             var card = hand.CardOf(CardName.Overroid);
-            Assert.Equal(CardVisibility.Guessed, card?.Visibility);
+            CustomAssertion.CardIsJustGuessable(card!);
         }
 
         [Fact]
@@ -131,8 +131,8 @@ namespace OverroidModel.Test
                 );
 
             var hiddenCard = game.HiddenCard;
-            Assert.False(hiddenCard.IsViewableTo(humanPlayer));
-            Assert.False(hiddenCard.IsViewableTo(overroidPlayer));
+            Assert.False(hiddenCard.IsVisibleTo(humanPlayer));
+            Assert.False(hiddenCard.IsVisibleTo(overroidPlayer));
         }
  
         [Fact]
@@ -173,8 +173,8 @@ namespace OverroidModel.Test
                 );
 
             var hiddenCard = game.HiddenCard;
-            Assert.False(hiddenCard.IsViewableTo(humanPlayer));
-            Assert.False(hiddenCard.IsViewableTo(overroidPlayer));
+            Assert.False(hiddenCard.IsVisibleTo(humanPlayer));
+            Assert.False(hiddenCard.IsVisibleTo(overroidPlayer));
         }
  
         [Fact]
@@ -196,8 +196,8 @@ namespace OverroidModel.Test
 
             var triggerCard = game.TriggerCard;
             Assert.NotNull(triggerCard);
-            Assert.True(triggerCard!.IsViewableTo(humanPlayer));
-            Assert.True(triggerCard!.IsViewableTo(overroidPlayer));
+            Assert.True(triggerCard!.IsVisibleTo(humanPlayer));
+            Assert.True(triggerCard!.IsVisibleTo(overroidPlayer));
         }
     }
 }

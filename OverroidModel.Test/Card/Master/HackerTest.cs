@@ -68,7 +68,7 @@ namespace OverroidModel.Test.Card.Master
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Hacker, CardName.Innocence, game);
 
             CustomAssertion.WinsInLastRound(CardName.Hacker, game);
-            Assert.Equal(CardVisibility.Hacked, game.HandOf(game.HumanPlayer).Cards[0].Visibility);
+            CustomAssertion.CardIsHacked(game.HandOf(game.HumanPlayer).Cards[0]);
             CustomAssertion.NotWaitingForCommand<HackCommand>(game);
         }
 
@@ -80,9 +80,6 @@ namespace OverroidModel.Test.Card.Master
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Hacker }, // Attacking
                 cardNamesInHumanHand: new List<CardName>() { CardName.Innocence, CardName.Creator } // Defending
                 );
-            var hand = game.HandOf(game.HumanPlayer);
-            Assert.Equal(CardVisibility.Hidden, hand.CardOf(CardName.Creator)!.Visibility);
-
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Hacker, CardName.Innocence, game);
 
             CustomAssertion.WaitingForCommand<HackCommand>(game.OverroidPlayer, game);
@@ -90,7 +87,8 @@ namespace OverroidModel.Test.Card.Master
             var command = new HackCommand(game.OverroidPlayer, CardName.Creator);
             game.ReceiveCommand(command);
 
-            Assert.Equal(CardVisibility.Hacked, hand.CardOf(CardName.Creator)!.Visibility);
+            var hand = game.HandOf(game.HumanPlayer);
+            CustomAssertion.CardIsHacked(hand.CardOf(CardName.Creator)!);
             Assert.Equal(2, game.Battles.Count); // New round has begun,
         }
 

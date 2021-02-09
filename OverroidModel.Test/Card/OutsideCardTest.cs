@@ -14,13 +14,13 @@ namespace OverroidModel.Test.Card
             var p1 = new PlayerAccount("hoge");
             var p2 = new PlayerAccount("fuga");
 
-            Assert.False(card.IsViewableTo(p1));
-            Assert.False(card.IsViewableTo(p2));
+            Assert.False(card.IsVisibleTo(p1));
+            Assert.False(card.IsVisibleTo(p2));
 
             card.RevealTo(p1);
             
-            Assert.True(card.IsViewableTo(p1));
-            Assert.False(card.IsViewableTo(p2));
+            Assert.True(card.IsVisibleTo(p1));
+            Assert.False(card.IsVisibleTo(p2));
         }
 
         [Fact]
@@ -30,36 +30,36 @@ namespace OverroidModel.Test.Card
             var p1 = new PlayerAccount("hoge");
             var p2 = new PlayerAccount("fuga");
 
-            Assert.False(card.IsViewableTo(p1));
-            Assert.False(card.IsViewableTo(p2));
+            Assert.False(card.IsVisibleTo(p1));
+            Assert.False(card.IsVisibleTo(p2));
 
             card.RevealTo(p1);
             card.RevealTo(p2);
             
-            Assert.True(card.IsViewableTo(p1));
-            Assert.True(card.IsViewableTo(p2));
+            Assert.True(card.IsVisibleTo(p1));
+            Assert.True(card.IsVisibleTo(p2));
         }
 
         [Fact]
-        public void Test_LookAtBy_WhenViewable()
+        public void Test_Open()
         {
             var card = new OutsideCard(new Idol());
-            var p = new PlayerAccount("hoge");
-
-            card.RevealTo(p);
-            Assert.True(card.IsViewableTo(p));
-
-            var master = card.LookedAtBy(p);
-            Assert.Equal(CardName.Idol, master.Name);
+            Assert.False(card.IsOpened());
+            card.Open();
+            Assert.True(card.IsOpened());
         }
 
         [Fact]
-        public void Test_LookAtBy_WhenNotViewable()
+        public void Test_IsViewable_WhenOpened()
         {
             var card = new OutsideCard(new Idol());
-            var p = new PlayerAccount("hoge");
+            var p1 = new PlayerAccount("hoge");
 
-            Assert.Throws<UnavailableActionException>( () => card.LookedAtBy(p) );
+            Assert.False(card.IsVisibleTo(p1));
+
+            card.Open();
+            
+            Assert.True(card.IsVisibleTo(p1));
         }
     }
 }

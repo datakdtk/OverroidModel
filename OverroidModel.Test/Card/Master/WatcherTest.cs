@@ -31,12 +31,12 @@ namespace OverroidModel.Test.Card.Master
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Watcher }, // Attacking
                 cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Defending
                 );
-            Assert.False(game.HiddenCard.IsViewableTo(game.OverroidPlayer));
+            Assert.False(game.HiddenCard.IsVisibleTo(game.OverroidPlayer));
 
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Watcher, CardName.Innocence, game);
 
-            Assert.True(game.HiddenCard.IsViewableTo(game.OverroidPlayer));
-            Assert.False(game.HiddenCard.IsViewableTo(game.HumanPlayer));
+            Assert.True(game.HiddenCard.IsVisibleTo(game.OverroidPlayer));
+            Assert.False(game.HiddenCard.IsVisibleTo(game.HumanPlayer));
         }
     }
 }

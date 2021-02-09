@@ -68,14 +68,14 @@ namespace OverroidModel.GameAction
             var attakingPlayerCard = battle.CardOf(battle.AttackingPlayer);
             if (player == battle.AttackingPlayer)
             {
-                if (attakingPlayerCard.Visibility == CardVisibility.Opened)
+                if (attakingPlayerCard.IsOpened())
                 {
                     throw new GameLogicException("Attacking player has already opened a card.");
                 }
             }
             else
             {
-                if (attakingPlayerCard.Visibility != CardVisibility.Opened)
+                if (!attakingPlayerCard.IsOpened())
                 {
                     throw new GameLogicException("Attacking player has not opened a card yet.");
                 }

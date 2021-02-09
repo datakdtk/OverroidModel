@@ -6,7 +6,7 @@ namespace OverroidModel.Card
     /// <summary>
     /// Value that determines how cards in player's hand looks from the opponent.
     /// </summary>
-    public enum CardVisibility
+    internal enum CardVisibility
     {
         /// <summary>
         /// Opponent cannot see at all.
@@ -30,7 +30,7 @@ namespace OverroidModel.Card
     /// <summary>
     /// Cards used in game. It may have temporal state.
     /// </summary>
-    public class InGameCard
+    public class InGameCard : ICardInfo
     {
         ICardMaster data;
         CardVisibility visibility = CardVisibility.Hidden;
@@ -43,9 +43,6 @@ namespace OverroidModel.Card
             this.data = data;
         }
 
-        /// <summary>
-        /// Card name that identifies each card in game.
-        /// </summary>
         public CardName Name => data.Name;
 
         /// <summary>
@@ -68,10 +65,22 @@ namespace OverroidModel.Card
         /// </summary>
         public ICardEffect DefaultEffect => data.Effect;
 
+        public bool IsOpened() => visibility == CardVisibility.Opened;
+
+        public bool IsVisibleTo(PlayerAccount player)
+        {
+            return IsOpened() || visibility == CardVisibility.Hacked; 
+        }
+
         /// <summary>
-        /// How cards in player's hand looks from the opponent.
+        /// Check if the opponent of card owner can guess the owner has the card.
         /// </summary>
-        public CardVisibility Visibility => visibility;
+        internal bool IsGuessable() => visibility != CardVisibility.Hidden;
+
+        /// <summary>
+        /// Check if the card is revealed by Hacker's card effect.
+        /// </summary>
+        internal bool IsHacked() => visibility == CardVisibility.Hacked;
 
         /// <summary>
         /// Marks the card guessable.
@@ -80,7 +89,7 @@ namespace OverroidModel.Card
         /// </summary>
         internal void SetGuessed()
         {
-            if (Visibility != CardVisibility.Hacked)
+            if (visibility != CardVisibility.Hacked)
             {
                 visibility = CardVisibility.Guessed;
             }

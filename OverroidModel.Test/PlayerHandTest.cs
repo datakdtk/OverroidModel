@@ -1,6 +1,7 @@
 ﻿using OverroidModel.Card;
 using OverroidModel.Card.Master;
 using OverroidModel.Exceptions;
+using OverroidModel.Test.TestLib;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -130,7 +131,7 @@ namespace OverroidModel.Test
             var cardInHand = hand.CardOf(additionalCard.Name);
             Assert.NotNull(cardInHand);
 
-            Assert.Equal(CardVisibility.Guessed, cardInHand?.Visibility);
+            CustomAssertion.CardIsJustGuessable(cardInHand!);
         }
 
         [Fact]
@@ -145,7 +146,7 @@ namespace OverroidModel.Test
             var cardInHand = hand.CardOf(additionalCard.Name);
             Assert.NotNull(cardInHand);
 
-            Assert.Equal(CardVisibility.Hacked, cardInHand?.Visibility);
+            CustomAssertion.CardIsHacked(cardInHand!);
         }
 
         [Fact]
@@ -155,13 +156,13 @@ namespace OverroidModel.Test
             var hand = new PlayerHand(cards);
             var additionalCard = new InGameCard(new Overroid());
             additionalCard.Open();
-            Assert.Equal(CardVisibility.Opened, additionalCard.Visibility);
+            CustomAssertion.CardIsOpened(additionalCard);
 
             hand.AddCard(additionalCard);
             var cardInHand = hand.CardOf(additionalCard.Name);
             Assert.NotNull(cardInHand);
 
-            Assert.Equal(CardVisibility.Guessed, cardInHand?.Visibility);
+            CustomAssertion.CardIsJustGuessable(cardInHand!);
         }
 
         [Fact]

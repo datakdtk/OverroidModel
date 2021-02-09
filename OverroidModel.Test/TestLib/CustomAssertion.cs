@@ -10,6 +10,24 @@ namespace OverroidModel.Test.TestLib
 {
     static class CustomAssertion
     {
+        public static void CardIsJustGuessable(InGameCard c)
+        {
+            Assert.True(c.IsGuessable(), "The card is expected to be guessable but not so");
+            Assert.False(c.IsHacked(), "The card is expected not to be hacked but so");
+            Assert.False(c.IsOpened(), "The card is expected not to be opened but so");
+        }
+
+        public static void CardIsHacked(InGameCard c)
+        {
+            Assert.True(c.IsHacked(), "The card is expected to be hacked but not so");
+            Assert.True(c.IsGuessable(), "The card is expected to be guessable but not so");
+        }
+        public static void CardIsOpened(InGameCard c)
+        {
+            Assert.True(c.IsOpened(), "The card is expected to be opened but not so");
+            Assert.False(c.IsHacked(), "The card is expected not to be hacked but so");
+        }
+
         public static void SameEffect(ICardEffect expected, ICardEffect actual)
         {
             Assert.IsType(

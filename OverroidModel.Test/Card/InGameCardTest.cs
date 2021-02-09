@@ -61,9 +61,8 @@ namespace OverroidModel.Test.Card
         {
             var master = new Innocence();
             var card = new InGameCard(master);
-            Assert.Equal(CardVisibility.Hidden, card.Visibility);
             card.SetGuessed();
-            Assert.Equal(CardVisibility.Guessed, card.Visibility);
+            CustomAssertion.CardIsJustGuessable(card);
         }
 
         [Fact]
@@ -71,9 +70,8 @@ namespace OverroidModel.Test.Card
         {
             var master = new Innocence();
             var card = new InGameCard(master);
-            Assert.Equal(CardVisibility.Hidden, card.Visibility);
             card.RevealByHack();
-            Assert.Equal(CardVisibility.Hacked, card.Visibility);
+            CustomAssertion.CardIsHacked(card);
         }
 
         [Fact]
@@ -82,9 +80,9 @@ namespace OverroidModel.Test.Card
             var master = new Innocence();
             var card = new InGameCard(master);
             card.SetGuessed();
-            Assert.Equal(CardVisibility.Guessed, card.Visibility);
+            CustomAssertion.CardIsJustGuessable(card);
             card.RevealByHack();
-            Assert.Equal(CardVisibility.Hacked, card.Visibility);
+            CustomAssertion.CardIsHacked(card);
         }
 
         [Fact]
@@ -93,20 +91,9 @@ namespace OverroidModel.Test.Card
             var master = new Innocence();
             var card = new InGameCard(master);
             card.RevealByHack();
-            Assert.Equal(CardVisibility.Hacked, card.Visibility);
+            CustomAssertion.CardIsHacked(card);
             card.SetGuessed(); // still to be revealed
-            Assert.Equal(CardVisibility.Hacked, card.Visibility);
-        }
-
-        [Fact]
-        public void Test_SetGuessed_FromOpened()
-        {
-            var master = new Innocence();
-            var card = new InGameCard(master);
-            card.Open();
-            Assert.Equal(CardVisibility.Opened, card.Visibility);
-            card.SetGuessed(); // still to be revealed
-            Assert.Equal(CardVisibility.Guessed, card.Visibility);
+            CustomAssertion.CardIsHacked(card);
         }
 
         [Fact]
@@ -114,20 +101,8 @@ namespace OverroidModel.Test.Card
         {
             var master = new Innocence();
             var card = new InGameCard(master);
-            Assert.Equal(CardVisibility.Hidden, card.Visibility);
             card.Open();
-            Assert.Equal(CardVisibility.Opened, card.Visibility);
-        }
-
-        [Fact]
-        public void Test_Open_FromGuessed()
-        {
-            var master = new Innocence();
-            var card = new InGameCard(master);
-            card.SetGuessed();
-            Assert.Equal(CardVisibility.Guessed, card.Visibility);
-            card.Open();
-            Assert.Equal(CardVisibility.Opened, card.Visibility);
+            CustomAssertion.CardIsOpened(card);
         }
 
         [Fact]
@@ -136,9 +111,9 @@ namespace OverroidModel.Test.Card
             var master = new Innocence();
             var card = new InGameCard(master);
             card.RevealByHack();
-            Assert.Equal(CardVisibility.Hacked, card.Visibility);
+            CustomAssertion.CardIsHacked(card);
             card.Open();
-            Assert.Equal(CardVisibility.Opened, card.Visibility);
+            CustomAssertion.CardIsOpened(card);
         }
 
         [Fact]
@@ -158,6 +133,30 @@ namespace OverroidModel.Test.Card
             
             Assert.Equal(master.Value, card.Value);
             CustomAssertion.SameEffect(master.Effect, card.Effect);
+        }
+
+        [Fact]
+        public void Test_IsVisibleTo_TrueForAllPlayersWhenHacked()
+        {
+            var master = new Innocence();
+            var card = new InGameCard(master);
+            card.RevealByHack();
+            CustomAssertion.CardIsHacked(card);
+
+            var p2 = new PlayerAccount("fuga");
+            Assert.True(card.IsVisibleTo(p2));
+        }
+
+        [Fact]
+        public void Test_IsVisibleTo_TrueForAllPlayersWhenOpened()
+        {
+            var master = new Innocence();
+            var card = new InGameCard(master);
+            card.Open();
+            CustomAssertion.CardIsOpened(card);
+
+            var p2 = new PlayerAccount("fuga");
+            Assert.True(card.IsVisibleTo(p2));
         }
     }
 }
