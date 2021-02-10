@@ -4,30 +4,6 @@ using OverroidModel.Card.Master;
 namespace OverroidModel.Card
 {
     /// <summary>
-    /// Value that determines how cards in player's hand looks from the opponent.
-    /// </summary>
-    internal enum CardVisibility
-    {
-        /// <summary>
-        /// Opponent cannot see at all.
-        /// </summary>
-        Hidden,
-        /// <summary>
-        /// Opponent can guess you have the card but cannot see where it is.
-        /// </summary>
-        Guessed,
-        /// <summary>
-        /// Revealed by card effect. Opponent can see the card and tell where it is.
-        /// </summary>
-        Hacked,
-
-        /// <summary>
-        /// Revealed in battles.
-        /// </summary>
-        Opened,
-    }
-
-    /// <summary>
     /// Cards used in game. It may have temporal state.
     /// </summary>
     public class InGameCard : ICardInfo
@@ -133,6 +109,27 @@ namespace OverroidModel.Card
         {
             overriddenValue = null;
             overriddenEffect = null;
+        }
+
+        private enum CardVisibility
+        {
+            /// <summary>
+            /// Opponent cannot see at all.
+            /// </summary>
+            Hidden,
+            /// <summary>
+            /// Opponent can guess you have the card but cannot see where it is.
+            /// </summary>
+            Guessed,
+            /// <summary>
+            /// Revealed by card effect. Opponent can see the card and tell where it is.
+            /// </summary>
+            Hacked,
+
+            /// <summary>
+            /// Revealed in battles.
+            /// </summary>
+            Opened,
         }
     }
 }
