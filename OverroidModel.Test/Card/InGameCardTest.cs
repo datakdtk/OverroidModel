@@ -11,7 +11,7 @@ namespace OverroidModel.Test.Card
         public void Test_Name()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             Assert.Equal(master.Name, card.Name);
         }
 
@@ -19,7 +19,7 @@ namespace OverroidModel.Test.Card
         public void Test_Value_NotOverridden()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             Assert.Equal(master.Value, card.Value);
             Assert.Equal(master.Value, card.DefaultValue);
         }
@@ -28,7 +28,7 @@ namespace OverroidModel.Test.Card
         public void Test_Value_Overridden()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             card.OverrideValue(0);
             Assert.NotEqual(master.Value, card.Value);
             Assert.Equal(0, card.Value);
@@ -39,7 +39,7 @@ namespace OverroidModel.Test.Card
         public void Test_Effect_NotOverridden()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             Assert.Equal(master.Effect, card.Effect);
             Assert.Equal(master.Effect, card.DefaultEffect);
         }
@@ -48,7 +48,7 @@ namespace OverroidModel.Test.Card
         public void Test_Efect_Overridden()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             var anotherMaster = new Overroid();
             card.OverrideEffect(anotherMaster.Effect);
             CustomAssertion.NotSameEffect(master.Effect, card.Effect);
@@ -60,7 +60,7 @@ namespace OverroidModel.Test.Card
         public void Test_SetGuessed()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             card.SetGuessed();
             CustomAssertion.CardIsJustGuessable(card);
         }
@@ -69,7 +69,7 @@ namespace OverroidModel.Test.Card
         public void Test_RevealByHack_FromHidden()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             card.RevealByHack();
             CustomAssertion.CardIsHacked(card);
         }
@@ -78,7 +78,7 @@ namespace OverroidModel.Test.Card
         public void Test_RevealByHack_FromGuessed()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             card.SetGuessed();
             CustomAssertion.CardIsJustGuessable(card);
             card.RevealByHack();
@@ -89,7 +89,7 @@ namespace OverroidModel.Test.Card
         public void Test_SetGuessed_FromRevealed()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             card.RevealByHack();
             CustomAssertion.CardIsHacked(card);
             card.SetGuessed(); // still to be revealed
@@ -100,7 +100,7 @@ namespace OverroidModel.Test.Card
         public void Test_Open_FromHidden()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             card.Open();
             CustomAssertion.CardIsOpened(card);
         }
@@ -109,7 +109,7 @@ namespace OverroidModel.Test.Card
         public void Test_Open_FromHacked()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             card.RevealByHack();
             CustomAssertion.CardIsHacked(card);
             card.Open();
@@ -120,7 +120,7 @@ namespace OverroidModel.Test.Card
         public void Test_ReturnDefault()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             var anotherMaster = new Overroid();
 
             card.OverrideValue(anotherMaster.Value);
@@ -139,7 +139,8 @@ namespace OverroidModel.Test.Card
         public void Test_IsVisibleTo_TrueForAllPlayersWhenHacked()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
+            var anotherMaster = new Overroid();
             card.RevealByHack();
             CustomAssertion.CardIsHacked(card);
 
@@ -151,7 +152,7 @@ namespace OverroidModel.Test.Card
         public void Test_IsVisibleTo_TrueForAllPlayersWhenOpened()
         {
             var master = new Innocence();
-            var card = new InGameCard(master);
+            var card = new InGameCard(master, new PlayerAccount("hoge"));
             card.Open();
             CustomAssertion.CardIsOpened(card);
 

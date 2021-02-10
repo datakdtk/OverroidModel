@@ -165,6 +165,10 @@ namespace OverroidModel
         /// <exception cref="GameLogicException">Thrown if the player has already set a card.</exception>
         internal void SetCard(PlayerAccount p, InGameCard c, CardName? detectedCardName)
         {
+            if (c.Owner != p)
+            {
+                throw new GameLogicException("Player putting the card is not the owner of the card");
+            }
             if (HasCardOf(p))
             {
                 throw new GameLogicException("Battle Card has already been set.");
@@ -184,6 +188,10 @@ namespace OverroidModel
         /// <exception cref="GameLogicException">Thrown if the player has not set any card yet.</exception>
         internal void ReplaceCard(PlayerAccount p, InGameCard c)
         {
+            if (c.Owner != p)
+            {
+                throw new GameLogicException("Player putting the card is not the owner of the card");
+            }
             if (!HasCardOf(p))
             {
                 throw new GameLogicException("Battle Card has not set yet.");

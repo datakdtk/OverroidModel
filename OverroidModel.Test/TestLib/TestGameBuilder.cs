@@ -19,8 +19,8 @@ namespace OverroidModel.Test.TestLib
             var overroidPlayer = new PlayerAccount("overroid");
 
             var handSize = IndividualGame.maxRound + 1 - round;
-            var humanHand = createPlayerHand(cardNamesInHumanHand, handSize);
-            var overroidHand = createPlayerHand(cardNamesInOverroidHand, handSize);
+            var humanHand = createPlayerHand(humanPlayer, cardNamesInHumanHand, handSize);
+            var overroidHand = createPlayerHand(overroidPlayer, cardNamesInOverroidHand, handSize);
 
             var config = new TestConfig();
             config.DetectionAvailable = detectionAvailable;
@@ -45,17 +45,17 @@ namespace OverroidModel.Test.TestLib
             return g;
         }
 
-        public static PlayerHand createPlayerHand(IEnumerable<CardName>? cardNamesInHand, int handSize)
+        public static PlayerHand createPlayerHand(PlayerAccount player, IEnumerable<CardName>? cardNamesInHand, int handSize)
         {
             var cards = cardNamesInHand != null
-                ? cardNamesInHand.Select(n => CardDictionary.GetInGameCard(n)).ToList()
+                ? cardNamesInHand.Select(n => CardDictionary.GetInGameCard(n, player)).ToList()
                 : new List<InGameCard>();
             while (cards.Count < handSize)
             {
-                cards.Add(new InGameCard(new DummyCard(99)));
+                cards.Add(new InGameCard(new DummyCard(99), player));
             }
 
-            return new PlayerHand(cards);
+            return new PlayerHand(player, cards);
         }
 
         public static void SetCardsToCurrentBattle(CardName attakingCardName, CardName defendingCardName, IMutableGame game)

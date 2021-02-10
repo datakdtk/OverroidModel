@@ -32,15 +32,18 @@ namespace OverroidModel.Card
     /// </summary>
     public class InGameCard : ICardInfo
     {
-        ICardMaster data;
+        readonly ICardMaster data;
+        PlayerAccount owner;
         CardVisibility visibility = CardVisibility.Hidden;
         ushort? overriddenValue;
         ICardEffect? overriddenEffect;
 
         /// <param name="data">Master data of the card</param>
-        internal InGameCard(ICardMaster data)
+        /// <param name="owner">Player who uses the card</param>
+        internal InGameCard(ICardMaster data, PlayerAccount owner)
         {
             this.data = data;
+            this.owner = owner;
         }
 
         public CardName Name => data.Name;
@@ -54,6 +57,11 @@ namespace OverroidModel.Card
         /// Unique effect of the cards. It may be changed by card effects.
         /// </summary>
         public ICardEffect Effect => overriddenEffect ?? data.Effect;
+
+        /// <summary>
+        /// Player using this card.
+        /// </summary>
+        public PlayerAccount Owner => owner;
 
         /// <summary>
         /// Card Value on initial state that is same as the master data.

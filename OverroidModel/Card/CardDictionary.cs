@@ -39,9 +39,9 @@ namespace OverroidModel.Card
             return dic[n];
         }
 
-        public static InGameCard GetInGameCard(CardName n)
+        public static InGameCard GetInGameCard(CardName n, PlayerAccount owner)
         {
-            return new InGameCard(GetMaster(n));
+            return new InGameCard(GetMaster(n), owner);
         }
 
         public static List<ICardMaster> DefaultCardList => new List<ICardMaster>()

@@ -13,37 +13,41 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_Count()
         {
-            var cards = GetCardList();
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
             cards[2].SetGuessed();
             cards[3].SetGuessed();
             cards[4].RevealByHack();
             cards[5].RevealByHack();
-            var hand = new PlayerHand(cards);
+            var hand = new PlayerHand(player, cards);
             Assert.Equal(cards.Count, hand.Count);
         }
 
         [Fact]
         public void Test_UnrevealedCardCount()
         {
-            var cards = GetCardList();
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
             cards[2].SetGuessed();
             cards[3].SetGuessed();
             cards[4].RevealByHack();
             cards[5].RevealByHack();
-            var hand = new PlayerHand(cards);
+            var hand = new PlayerHand(player, cards);
             Assert.Equal(cards.Count - 2, hand.UnrevealedCardCount);
         }
 
         [Fact]
         public void Test_GuessableCardNames()
         {
-            var cards = GetCardList();
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
             cards[2].SetGuessed();
             cards[3].SetGuessed();
             cards[4].RevealByHack();
             cards[5].RevealByHack();
             var expected = cards.ToArray()[2..6].Select(c => c.Name).OrderBy(n => n).ToArray();
-            var hand = new PlayerHand(cards);
+
+            var hand = new PlayerHand(player, cards);
             var actual = hand.GuessableCardNames.OrderBy(n => n).ToArray();
             Assert.Equal(expected, actual);
         }
@@ -51,8 +55,10 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_CardOf_Found()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
+
             var name = CardName.Creator;
             var c = hand.CardOf(name);
             Assert.NotNull(c);
@@ -62,8 +68,10 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_CardOf_NotFound()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
+
             var name = CardName.Overroid;
             var c = hand.CardOf(name);
             Assert.Null(c);
@@ -72,8 +80,10 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_HasCard_True()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
+
             var name = CardName.Hacker;
             Assert.True(hand.HasCard(name));
         }
@@ -81,8 +91,10 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_HasCard_False()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
+
             var name = CardName.Overroid;
             Assert.False(hand.HasCard(name));
         }
@@ -90,9 +102,11 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_AddCard_CardIsAdded()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
-            var additionalCard = new InGameCard(new Overroid());
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
+
+            var additionalCard = new InGameCard(new Overroid(), player);
             Assert.Equal(6, hand.Count);
             Assert.False(hand.HasCard(additionalCard.Name));
 
@@ -104,9 +118,10 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_AddCard_CardReturnsToDefault()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
-            var additionalCard = new InGameCard(new Overroid());
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
+            var additionalCard = new InGameCard(new Overroid(), player);
 
             var anotherCard = new Death();
             additionalCard.OverrideValue(99);
@@ -123,9 +138,10 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_AddCard_CardIsGuessable()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
-            var additionalCard = new InGameCard(new Overroid());
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
+            var additionalCard = new InGameCard(new Overroid(), player);
 
             hand.AddCard(additionalCard);
             var cardInHand = hand.CardOf(additionalCard.Name);
@@ -137,9 +153,10 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_AddCard_CardKeepsRevealedIfHasBeenHacked()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
-            var additionalCard = new InGameCard(new Overroid());
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
+            var additionalCard = new InGameCard(new Overroid(), player);
             additionalCard.RevealByHack();
 
             hand.AddCard(additionalCard);
@@ -152,9 +169,10 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_AddCard_CardTurnsGuessedIfHasBeenOpend()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
-            var additionalCard = new InGameCard(new Overroid());
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
+            var additionalCard = new InGameCard(new Overroid(), player);
             additionalCard.Open();
             CustomAssertion.CardIsOpened(additionalCard);
 
@@ -168,8 +186,9 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_RemoveCard_CardIsRemoved()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
             var cn = CardName.Doctor;
 
             Assert.Equal(6, hand.Count);
@@ -184,8 +203,9 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_RemoveCard_ReturnsRemovedCard()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
             var cn = CardName.Doctor;
 
             var Removed = hand.RemoveCard(cn);
@@ -196,8 +216,9 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_RemoveCard_ErrorIfNotExist()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
             var cn = CardName.Overroid;
 
             Assert.Throws<GameLogicException>(() => hand.RemoveCard(cn));
@@ -206,8 +227,9 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_SelectRadomUnrevealedLand_SelectedCardIsStillInHand()
         {
-            var cards = GetCardList();
-            var hand = new PlayerHand(cards);
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
             var selected = hand.SelectRandomUnrevealCard();
 
             Assert.True(hand.HasCard(selected.Name));
@@ -217,14 +239,15 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_SelectRadomUnrevealedLand_RevealedCardNeverSelected()
         {
+            var player = new PlayerAccount("hoge");
             var cards = new List<InGameCard>()
             {
-                CardDictionary.GetInGameCard(CardName.Innocence),
-                CardDictionary.GetInGameCard(CardName.Hacker),
-                CardDictionary.GetInGameCard(CardName.Creator),
+                CardDictionary.GetInGameCard(CardName.Innocence, player),
+                CardDictionary.GetInGameCard(CardName.Hacker, player),
+                CardDictionary.GetInGameCard(CardName.Creator, player),
             };
             cards[0].RevealByHack();
-            var hand = new PlayerHand(cards);
+            var hand = new PlayerHand(player, cards);
             var selected = hand.SelectRandomUnrevealCard();
 
             Assert.True(selected.Name == CardName.Hacker || selected.Name == CardName.Creator, selected.Name.ToString());
@@ -233,16 +256,17 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_SelectRadomUnrevealedLand_GuessedCardMayBeSelected()
         {
+            var player = new PlayerAccount("hoge");
             var cards = new List<InGameCard>()
             {
-                CardDictionary.GetInGameCard(CardName.Innocence),
-                CardDictionary.GetInGameCard(CardName.Hacker),
-                CardDictionary.GetInGameCard(CardName.Creator),
+                CardDictionary.GetInGameCard(CardName.Innocence, player),
+                CardDictionary.GetInGameCard(CardName.Hacker, player),
+                CardDictionary.GetInGameCard(CardName.Creator, player),
             };
             cards[0].RevealByHack();
             cards[1].SetGuessed();
             cards[2].SetGuessed();
-            var hand = new PlayerHand(cards);
+            var hand = new PlayerHand(player, cards);
             var selected = hand.SelectRandomUnrevealCard();
 
             Assert.True(selected.Name == CardName.Hacker || selected.Name == CardName.Creator, selected.Name.ToString());
@@ -251,29 +275,30 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_SelectRadomUnrevealedLand_ThrownIfAllCardsAreRevealed()
         {
+            var player = new PlayerAccount("hoge");
             var cards = new List<InGameCard>()
             {
-                CardDictionary.GetInGameCard(CardName.Innocence),
-                CardDictionary.GetInGameCard(CardName.Hacker),
-                CardDictionary.GetInGameCard(CardName.Creator),
+                CardDictionary.GetInGameCard(CardName.Innocence, player),
+                CardDictionary.GetInGameCard(CardName.Hacker, player),
+                CardDictionary.GetInGameCard(CardName.Creator, player),
             };
             cards[0].RevealByHack();
             cards[1].RevealByHack();
             cards[2].RevealByHack();
-            var hand = new PlayerHand(cards);
+            var hand = new PlayerHand(player, cards);
             Assert.Throws<UnavailableActionException>(() => hand.SelectRandomUnrevealCard());
         }
 
-        private static List<InGameCard> GetCardList()
+        private static List<InGameCard> GetCardList(PlayerAccount p)
         {
             return new List<InGameCard>()
             {
-                CardDictionary.GetInGameCard(CardName.Innocence),
-                CardDictionary.GetInGameCard(CardName.Hacker),
-                CardDictionary.GetInGameCard(CardName.Creator),
-                CardDictionary.GetInGameCard(CardName.Doctor),
-                CardDictionary.GetInGameCard(CardName.Idol),
-                CardDictionary.GetInGameCard(CardName.Trickster),
+                CardDictionary.GetInGameCard(CardName.Innocence, p),
+                CardDictionary.GetInGameCard(CardName.Hacker, p),
+                CardDictionary.GetInGameCard(CardName.Creator, p),
+                CardDictionary.GetInGameCard(CardName.Doctor, p),
+                CardDictionary.GetInGameCard(CardName.Idol, p),
+                CardDictionary.GetInGameCard(CardName.Trickster, p),
             };
         }
     }

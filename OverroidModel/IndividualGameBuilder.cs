@@ -40,10 +40,13 @@ namespace OverroidModel
                 : CardDictionary.DefaultCardList;
             var shuffledDeck = shuffler.Shuffle(cardSet, shufflingSeed);
 
-            var humanHand = new PlayerHand(shuffledDeck.GetRange(0, 5).Select(c => new InGameCard(c)));
-            var overroidHand = new PlayerHand(shuffledDeck.GetRange(5, 5).Select(c => new InGameCard(c)));
-            humanHand.AddCard(CardDictionary.GetInGameCard(CardName.Innocence));
-            overroidHand.AddCard(CardDictionary.GetInGameCard(CardName.Overroid));
+            var humanCards = shuffledDeck.GetRange(0, 5).Select(c => new InGameCard(c, humanPlayer));
+            var humanHand = new PlayerHand(humanPlayer, humanCards);
+            humanHand.AddCard(CardDictionary.GetInGameCard(CardName.Innocence, humanPlayer));
+
+            var overroidCards = shuffledDeck.GetRange(5, 5).Select(c => new InGameCard(c, overroidPlayer));
+            var overroidHand = new PlayerHand(overroidPlayer, overroidCards);
+            overroidHand.AddCard(CardDictionary.GetInGameCard(CardName.Overroid, overroidPlayer));
 
             var hiddenCard = shuffledDeck[10];
             var triggerCard = shuffledDeck.Count >= 12 ? shuffledDeck[11] : null;

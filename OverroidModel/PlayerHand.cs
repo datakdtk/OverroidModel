@@ -12,10 +12,13 @@ namespace OverroidModel
     public class PlayerHand
     {
         readonly List<InGameCard> cards;
+        readonly PlayerAccount player;
 
-        /// <param name="cards">Cards in the hand.</param>
-        public PlayerHand(IEnumerable<InGameCard> cards)
+        /// <param name="player">Cards in the hand.</param>
+        /// <param name="cards">Player who uses cards in the hand.</param>
+        public PlayerHand(PlayerAccount player, IEnumerable<InGameCard> cards)
         {
+            this.player = player;
             this.cards = cards.ToList();
         }
 
@@ -23,6 +26,11 @@ namespace OverroidModel
         /// Cards in the hand.
         /// </summary>
         public IReadOnlyList<InGameCard> Cards => cards;
+
+        /// <summary>
+        /// Player who uses the cards
+        /// </summary>
+        public PlayerAccount Player => player;
 
         /// <summary>
         /// The number of all cards.
