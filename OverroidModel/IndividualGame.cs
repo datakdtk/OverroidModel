@@ -62,8 +62,7 @@ namespace OverroidModel
             if (triggerCardMaster != null)
             {
                 triggerCard = new OutsideCard(triggerCardMaster);
-                triggerCard.RevealTo(humanPlayer);
-                triggerCard.RevealTo(overroidPlayer);
+                triggerCard.Open();
             }
 
             playerHands = new Dictionary<PlayerAccount, PlayerHand>()
@@ -72,7 +71,7 @@ namespace OverroidModel
                 [overroidPlayer] = overroidPlayerHand,
             };
 
-            battles = battles ?? new List<Battle>();
+            battles = new List<Battle>();
             actionStack = new Stack<IGameAction>();
             actionHistory = new List<IGameAction>();
             effectDisabledPlayers = new PlayerAccount?[IndividualGame.maxRound];
