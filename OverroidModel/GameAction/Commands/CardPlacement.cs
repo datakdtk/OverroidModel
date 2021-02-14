@@ -32,6 +32,8 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName? SecondTargetCardName => null;
 
+        public CardName? DetectedCardName => detectedCardName;
+
         public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
         {
             ["cardNameToPlace"] = cardNameToPlace.ToString(),
@@ -83,8 +85,20 @@ namespace OverroidModel.GameAction.Commands
 
             if (!g.HandOf(player).HasCard(cardNameToPlace))
             {
-                throw new UnavailableActionException("Invalid Command: player does not have the card to set");
+                throw new UnavailableActionException($"Invalid Command: player does not have the card to set ({cardNameToPlace})");
             }
+        }
+
+        /// <summary>
+        /// Choose a card to place automatically.
+        /// </summary>
+        /// <param name="g">Current game object.</param>
+        /// <param name="commandingPlayer">Controller to place a card.</param>
+        /// <exception cref="Exceptions.UnavailableActionException">Thrown when the cojmmandingPlayer has no card.</exception>
+        public static CardPlacement CreateRandomCommand(IGameInformation g, PlayerAccount commandingPlayer)
+        {
+            var target = g.HandOf(commandingPlayer).SelectRandomCard();
+            return new CardPlacement(commandingPlayer, target.Name, null);
         }
     }
 }

@@ -47,5 +47,17 @@ namespace OverroidModel.GameAction.Commands
                 throw new UnavailableActionException("Player does not have Rush target card");
             }
         }
+
+        /// <summary>
+        /// Choose target of Rush effect at random.
+        /// </summary>
+        /// <param name="g">Current game object.</param>
+        /// <param name="commandingPlayer">Controller of Soldier card.</param>
+        /// <exception cref="Exceptions.UnavailableActionException">Thrown when the cojmmandingPlayer has no card.</exception>
+        public static RushCommand CreateRandomCommand(IGameInformation g, PlayerAccount commandingPlayer)
+        {
+            var target = g.HandOf(commandingPlayer).SelectRandomCard();
+            return new RushCommand(commandingPlayer, target.Name);
+        }
     }
 }

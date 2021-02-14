@@ -16,7 +16,7 @@ namespace OverroidModel.Test.Card.Master
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Spy }, // Attacking
                 cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Defending
-                );
+            );
 
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Spy, CardName.Innocence, game);
 
@@ -31,7 +31,7 @@ namespace OverroidModel.Test.Card.Master
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Spy }, // Attacking
                 cardNamesInHumanHand: new List<CardName>() { CardName.Diva } // Defending
-                );
+            );
 
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Spy, CardName.Diva, game);
 
@@ -46,7 +46,7 @@ namespace OverroidModel.Test.Card.Master
                 round: 6,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Spy }, // Defending
                 cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Attacking
-                );
+            );
             Assert.Equal(1, game.HandOf(game.HumanPlayer).Count);
 
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Innocence, CardName.Spy, game);
@@ -62,7 +62,7 @@ namespace OverroidModel.Test.Card.Master
                 round: 5,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Spy }, // Attacking
                 cardNamesInHumanHand: new List<CardName>() { CardName.Innocence, CardName.Creator } // Defending
-                );
+            );
             game.HandOf(game.HumanPlayer).CardOf(CardName.Creator)!.RevealByHack();
 
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Spy, CardName.Innocence, game);
@@ -79,7 +79,7 @@ namespace OverroidModel.Test.Card.Master
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Idol, CardName.Spy }, // Attacking
                 cardNamesInHumanHand: new List<CardName>() { CardName.Innocence, CardName.Creator } // Defending
-                );
+            );
 
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Spy, CardName.Innocence, game);
 
@@ -101,7 +101,7 @@ namespace OverroidModel.Test.Card.Master
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Idol, CardName.Spy }, // Attacking
                 cardNamesInHumanHand: new List<CardName>() { CardName.Innocence, CardName.Creator } // Defending
-                );
+            );
 
             game.HandOf(game.OverroidPlayer).CardOf(CardName.Idol)!.RevealByHack();
 
@@ -112,25 +112,8 @@ namespace OverroidModel.Test.Card.Master
             var command = new EspionageCommand(game.OverroidPlayer, CardName.Idol, CardName.Creator);
             game.ReceiveCommand(command);
 
-
             Assert.True(game.HandOf(game.HumanPlayer).HasCard(CardName.Idol));
             CustomAssertion.CardIsHacked(game.HandOf(game.HumanPlayer).CardOf(CardName.Idol)!);
-        }
-
-        [Fact]
-        public void Test_CommandGenerateChoosesUnRevealedCard()
-        {
-            var game = TestGameBuilder.CreateIndividualGame(
-                round: 4,
-                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence, CardName.Idol } // Defending
-                );
-            var hand = game.HandOf(game.HumanPlayer);
-            hand.CardOf(CardName.Innocence)!.RevealByHack();
-
-            var command = CommandGenerate.CreateRamdomEspionageCommand(game, game.OverroidPlayer, CardName.Unknown);
-            Assert.Equal(CardName.Idol, command.SecondTargetCardName);
-
-
         }
     }
 }

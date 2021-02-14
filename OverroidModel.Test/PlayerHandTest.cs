@@ -225,7 +225,36 @@ namespace OverroidModel.Test
         }
 
         [Fact]
-        public void Test_SelectRadomUnrevealedLand_SelectedCardIsStillInHand()
+        public void Test_SelectRadomCard_SelectedCardIsStillInHand()
+        {
+            var player = new PlayerAccount("hoge");
+            var cards = GetCardList(player);
+            var hand = new PlayerHand(player, cards);
+            var selected = hand.SelectRandomCard();
+
+            Assert.True(hand.HasCard(selected.Name));
+        }
+
+        [Fact]
+        public void Test_SelectRadomCard_HackedCardsCanBeChosen()
+        {
+            var player = new PlayerAccount("hoge");
+            var cards = new List<InGameCard>()
+            {
+                CardDictionary.GetInGameCard(CardName.Innocence, player),
+                CardDictionary.GetInGameCard(CardName.Hacker, player),
+                CardDictionary.GetInGameCard(CardName.Creator, player),
+            };
+            cards[0].RevealByHack();
+            cards[1].RevealByHack();
+            cards[2].RevealByHack();
+            var hand = new PlayerHand(player, cards);
+            hand.SelectRandomCard();
+            Assert.True(true); // Assert error not thrown;
+        }
+
+        [Fact]
+        public void Test_SelectRadomUnrevealedCard_SelectedCardIsStillInHand()
         {
             var player = new PlayerAccount("hoge");
             var cards = GetCardList(player);
@@ -237,7 +266,7 @@ namespace OverroidModel.Test
 
 
         [Fact]
-        public void Test_SelectRadomUnrevealedLand_RevealedCardNeverSelected()
+        public void Test_SelectRadomUnrevealeCard_RevealedCardNeverSelected()
         {
             var player = new PlayerAccount("hoge");
             var cards = new List<InGameCard>()
@@ -254,7 +283,7 @@ namespace OverroidModel.Test
         }
 
         [Fact]
-        public void Test_SelectRadomUnrevealedLand_GuessedCardMayBeSelected()
+        public void Test_SelectRadomUnrevealedCard_GuessedCardMayBeSelected()
         {
             var player = new PlayerAccount("hoge");
             var cards = new List<InGameCard>()
@@ -273,7 +302,7 @@ namespace OverroidModel.Test
         }
 
         [Fact]
-        public void Test_SelectRadomUnrevealedLand_ThrownIfAllCardsAreRevealed()
+        public void Test_SelectRadomUnrevealedCard_ThrownIfAllCardsAreRevealed()
         {
             var player = new PlayerAccount("hoge");
             var cards = new List<InGameCard>()

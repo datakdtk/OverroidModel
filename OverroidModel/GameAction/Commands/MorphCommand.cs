@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using OverroidModel.Card;
 using OverroidModel.Card.Effects;
@@ -60,6 +61,29 @@ namespace OverroidModel.GameAction.Commands
             {
                 throw new UnavailableActionException("Morph target round must be previous rounds");
             }
+        }
+
+        /// <summary>
+        /// Choose target of Morph effect at random.
+        /// </summary>
+        /// <param name="g">Current game object.</param>
+        /// <param name="commandingPlayer">Controller of Beast card.</param>
+        /// <exception cref="UnavailableActionException">Thrown this is first round.</exception>
+        public static MorphCommand CreateRandomCommand(IGameInformation g, PlayerAccount commandingPlayer)
+        {
+            var preveousRound = g.CurrentBattle.Round - 1;
+            if (preveousRound <= 0)
+            {
+                throw new UnavailableActionException("There are no battle cards to be Morph target.");
+            }
+            var rand = new Random();
+            var randomRound = rand.Next(1, preveousRound + 1);
+            var target = g.Battles[randomRound - 1].CardOf(g.OpponentOf(commandingPlayer)); ;
+            if (target == null)
+            {
+                throw new GameLogicException("Failed to choose Morph target at random. Not found");
+            }
+            return new MorphCommand(commandingPlayer, target.Name);
         }
     }
 }

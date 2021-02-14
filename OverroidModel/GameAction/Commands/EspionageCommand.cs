@@ -63,5 +63,39 @@ namespace OverroidModel.GameAction.Commands
                 throw new UnavailableActionException("Invalid Command: opponent does not have the card to exchange");
             }
         }
+
+        /// <summary>
+        /// Choose targets Espionage at random for both players hand.
+        /// </summary>
+        /// <param name="g">Current game object.</param>
+        /// <param name="commandingPlayer">Controller of Spy card.</param>
+        /// <exception cref="Exceptions.UnavailableActionException">Thrown when either player has no card.</exception>
+        public static EspionageCommand CreateRandomCommand(IGameInformation g, PlayerAccount commandingPlayer)
+        {
+            var myTarget = g.HandOf(commandingPlayer).SelectRandomCard();
+            var opponentTarget = g.HandOf(g.OpponentOf(commandingPlayer)).SelectRandomCard();
+            return new EspionageCommand(commandingPlayer, myTarget.Name, opponentTarget.Name);
+        }
+
+        /// <summary>
+        /// Choose target opponent card of Espionage at random.
+        /// Used when player choose not get opponent's revealed card by the effect.
+        /// </summary>
+        /// <param name="g">Current game object.</param>
+        /// <param name="commandingPlayer">Controller of Spy card.</param>
+        /// <param name="targetMyCardName">Name of card in controller's hand that will be given to the opponent.</param>
+        /// <exception cref="Exceptions.CardNotFoundException">Thrown when the commandingPlayer has given target card.</exception>
+        /// <exception cref="Exceptions.UnavailableActionException">Thrown when the opponent has no unrevealed card.</exception>
+        public static EspionageCommand CreateRandomCommandWithMyCardChoice(IGameInformation g, PlayerAccount commandingPlayer, CardName targetMyCardName)
+        {
+            if (!g.HandOf(commandingPlayer).HasCard(targetMyCardName))
+            {
+                throw new CardNotFoundException("commanding player does not have target card for espionage.");
+            }
+            var opponentHand = g.HandOf(g.OpponentOf(commandingPlayer));
+            var randomTarget = opponentHand.SelectRandomUnrevealCard();
+            return new EspionageCommand(commandingPlayer, targetMyCardName, randomTarget.Name);
+        }
+
     }
 }

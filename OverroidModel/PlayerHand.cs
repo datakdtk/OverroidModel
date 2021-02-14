@@ -59,13 +59,29 @@ namespace OverroidModel
         public bool HasCard(CardName cn) => CardOf(cn) != null;
 
         /// <summary>
-        /// Selects an unrevealed card at random and returns it.
+        /// Selects an card at random including revealed cards.
         /// </summary>
-        /// <returns>Removed card.</returns>
+        /// <returns>Selected card.</returns>
+        /// <exception cref="UnavailableActionException">Thrown when there is no card in the hand.</exception>
+        public InGameCard SelectRandomCard()
+        {
+            if (Count == 0)
+            {
+                throw new UnavailableActionException("Card does not exist in hand. So cannot choose at random");
+            }
+            var rand = new Random();
+            var randomIndex = rand.Next(Count - 1);
+            return cards[randomIndex];
+        }
+
+        /// <summary>
+        /// Selects an unrevealed card at random.
+        /// </summary>
+        /// <returns>Selected card.</returns>
         /// <exception cref="UnavailableActionException">Thrown when there is no unrevealed card in the hand.</exception>
         public InGameCard SelectRandomUnrevealCard()
         {
-            var unrevealedCards = cards.FindAll( c=> !c.IsHacked() );
+            var unrevealedCards = cards.FindAll( c => !c.IsHacked() );
             if (unrevealedCards.Count == 0)
             {
                 throw new UnavailableActionException("Unrevealed card does not exist. So cannot choose at random");
