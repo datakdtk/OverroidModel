@@ -7,7 +7,7 @@ namespace OverroidModel.Config
     /// <summary>
     /// Interface to get customized game rule.
     /// </summary>
-    interface IGameConfig
+    public interface IGameConfig
     {
 
         /// <summary>

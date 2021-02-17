@@ -6,7 +6,7 @@ namespace OverroidModel
     /// <summary>
     /// Interface to prepare shuffled card deck.
     /// </summary>
-    interface ICardShuffler
+    public interface ICardShuffler
     {
         /// <summary>
         /// Shuffle cards according to seed string,
