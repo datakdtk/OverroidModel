@@ -11,7 +11,7 @@ namespace OverroidModel
     /// <summary>
     /// Builder class to create IGameInformation implementations.
     /// </summary>
-    class IndividualGameBuilder
+    public class IndividualGameBuilder
     {
         readonly ICardShuffler shuffler;
 
