@@ -46,6 +46,10 @@ namespace OverroidModel.GameAction.Commands
             Debug.Assert(myHand.Cards.Count == opponentHand.Cards.Count);
             var myCard = myHand.RemoveCard(targetMyCardName);
             var opponentCard = opponentHand.RemoveCard(targetOpponentCardName);
+
+            myCard.ChangeOwner(opponentHand.Player);
+            opponentCard.ChangeOwner(myHand.Player);
+
             myHand.AddCard(opponentCard);
             opponentHand.AddCard(myCard);
             Debug.Assert(myHand.Cards.Count == opponentHand.Cards.Count);

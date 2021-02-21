@@ -136,14 +136,27 @@ namespace OverroidModel.Test.Card
         }
 
         [Fact]
+        public void Test_IsVisibleTo_AlwaysVisibleToOwner()
+        {
+            var master = new Innocence();
+            var p1 = new PlayerAccount("hoge");
+            var card = new InGameCard(master, p1);
+
+            Assert.True(card.IsVisibleTo(p1));
+            var p2 = new PlayerAccount("fuga");
+            Assert.False(card.IsVisibleTo(p2));
+        }
+
+        [Fact]
         public void Test_IsVisibleTo_TrueForAllPlayersWhenHacked()
         {
             var master = new Innocence();
-            var card = new InGameCard(master, new PlayerAccount("hoge"));
-            var anotherMaster = new Overroid();
+            var p1 = new PlayerAccount("hoge");
+            var card = new InGameCard(master, p1);
             card.RevealByHack();
             CustomAssertion.CardIsHacked(card);
 
+            Assert.True(card.IsVisibleTo(p1));
             var p2 = new PlayerAccount("fuga");
             Assert.True(card.IsVisibleTo(p2));
         }
@@ -152,10 +165,12 @@ namespace OverroidModel.Test.Card
         public void Test_IsVisibleTo_TrueForAllPlayersWhenOpened()
         {
             var master = new Innocence();
-            var card = new InGameCard(master, new PlayerAccount("hoge"));
+            var p1 = new PlayerAccount("hoge");
+            var card = new InGameCard(master, p1);
             card.Open();
             CustomAssertion.CardIsOpened(card);
 
+            Assert.True(card.IsVisibleTo(p1));
             var p2 = new PlayerAccount("fuga");
             Assert.True(card.IsVisibleTo(p2));
         }

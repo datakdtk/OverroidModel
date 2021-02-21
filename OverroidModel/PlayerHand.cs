@@ -114,6 +114,10 @@ namespace OverroidModel
         /// <param name="c">Card to add</param>
         internal void AddCard(InGameCard c)
         {
+            if (c.Owner != player)
+            {
+                throw new GameLogicException("Card is tried to add to hand of non-owner player");
+            }
             c.ReturnToDefault();
             c.SetGuessed();
             cards.Add(c);

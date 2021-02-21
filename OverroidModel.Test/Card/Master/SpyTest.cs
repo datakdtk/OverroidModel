@@ -88,11 +88,32 @@ namespace OverroidModel.Test.Card.Master
             var command = new EspionageCommand(game.OverroidPlayer, CardName.Idol, CardName.Creator);
             game.ReceiveCommand(command);
 
-
             Assert.True(game.HandOf(game.HumanPlayer).HasCard(CardName.Idol));
             Assert.True(game.HandOf(game.OverroidPlayer).HasCard(CardName.Creator));
             Assert.Equal(2, game.Battles.Count); // New round has begun,
         }
+
+        [Fact]
+        public void Test_OwnersOfExchangedCardsHasChanged()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 1,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Idol, CardName.Spy }, // Attacking
+                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence, CardName.Creator } // Defending
+            );
+
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Spy, CardName.Innocence, game);
+
+            CustomAssertion.WaitingForCommand<EspionageCommand>(game.OverroidPlayer, game);
+
+            var command = new EspionageCommand(game.OverroidPlayer, CardName.Idol, CardName.Creator);
+            game.ReceiveCommand(command);
+
+            Assert.Equal(game.HumanPlayer, game.HandOf(game.HumanPlayer).CardOf(CardName.Idol)!.Owner);
+            Assert.Equal(game.OverroidPlayer, game.HandOf(game.OverroidPlayer).CardOf(CardName.Creator)!.Owner);
+            Assert.Equal(2, game.Battles.Count); // New round has begun,
+        }
+
 
         [Fact]
         public void Test_HackedCardIsStillHackedAfterExchange()

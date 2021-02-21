@@ -53,18 +53,23 @@ namespace OverroidModel.Card
 
         public bool IsVisibleTo(PlayerAccount player)
         {
-            return IsOpened() || visibility == CardVisibility.Hacked; 
+            return player == owner || IsOpened() || visibility == CardVisibility.Hacked; 
         }
 
         /// <summary>
         /// Check if the opponent of card owner can guess the owner has the card.
         /// </summary>
-        internal bool IsGuessable() => visibility != CardVisibility.Hidden;
+        public bool IsGuessable() => visibility != CardVisibility.Hidden;
 
         /// <summary>
         /// Check if the card is revealed by Hacker's card effect.
         /// </summary>
-        internal bool IsHacked() => visibility == CardVisibility.Hacked;
+        public bool IsHacked() => visibility == CardVisibility.Hacked;
+
+        /// <summary>
+        /// Change owner of this card.
+        /// </summary>
+        internal void ChangeOwner(PlayerAccount newOwner) => owner = newOwner;
 
         /// <summary>
         /// Marks the card guessable.
