@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using OverroidModel.Card;
 using OverroidModel.GameAction;
 using OverroidModel.GameAction.Commands;
@@ -39,7 +40,7 @@ namespace OverroidModel.Test
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva }
-                );
+            );
             var player = game.OverroidPlayer;
 
             var command = new CardPlacement(player, CardName.Diva, null);
@@ -57,7 +58,7 @@ namespace OverroidModel.Test
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva }
-                );
+            );
 
             var player = game.OverroidPlayer;
             var command = new CardPlacement(player, CardName.Diva, null);
@@ -73,7 +74,7 @@ namespace OverroidModel.Test
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Idol }
-                );
+            );
 
             var player1 = game.OverroidPlayer;
             var command1 = new CardPlacement(player1, CardName.Diva, null);
@@ -97,7 +98,7 @@ namespace OverroidModel.Test
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Idol }
-                );
+            );
 
             var player1 = game.OverroidPlayer;
             var command1 = new CardPlacement(player1, CardName.Diva, null);
@@ -120,7 +121,7 @@ namespace OverroidModel.Test
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Idol },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Diva }
-                );
+            );
 
             var player1 = game.OverroidPlayer;
             var command1 = new CardPlacement(player1, CardName.Idol, null);
@@ -144,7 +145,7 @@ namespace OverroidModel.Test
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Idol }
-                );
+            );
 
             var player1 = game.OverroidPlayer;
             var command1 = new CardPlacement(player1, CardName.Diva, null);
@@ -167,7 +168,7 @@ namespace OverroidModel.Test
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Idol }
-                );
+            );
 
             var player1 = game.OverroidPlayer;
             var command1 = new CardPlacement(player1, CardName.Diva, null);
@@ -188,7 +189,7 @@ namespace OverroidModel.Test
                 round: 6,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Idol }
-                );
+            );
 
             var player1 = game.HumanPlayer;
             var command1 = new CardPlacement(player1, CardName.Idol, null);
@@ -211,7 +212,7 @@ namespace OverroidModel.Test
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Idol }
-                );
+            );
 
             var player1 = game.OverroidPlayer;
             var command1 = new CardPlacement(player1, CardName.Diva, null);
@@ -237,7 +238,7 @@ namespace OverroidModel.Test
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Idol }
-                );
+            );
 
             var player1 = game.OverroidPlayer;
             var command1 = new CardPlacement(player1, CardName.Diva, null);
@@ -265,7 +266,7 @@ namespace OverroidModel.Test
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Spy },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Legion }
-                );
+            );
 
             var player1 = game.OverroidPlayer;
             var command1 = new CardPlacement(player1, CardName.Spy, null);
@@ -298,7 +299,7 @@ namespace OverroidModel.Test
                 round: 6,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Idol }
-                );
+            );
 
             var player1 = game.HumanPlayer;
             var command1 = new CardPlacement(player1, CardName.Idol, null);
@@ -320,7 +321,7 @@ namespace OverroidModel.Test
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Doctor },
                 cardNamesInHumanHand: new List<CardName>() { CardName.Legion }
-                );
+            );
 
             var player1 = game.OverroidPlayer;
             var command1 = new CardPlacement(player1, CardName.Doctor, null);
@@ -343,6 +344,37 @@ namespace OverroidModel.Test
             var nextAction = game.ResolveNextAction();
             Assert.NotNull(nextAction);
             Assert.IsNotType<TrampleEffect>(nextAction);
+        }
+
+        [Fact]
+        public void Test_AllCards_KeepTrackingMovedCard()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 1,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Overroid }
+            );
+
+            var player = game.OverroidPlayer;
+            var command = new CardPlacement(player, CardName.Overroid, null);
+            game.ReceiveCommand(command); // card moved to battle area from hand
+
+            Assert.Equal(12, game.AllInGameCards.Count);
+            Assert.Contains(game.AllInGameCards, c => c.Name == CardName.Overroid);
+        }
+
+        [Fact]
+        public void Test_AllCards_RefrectsCardStateChanges()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 1,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Overroid }
+            );
+
+            var handCard = game.HandOf(game.OverroidPlayer).CardOf(CardName.Overroid)!;
+            handCard.SetGuessed();
+
+            var cardInAllCardList = game.AllInGameCards.First(c => c.Name == CardName.Overroid);
+            Assert.True(cardInAllCardList.IsGuessable());
         }
     }
 }

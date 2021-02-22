@@ -7,6 +7,7 @@ using OverroidModel.GameAction.Commands;
 using OverroidModel.GameAction.Effects;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 
@@ -32,6 +33,7 @@ namespace OverroidModel
         readonly PlayerAccount?[] effectDisabledPlayers;
         ICommandAuthorizer? commandAuthorizer;
         PlayerAccount? specialWinner;
+        readonly ImmutableList<InGameCard> inGameCards;
 
         /// <param name="humanPlayer"> Player who plays Human force,</param>
         /// <param name="overroidPlayer">Player who plays Overroid force.</param>
@@ -75,6 +77,8 @@ namespace OverroidModel
             actionStack = new Stack<IGameAction>();
             actionHistory = new List<IGameAction>();
             effectDisabledPlayers = new PlayerAccount?[IndividualGame.maxRound];
+
+            inGameCards = humanPlayerHand.Cards.Concat(overroidPlayerHand.Cards).ToImmutableList();
         }
 
         public PlayerAccount HumanPlayer => humanPlayer;
@@ -111,6 +115,8 @@ namespace OverroidModel
 
         public bool DetectionAvailable => config.DetectionAvailable;
         public (Type type, PlayerAccount player)? ExpectedCommandInfo => commandAuthorizer?.RequiredCommandInfo;
+
+        public IReadOnlyList<InGameCard> AllInGameCards => inGameCards;
 
         public bool HasFinished()
         {

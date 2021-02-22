@@ -39,6 +39,11 @@ namespace OverroidModel
         public Battle CurrentBattle { get; }
 
         /// <summary>
+        /// All cards used in the game.
+        /// </summary>
+        public IReadOnlyList<InGameCard> AllInGameCards { get; }
+
+        /// <summary>
         /// Card that was not distributed to player's hands.
         /// </summary>
         public OutsideCard HiddenCard { get;  }
