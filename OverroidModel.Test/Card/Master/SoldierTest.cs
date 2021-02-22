@@ -69,6 +69,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new RushCommand(game.OverroidPlayer, CardName.Idol);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
 
             Assert.Equal(CardName.Idol, game.Battles[0].CardOf(game.OverroidPlayer).Name);
@@ -93,6 +94,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new RushCommand(game.OverroidPlayer, CardName.Idol);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
             Assert.Equal(game.OverroidPlayer, game.Battles[0].Winner);
         }

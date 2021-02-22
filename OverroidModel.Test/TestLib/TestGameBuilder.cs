@@ -41,7 +41,7 @@ namespace OverroidModel.Test.TestLib
 
             var g = (IndividualGame)ig;
             g.PushToActionStack(new RoundStart());
-            g.ResolveStacks();
+            g.ResolveAllActions();
             return g;
         }
 
@@ -63,6 +63,7 @@ namespace OverroidModel.Test.TestLib
             var battle = game.CurrentBattle;
             game.ReceiveCommand(new CardPlacement(battle.AttackingPlayer, attakingCardName, null));
             game.ReceiveCommand(new CardPlacement(battle.DefendingPlayer, defendingCardName, null));
+            game.ResolveAllActions();
         }
 
     }

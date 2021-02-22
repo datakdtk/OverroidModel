@@ -86,6 +86,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new HackCommand(game.OverroidPlayer, CardName.Creator);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
             var hand = game.HandOf(game.HumanPlayer);
             CustomAssertion.CardIsHacked(hand.CardOf(CardName.Creator)!);

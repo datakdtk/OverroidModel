@@ -56,6 +56,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new MorphCommand(game.OverroidPlayer, CardName.Creator);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
             CustomAssertion.WinsInLastRound(CardName.Beast, game);
         }
@@ -75,6 +76,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new MorphCommand(game.OverroidPlayer, CardName.Doctor);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
             CustomAssertion.WinsInLastRound(CardName.Beast, game);
         }
@@ -94,6 +96,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new MorphCommand(game.OverroidPlayer, CardName.Overroid);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
             CustomAssertion.WinsInLastRound(CardName.Beast, game);
             CustomAssertion.ActionIsInHistory<SingularityEffect>(game.ActionHistory);
@@ -115,6 +118,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new MorphCommand(game.OverroidPlayer, CardName.Overroid);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
             CustomAssertion.LosesInLastRound(CardName.Beast, game);
             CustomAssertion.ActionIsNotInHistory<SingularityEffect>(game.ActionHistory);
@@ -136,6 +140,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new MorphCommand(game.OverroidPlayer, CardName.Hacker);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
             CustomAssertion.WinsInLastRound(CardName.Beast, game);
             CustomAssertion.WaitingForCommand<HackCommand>(game.OverroidPlayer, game);

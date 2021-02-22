@@ -174,7 +174,38 @@ namespace OverroidModel
             command.Validate(this);
             PushToActionStack(command);
             commandAuthorizer = null;
-            ResolveStacks();
+            ResolveNextAction();
+        }
+
+        public IGameAction? ResolveNextAction()
+        {
+            if (HasFinished())
+            {
+                actionStack.Clear();
+                return null;
+            }
+            
+            if (commandAuthorizer != null || actionStack.Count == 0)
+            {
+                return null;
+            }
+
+            var action = actionStack.Pop();
+
+            var effect = action as ICardEffectAction;
+            if (effect != null && EffectIsDisabled(CurrentBattle.Round, CurrentBattle.PlayerOf(effect.SourceCardName)))
+            {
+                return ResolveNextAction(); // Ignore effect action and go next
+            }
+
+            action.Resolve(this);
+            actionHistory.Add(action);
+            return action;
+        }
+
+        public void ResolveAllActions()
+        {
+            while (ResolveNextAction() != null);
         }
 
         void IMutableGame.AddNewRound()
@@ -204,28 +235,6 @@ namespace OverroidModel
         void IMutableGame.PushToActionStack(IGameAction a) => PushToActionStack(a);
 
         void IMutableGame.SetSpecialWinner(PlayerAccount p) => specialWinner = p;
-
-        internal void ResolveStacks()
-        {
-            while (commandAuthorizer == null && actionStack.Count > 0)
-            {
-                if (HasFinished())
-                {
-                    actionStack.Clear();
-                    break;
-                }
-                var a = actionStack.Pop();
-
-                var effect = a as ICardEffectAction;
-                if (effect != null && EffectIsDisabled(CurrentBattle.Round, CurrentBattle.PlayerOf(effect.SourceCardName)))
-                {
-                    continue; // Effect gets disabled and ignored;
-                }
-
-                a.Resolve(this);
-                actionHistory.Add(a);
-            }
-        }
 
         internal void PushToActionStack(IGameAction a)
         {

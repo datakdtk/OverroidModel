@@ -61,7 +61,7 @@ namespace OverroidModel
                 config
                 );
             game.PushToActionStack(new RoundStart());
-            game.ResolveStacks();
+            game.ResolveAllActions();
             return game;
         }
 
@@ -86,6 +86,7 @@ namespace OverroidModel
             foreach (var c in commandHistory)
             {
                 game.ReceiveCommand(c);
+                game.ResolveAllActions();
             }
             return game;
         }

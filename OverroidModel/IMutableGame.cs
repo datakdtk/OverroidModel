@@ -11,10 +11,21 @@ namespace OverroidModel
     {
 
         /// <summary>
-        /// Receive and resolve a game command by a player in game.
+        /// Receive new game command and resolve it.
         /// </summary>
         /// <exception cref="UnavailableActionException">Thrown when the command is not applicable in the current game state.</exception>
         public void ReceiveCommand(IGameCommand command);
+
+        /// <summary>
+        /// Proceed the game state by one.
+        /// </summary>
+        /// <returns> Resolved Action. Returns null if there is no action to resolve or the game waiting for external command.</returns>
+        public IGameAction? ResolveNextAction();
+
+        /// <summary>
+        /// Proceed the game status until action stack get empty or the game is waiting for external command.
+        /// </summary>
+        public void ResolveAllActions();
 
         /// <summary>
         /// Create new battle and add it to the game.

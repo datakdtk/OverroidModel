@@ -87,6 +87,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new EspionageCommand(game.OverroidPlayer, CardName.Idol, CardName.Creator);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
             Assert.True(game.HandOf(game.HumanPlayer).HasCard(CardName.Idol));
             Assert.True(game.HandOf(game.OverroidPlayer).HasCard(CardName.Creator));
@@ -108,6 +109,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new EspionageCommand(game.OverroidPlayer, CardName.Idol, CardName.Creator);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
             Assert.Equal(game.HumanPlayer, game.HandOf(game.HumanPlayer).CardOf(CardName.Idol)!.Owner);
             Assert.Equal(game.OverroidPlayer, game.HandOf(game.OverroidPlayer).CardOf(CardName.Creator)!.Owner);
@@ -132,6 +134,7 @@ namespace OverroidModel.Test.Card.Master
 
             var command = new EspionageCommand(game.OverroidPlayer, CardName.Idol, CardName.Creator);
             game.ReceiveCommand(command);
+            game.ResolveAllActions();
 
             Assert.True(game.HandOf(game.HumanPlayer).HasCard(CardName.Idol));
             CustomAssertion.CardIsHacked(game.HandOf(game.HumanPlayer).CardOf(CardName.Idol)!);
