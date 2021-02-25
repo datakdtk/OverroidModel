@@ -2,7 +2,7 @@
 
 namespace OverroidModel.GameAction.Effects
 {
-    class NoEffectAction : ICardEffectAction
+    public class NoEffectAction : ICardEffectAction
     {
         readonly PlayerAccount controller;
         readonly CardName sourceCardName;

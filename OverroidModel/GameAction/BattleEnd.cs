@@ -6,7 +6,7 @@ namespace OverroidModel.GameAction
     /// <summary>
     /// Action to compare the card values and determine the battle winner.
     /// </summary>
-    class BattleEnd : IGameAction
+    public class BattleEnd : IGameAction
     {
 
         public PlayerAccount? Controller => null;

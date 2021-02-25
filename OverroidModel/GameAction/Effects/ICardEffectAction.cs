@@ -2,7 +2,7 @@
 
 namespace OverroidModel.GameAction.Effects
 {
-    interface ICardEffectAction : IGameAction
+    public interface ICardEffectAction : IGameAction
     {
         /// <summary>
         /// Name of the card that this effect is triggered from
