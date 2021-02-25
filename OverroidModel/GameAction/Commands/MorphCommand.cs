@@ -31,6 +31,8 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName? SecondTargetCardName => null;
 
+        public CardName MorphTargetCardName => targetCardName;
+
         public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
         {
             ["targetCardName"] = TargetCardName?.ToString() ?? "",

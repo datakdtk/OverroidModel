@@ -32,6 +32,10 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName? SecondTargetCardName => targetOpponentCardName;
 
+        public CardName TargetMyCardName => targetMyCardName;
+
+        public CardName TargetOpponentCardName => targetOpponentCardName;
+
         public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
         {
             ["targetMyCardName"] = targetMyCardName.ToString(),

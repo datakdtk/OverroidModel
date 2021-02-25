@@ -32,6 +32,8 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName? SecondTargetCardName => null;
 
+        public CardName CardNameToPlace => cardNameToPlace;
+
         public CardName? DetectedCardName => detectedCardName;
 
         public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
