@@ -60,7 +60,7 @@ namespace OverroidModel.Test.GameAction.Commands
         public void Test_CreateRandomCommand_CreatedCommandIsValid()
         {
             var game = TestGameBuilder.CreateIndividualGame(
-                round: 4,
+                round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Innocence, CardName.Idol }
             );
             var me = game.OverroidPlayer;
