@@ -61,7 +61,6 @@ namespace OverroidModel
                 config
                 );
             game.PushToActionStack(new RoundStart());
-            game.ResolveAllActions();
             return game;
         }
 

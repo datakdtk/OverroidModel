@@ -1,4 +1,5 @@
 ﻿using OverroidModel.Card;
+using OverroidModel.Exceptions;
 using OverroidModel.GameAction.Commands;
 using OverroidModel.Test.TestLib;
 using Xunit;
@@ -8,7 +9,7 @@ namespace OverroidModel.Test
     public class IndividualGameBuilderTest
     {
         [Fact]
-        public void Test_InitializeGame_FirstRoundIsCreated()
+        public void Test_InitializeGame_FirstRoundNotIsCreatedBeforeResolvingActions()
         {
             var builder = new IndividualGameBuilder(new DummyShuffler());
 
@@ -21,14 +22,35 @@ namespace OverroidModel.Test
                 overroidPlayer: overroidPlayer,
                 shufflingSeed: "dummySeed",
                 config: config
-                );
+            );
+
+            Assert.Equal(0, game.Battles.Count);
+            Assert.Throws<GameLogicException>(() => game.CurrentBattle);
+        }
+
+        [Fact]
+        public void Test_InitializeGame_FirstRoundIsCreatedAfterResolvingActions()
+        {
+            var builder = new IndividualGameBuilder(new DummyShuffler());
+
+            var humanPlayer = new PlayerAccount("hoge");
+            var overroidPlayer = new PlayerAccount("fuga");
+            var config = new TestConfig();
+
+            var game = builder.InitializeGame(
+                humanPlayer: humanPlayer,
+                overroidPlayer: overroidPlayer,
+                shufflingSeed: "dummySeed",
+                config: config
+            );
+            game.ResolveAllActions();
 
             Assert.Equal(1, game.Battles.Count);
             Assert.Equal(1, game.CurrentBattle.Round);
         }
 
         [Fact]
-        public void Test_InitializeGame_OverroidAttacksInFirstRound()
+        public void Test_InitializeGame_OverroidAttacksInFirstRoundAfterResolvingActions()
         {
             var builder = new IndividualGameBuilder(new DummyShuffler());
 
@@ -41,14 +63,15 @@ namespace OverroidModel.Test
                 overroidPlayer: overroidPlayer,
                 shufflingSeed: "dummySeed",
                 config: config
-                );
+            );
+            game.ResolveAllActions();
 
             Assert.Equal(overroidPlayer, game.CurrentBattle.AttackingPlayer);
             Assert.Equal(humanPlayer, game.CurrentBattle.DefendingPlayer);
         }
-
+        
         [Fact]
-        public void Test_InitializeGame_CheckExpectedCommand()
+        public void Test_InitializeGame_NotWaitingForCommandBeforeResolvingActions()
         {
             var builder = new IndividualGameBuilder(new DummyShuffler());
 
@@ -61,7 +84,28 @@ namespace OverroidModel.Test
                 overroidPlayer: overroidPlayer,
                 shufflingSeed: "dummySeed",
                 config: config
-                );
+            );
+
+            Assert.Null(game.ExpectedCommandInfo);
+        }
+
+
+        [Fact]
+        public void Test_InitializeGame_CheckExpectedCommandAfterResolvingActions()
+        {
+            var builder = new IndividualGameBuilder(new DummyShuffler());
+
+            var humanPlayer = new PlayerAccount("hoge");
+            var overroidPlayer = new PlayerAccount("fuga");
+            var config = new TestConfig();
+
+            var game = builder.InitializeGame(
+                humanPlayer: humanPlayer,
+                overroidPlayer: overroidPlayer,
+                shufflingSeed: "dummySeed",
+                config: config
+            );
+            game.ResolveAllActions();
 
             CustomAssertion.WaitingForCommand<CardPlacement>(overroidPlayer, game);
         }
@@ -80,7 +124,7 @@ namespace OverroidModel.Test
                 overroidPlayer: overroidPlayer,
                 shufflingSeed: "dummySeed",
                 config: config
-                );
+            );
 
             var hand = game.HandOf(humanPlayer);
             Assert.Equal(6, hand.Count);
@@ -104,7 +148,7 @@ namespace OverroidModel.Test
                 overroidPlayer: overroidPlayer,
                 shufflingSeed: "dummySeed",
                 config: config
-                );
+            );
 
             var hand = game.HandOf(overroidPlayer);
             Assert.Equal(6, hand.Count);
@@ -128,7 +172,7 @@ namespace OverroidModel.Test
                 overroidPlayer: overroidPlayer,
                 shufflingSeed: "dummySeed",
                 config: config
-                );
+            );
 
             var hiddenCard = game.HiddenCard;
             Assert.False(hiddenCard.IsVisibleTo(humanPlayer));
@@ -149,7 +193,7 @@ namespace OverroidModel.Test
                 overroidPlayer: overroidPlayer,
                 shufflingSeed: "dummySeed",
                 config: config
-                );
+            );
 
             var triggerCard = game.TriggerCard;
             Assert.Null(triggerCard);
@@ -170,7 +214,7 @@ namespace OverroidModel.Test
                 overroidPlayer: overroidPlayer,
                 shufflingSeed: "dummySeed",
                 config: config
-                );
+            );
 
             var hiddenCard = game.HiddenCard;
             Assert.False(hiddenCard.IsVisibleTo(humanPlayer));
@@ -192,7 +236,7 @@ namespace OverroidModel.Test
                 overroidPlayer: overroidPlayer,
                 shufflingSeed: "dummySeed",
                 config: config
-                );
+            );
 
             var triggerCard = game.TriggerCard;
             Assert.NotNull(triggerCard);
