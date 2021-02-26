@@ -1,6 +1,5 @@
 ﻿using OverroidModel.Card;
 using OverroidModel.Card.Master;
-using OverroidModel.Config;
 using OverroidModel.Exceptions;
 using OverroidModel.GameAction;
 using OverroidModel.GameAction.Commands;
@@ -82,6 +81,7 @@ namespace OverroidModel
 
         public PlayerAccount HumanPlayer => humanPlayer;
         public PlayerAccount OverroidPlayer => overroidPlayer;
+        public IGameConfig Config => config;
         public OutsideCard HiddenCard => hiddendCard;
         public OutsideCard? TriggerCard => triggerCard;
         public IReadOnlyList<IGameAction> ActionHistory => actionHistory;
@@ -109,7 +109,6 @@ namespace OverroidModel
             }
         }
 
-        public bool DetectionAvailable => config.DetectionAvailable;
         public ICommandRequirement? CommandRequirement => commandAuthorizer?.CommandRequirement;
         public IReadOnlyList<InGameCard> AllInGameCards => inGameCards;
 

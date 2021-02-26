@@ -1,5 +1,4 @@
 ﻿using OverroidModel.Card;
-using OverroidModel.Config;
 using OverroidModel.GameAction;
 using OverroidModel.GameAction.Commands;
 using System;

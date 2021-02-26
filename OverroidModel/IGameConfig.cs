@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OverroidModel.Config
+﻿namespace OverroidModel
 {
     /// <summary>
     /// Interface to get customized game rule.
@@ -15,7 +11,6 @@ namespace OverroidModel.Config
         /// </summary>
         bool DetectionAvailable { get; }
 
-        
         /// <summary>
         /// Whether adds Watcher card to first deck and uses 14 cards for the game.
         /// </summary>

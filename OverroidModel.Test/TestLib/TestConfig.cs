@@ -1,6 +1,4 @@
-﻿using OverroidModel.Config;
-
-namespace OverroidModel.Test.TestLib
+﻿namespace OverroidModel.Test.TestLib
 {
     class TestConfig : IGameConfig
     {

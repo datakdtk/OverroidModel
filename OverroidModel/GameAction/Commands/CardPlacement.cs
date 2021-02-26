@@ -53,7 +53,7 @@ namespace OverroidModel.GameAction.Commands
             }
             else
             {
-                var detectedCardName = g.DetectionAvailable ? this.detectedCardName : null;
+                var detectedCardName = g.Config.DetectionAvailable ? this.detectedCardName : null;
                 battle.SetCard(player, card, detectedCardName);
                 var ap = battle.AttackingPlayer;
                 g.PushToActionStack(new CardOpen(ap, battle.CardOf(ap).Name));

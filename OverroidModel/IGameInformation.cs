@@ -24,6 +24,11 @@ namespace OverroidModel
         public PlayerAccount OverroidPlayer { get; }
 
         /// <summary>
+        /// Customized game rules.
+        /// </summary>
+        public IGameConfig Config { get; }
+
+        /// <summary>
         /// Game actions from the beginning to current game state.
         /// </summary>
         public IReadOnlyList<IGameAction> ActionHistory { get; }
@@ -58,11 +63,6 @@ namespace OverroidModel
         /// Winner of the game if already determined.
         /// </summary>
         public PlayerAccount? Winner { get; }
-
-        /// <summary>
-        /// Whether defending player detect a card in battles.
-        /// </summary>
-        public bool DetectionAvailable { get; }
 
         /// <summary>
         /// Whose and which command is expected to be given. If no command is expected, returns null.
