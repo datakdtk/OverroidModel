@@ -49,7 +49,7 @@ namespace OverroidModel.GameAction.Commands
             if (player == battle.AttackingPlayer)
             {
                 battle.SetCard(player, card, null);
-                g.AddCommandAuthorizer(new CommandAuthorizer<CardPlacement>(g.OpponentOf(player)));
+                g.AddCommandAuthorizer(new CommandAuthorizerImplement<CardPlacement>(g.OpponentOf(player)));
             }
             else
             {

@@ -65,9 +65,9 @@ namespace OverroidModel
         public bool DetectionAvailable { get; }
 
         /// <summary>
-        /// Tells whose and which command is expected to be given. If no command is expected, returns null.
+        /// Whose and which command is expected to be given. If no command is expected, returns null.
         /// </summary>
-        public (Type type, PlayerAccount player)? ExpectedCommandInfo { get; }
+        public ICommandRequirement? CommandRequirement { get; }
 
         /// <summary>
         /// Check if the game winner is already determined.

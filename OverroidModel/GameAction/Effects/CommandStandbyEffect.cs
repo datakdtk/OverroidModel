@@ -29,7 +29,7 @@ namespace OverroidModel.GameAction.Effects
         void IGameAction.Resolve(IMutableGame g)
         {
             var player = g.CurrentBattle.PlayerOf(sourceCardName);
-            g.AddCommandAuthorizer(new CommandAuthorizer<T>(player));
+            g.AddCommandAuthorizer(new CommandAuthorizerImplement<T>(player));
         }
     }
 }

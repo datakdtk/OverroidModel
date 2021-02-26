@@ -17,7 +17,7 @@ namespace OverroidModel.GameAction
         void IGameAction.Resolve(IMutableGame g)
         {
             g.AddNewRound();
-            g.AddCommandAuthorizer(new CommandAuthorizer<CardPlacement>(g.CurrentBattle.AttackingPlayer));
+            g.AddCommandAuthorizer(new CommandAuthorizerImplement<CardPlacement>(g.CurrentBattle.AttackingPlayer));
         }
     }
 }

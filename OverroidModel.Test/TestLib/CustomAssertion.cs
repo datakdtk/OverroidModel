@@ -82,20 +82,20 @@ namespace OverroidModel.Test.TestLib
 
         public static void WaitingForCommand<T>(PlayerAccount player, IGameInformation game) where T : IGameAction
         {
-            var expected = game.ExpectedCommandInfo;
-            Assert.NotNull(expected);
-            Assert.Equal(typeof(T), expected?.type);
-            Assert.Equal(player, expected?.player);
+            var requirement = game.CommandRequirement;
+            Assert.NotNull(requirement);
+            Assert.Equal(typeof(T), requirement!.CommandType);
+            Assert.Equal(player, requirement!.ComandingPlayer);
         }
 
         public static void NotWaitingForCommand<T>(IGameInformation game) where T : IGameAction
         {
-            var expected = game.ExpectedCommandInfo;
-            if (expected == null)
+            var requrement = game.CommandRequirement;
+            if (requrement == null)
             {
                 return;
             }
-            Assert.NotEqual(typeof(T), expected?.type);
+            Assert.NotEqual(typeof(T), requrement?.CommandType);
         }
     }
 }

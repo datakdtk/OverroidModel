@@ -16,6 +16,11 @@ namespace OverroidModel
         public (Type type, PlayerAccount player) RequiredCommandInfo { get; }
 
         /// <summary>
+        /// What kind of GameCommand is expected to be given;
+        /// </summary>
+        public ICommandRequirement CommandRequirement { get; }
+
+        /// <summary>
         /// Checks if given command is acceptable for current game state.
         /// </summary>
         /// <param name="command"> Command from a player.</param>
@@ -28,17 +33,22 @@ namespace OverroidModel
     /// Implementation of ICommandAuthorizer
     /// </summary>
     /// <typeparam name="T">GameCommand class that expected to be passed to the game.</typeparam>
-    class CommandAuthorizer<T> : ICommandAuthorizer where T : IGameCommand
+    class CommandAuthorizerImplement<T> : ICommandAuthorizer where T : IGameCommand
     {
         readonly PlayerAccount expectedPlayer;
+        readonly CommandRequirementImplement<T> requirement;
 
         /// <param name="expectedPlayer">Player expected to command.</param>
-        public CommandAuthorizer(PlayerAccount expectedPlayer)
+        public CommandAuthorizerImplement(PlayerAccount expectedPlayer)
         {
             this.expectedPlayer = expectedPlayer;
+            this.requirement = new CommandRequirementImplement<T>(expectedPlayer);
         }
 
         public (Type type, PlayerAccount player) RequiredCommandInfo => (typeof(T), expectedPlayer);
+
+        public ICommandRequirement CommandRequirement => requirement;
+
 
         public void Authorize(IGameCommand command)
         {

@@ -24,13 +24,13 @@ namespace OverroidModel.Test
         {
             IMutableGame game = TestGameBuilder.CreateIndividualGame();
             var player = game.HumanPlayer;
-            game.AddCommandAuthorizer(new CommandAuthorizer<DummyCommand>(player));
-            Assert.NotNull(game.ExpectedCommandInfo);
+            game.AddCommandAuthorizer(new CommandAuthorizerImplement<DummyCommand>(player));
+            Assert.NotNull(game.CommandRequirement);
 
             var command = new DummyCommand(player);
             game.ReceiveCommand(command);
 
-            Assert.Null(game.ExpectedCommandInfo);
+            Assert.Null(game.CommandRequirement);
             CustomAssertion.ActionIsInHistory<DummyCommand>(game.ActionHistory);
         }
 
@@ -276,7 +276,7 @@ namespace OverroidModel.Test
             var command2 = new CardPlacement(player2, CardName.Legion, null);
             game.ReceiveCommand(command2);
 
-            while (game.ExpectedCommandInfo == null)
+            while (game.CommandRequirement == null)
             {
                 var res = game.ResolveNextAction();
                 if (res == null)

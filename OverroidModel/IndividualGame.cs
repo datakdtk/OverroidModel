@@ -41,7 +41,7 @@ namespace OverroidModel
         /// <param name="hiddenCardMaster">Card that was not distributed to hands</param>
         /// <param name="triggerCardMaster">Another card that was not distributed to hand if exists.</param>
         /// <param name="config">Customized rule of the game</param>
-        internal IndividualGame(
+        public IndividualGame(
             PlayerAccount humanPlayer,
             PlayerAccount overroidPlayer,
             PlayerHand humanPlayerHand,
@@ -82,11 +82,8 @@ namespace OverroidModel
 
         public PlayerAccount HumanPlayer => humanPlayer;
         public PlayerAccount OverroidPlayer => overroidPlayer;
-
         public OutsideCard HiddenCard => hiddendCard;
-
         public OutsideCard? TriggerCard => triggerCard;
-
         public IReadOnlyList<IGameAction> ActionHistory => actionHistory;
         public IReadOnlyList<Battle> Battles => battles;
         public Battle CurrentBattle => battles.Count > 0 ? battles.Last() : throw new GameLogicException("Game has no battle round yet.");
@@ -113,8 +110,7 @@ namespace OverroidModel
         }
 
         public bool DetectionAvailable => config.DetectionAvailable;
-        public (Type type, PlayerAccount player)? ExpectedCommandInfo => commandAuthorizer?.RequiredCommandInfo;
-
+        public ICommandRequirement? CommandRequirement => commandAuthorizer?.CommandRequirement;
         public IReadOnlyList<InGameCard> AllInGameCards => inGameCards;
 
         public bool HasFinished()

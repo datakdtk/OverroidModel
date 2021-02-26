@@ -66,8 +66,8 @@ namespace OverroidModel.Test.Card.Master
 
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Soldier, game);
 
-            var expectedCommand = game.ExpectedCommandInfo;
-            Assert.NotEqual(typeof(RushCommand), expectedCommand?.type);
+            var expectedCommand = game.CommandRequirement;
+            Assert.NotEqual(typeof(RushCommand), expectedCommand?.CommandType);
             CustomAssertion.ActionIsNotInHistory<RushCommand>(game.ActionHistory);
         }
     }

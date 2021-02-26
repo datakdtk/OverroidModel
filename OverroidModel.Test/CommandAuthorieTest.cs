@@ -8,34 +8,25 @@ namespace OverroidModel.Test
     public class CommandAuthorieTest
     {
         [Fact]
-        public void Test_RequiredCommandInfo_SameType()
+        public void Test_CommandRequirement()
         {
-            var p = new PlayerAccount("hoge");
-            var a = new CommandAuthorizer<CardPlacement>(p);
+            var player = new PlayerAccount("hoge");
+            var authorizer = new CommandAuthorizerImplement<CardPlacement>(player);
 
-            var result = a.RequiredCommandInfo;
-            Assert.Equal(typeof(CardPlacement), result.Item1);
-            Assert.Equal(p, result.Item2);
-        }
-
-        [Fact]
-        public void Test_RequiredCommandInfo_OtherType()
-        {
-            var p = new PlayerAccount("hoge");
-            var a = new CommandAuthorizer<HackCommand>(p);
-
-            var result = a.RequiredCommandInfo;
-            Assert.NotEqual(typeof(CardPlacement), result.Item1);
+            var requirement = authorizer.CommandRequirement;
+            Assert.IsType<CommandAuthorizerImplement<CardPlacement>>(authorizer);
+            Assert.Equal(typeof(CardPlacement), requirement.CommandType);
+            Assert.Equal(player, requirement.ComandingPlayer);
         }
 
         [Fact]
         public void Test_Authorize_Pass()
         {
-            var p = new PlayerAccount("hoge");
-            var a = new CommandAuthorizer<CardPlacement>(p);
+            var player = new PlayerAccount("hoge");
+            var authorizer = new CommandAuthorizerImplement<CardPlacement>(player);
 
-            var c = new CardPlacement(p, CardName.Innocence, null);
-            a.Authorize(c);
+            var command = new CardPlacement(player, CardName.Innocence, null);
+            authorizer.Authorize(command);
 
             Assert.True(true); // Expected not to be thrown;
         }
@@ -43,22 +34,22 @@ namespace OverroidModel.Test
         [Fact]
         public void Test_Authorize_DifferntPlayer()
         {
-            var p = new PlayerAccount("hoge");
-            var a = new CommandAuthorizer<CardPlacement>(p);
+            var player = new PlayerAccount("hoge");
+            var authorizer = new CommandAuthorizerImplement<CardPlacement>(player);
 
-            var anotherP = new PlayerAccount("fuga");
-            var c = new CardPlacement(anotherP, CardName.Innocence, null);
-            Assert.Throws<UnavailableActionException>(() => a.Authorize(c));
+            var anotherPlayer = new PlayerAccount("fuga");
+            var command = new CardPlacement(anotherPlayer, CardName.Innocence, null);
+            Assert.Throws<UnavailableActionException>(() => authorizer.Authorize(command));
         }
 
         [Fact]
         public void Test_Authorize_DifferntCommandClass()
         {
-            var p = new PlayerAccount("hoge");
-            var a = new CommandAuthorizer<CardPlacement>(p);
+            var player = new PlayerAccount("hoge");
+            var authorizer = new CommandAuthorizerImplement<CardPlacement>(player);
 
-            var c = new RushCommand(p, CardName.Innocence);
-            Assert.Throws<UnavailableActionException>(() => a.Authorize(c));
+            var command = new RushCommand(player, CardName.Innocence);
+            Assert.Throws<UnavailableActionException>(() => authorizer.Authorize(command));
         }
     }
 }

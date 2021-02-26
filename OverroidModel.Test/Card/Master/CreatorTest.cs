@@ -53,7 +53,7 @@ namespace OverroidModel.Test.Card.Master
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Creator, CardName.Beast, game);
 
             // Expected Morph not to be triggered because it is first round.
-            if (game.ExpectedCommandInfo?.type == typeof(MorphCommand))
+            if (game.CommandRequirement?.CommandType == typeof(MorphCommand))
             {
                 throw new Exception("battle has not finished because waiting for morph command");
             }

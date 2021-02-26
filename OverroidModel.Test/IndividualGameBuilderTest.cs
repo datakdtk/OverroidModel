@@ -86,7 +86,7 @@ namespace OverroidModel.Test
                 config: config
             );
 
-            Assert.Null(game.ExpectedCommandInfo);
+            Assert.Null(game.CommandRequirement);
         }
 
 
