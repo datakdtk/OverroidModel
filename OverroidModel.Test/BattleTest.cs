@@ -27,7 +27,6 @@ namespace OverroidModel.Test
             Assert.False(b.HasCardOf(ap));
             Assert.False(b.HasCardOf(dp));
             Assert.Null(b.DetectedCardName);
-            Assert.False(b.HasBothPlayersCards());
         }
 
         [Fact]
@@ -57,7 +56,6 @@ namespace OverroidModel.Test
             Assert.Equal(c.Name, b.CardOf(p).Name);
             Assert.Equal(p, b.PlayerOf(c.Name));
             Assert.Null(b.DetectedCardName);
-            Assert.False(b.HasBothPlayersCards());
         }
 
         [Fact]
@@ -76,7 +74,6 @@ namespace OverroidModel.Test
             Assert.Equal(c.Name, b.CardOf(p).Name);
             Assert.Equal(p, b.PlayerOf(c.Name));
             Assert.Equal(b.DetectedCardName, detectedCardName);
-            Assert.False(b.HasBothPlayersCards());
         }
 
         [Fact]
@@ -107,7 +104,6 @@ namespace OverroidModel.Test
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, null);
-            Assert.True(b.HasBothPlayersCards());
             Assert.Null(b.Winner);
             Assert.False(b.HasFinished());
             Assert.False(b.IsDrawBattle());
@@ -129,7 +125,6 @@ namespace OverroidModel.Test
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, null);
-            Assert.True(b.HasBothPlayersCards());
             Assert.Null(b.Winner);
             Assert.False(b.HasFinished());
             Assert.False(b.IsDrawBattle());
@@ -151,7 +146,6 @@ namespace OverroidModel.Test
 
             b.SetCard(ap, ac, null);
             b.SetCard(dp, dc, null);
-            Assert.True(b.HasBothPlayersCards());
             Assert.Null(b.Winner);
             Assert.False(b.HasFinished());
             Assert.False(b.IsDrawBattle());

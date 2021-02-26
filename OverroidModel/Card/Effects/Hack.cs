@@ -1,4 +1,5 @@
-﻿using OverroidModel.GameAction.Commands;
+﻿using System.Linq;
+using OverroidModel.GameAction.Commands;
 using OverroidModel.GameAction.Effects;
 
 namespace OverroidModel.Card.Effects
@@ -15,7 +16,8 @@ namespace OverroidModel.Card.Effects
         {
             var player = g.CurrentBattle.PlayerOf(sourceCardName);
             var opponentHand = g.HandOf(g.OpponentOf(player));
-            return opponentHand.UnrevealedCardCount >= 1;
+            var unrevealedCards = opponentHand.Cards.Where( c => !c.IsHacked() );
+            return unrevealedCards.Count() >= 1;
         }
 
         ICardEffectAction ICardEffect.GetAction(CardName sourceCardName, IGameInformation g)

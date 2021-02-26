@@ -24,7 +24,7 @@ namespace OverroidModel.Test.Card.Master
             CustomAssertion.WinsInLastRound(CardName.Overroid, game);
             CustomAssertion.ActionIsInHistory<SingularityEffect>(game.ActionHistory);
             Assert.True(game.HasFinished());
-            Assert.Equal(game.OverroidPlayer, game.Winner);
+            Assert.Equal(game.OverroidPlayer, game.CheckWinner());
         }
 
         [Fact]

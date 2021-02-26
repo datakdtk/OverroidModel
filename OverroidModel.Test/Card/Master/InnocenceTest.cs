@@ -81,7 +81,7 @@ namespace OverroidModel.Test.Card.Master
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Overroid, CardName.Innocence, game);
 
             Assert.True(game.HasFinished());
-            Assert.Equal(game.HumanPlayer, game.Winner);
+            Assert.Equal(game.HumanPlayer, game.CheckWinner());
             Assert.Equal(1, game.Battles.Count);
             CustomAssertion.ActionIsNotInHistory<SingularityEffect>(game.ActionHistory);
         }

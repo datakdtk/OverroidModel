@@ -60,11 +60,6 @@ namespace OverroidModel
         public OutsideCard? TriggerCard { get;  }
 
         /// <summary>
-        /// Winner of the game if already determined.
-        /// </summary>
-        public PlayerAccount? Winner { get; }
-
-        /// <summary>
         /// Whose and which command is expected to be given. If no command is expected, returns null.
         /// </summary>
         public ICommandRequirement? CommandRequirement { get; }
@@ -73,6 +68,11 @@ namespace OverroidModel
         /// Check if the game winner is already determined.
         /// </summary>
         public bool HasFinished();
+
+        /// <summary>
+        /// Get winner of the game if determined.
+        /// </summary>
+        public PlayerAccount? CheckWinner();
 
         /// <summary>
         /// Check if the game winner finished and is draw game.

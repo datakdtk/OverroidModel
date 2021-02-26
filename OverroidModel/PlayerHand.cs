@@ -38,11 +38,6 @@ namespace OverroidModel
         public ushort Count => (ushort)Cards.Count;
 
         /// <summary>
-        /// The number of cards that are not revealed.
-        /// </summary>
-        public ushort UnrevealedCardCount => (ushort)cards.Where( c => !c.IsHacked() ).Count();
-
-        /// <summary>
         /// Names of cards that are guessable by the opponent.
         /// </summary>
         public IReadOnlyList<CardName> GuessableCardNames => cards.Where( c => c.IsGuessable() ).Select(c => c.Name).ToList();

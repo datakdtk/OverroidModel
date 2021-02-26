@@ -17,7 +17,7 @@ namespace OverroidModel
     /// </summary>
     public class IndividualGame : IMutableGame
     {
-        public static readonly ushort maxRound = 6;
+        public static readonly ushort MAX_ROUND = 6;
 
         readonly PlayerAccount humanPlayer;
         readonly PlayerAccount overroidPlayer;
@@ -74,7 +74,7 @@ namespace OverroidModel
             battles = new List<Battle>();
             actionStack = new Stack<IGameAction>();
             actionHistory = new List<IGameAction>();
-            effectDisabledPlayers = new PlayerAccount?[IndividualGame.maxRound];
+            effectDisabledPlayers = new PlayerAccount?[MAX_ROUND];
 
             inGameCards = humanPlayerHand.Cards.Concat(overroidPlayerHand.Cards).ToList();
         }
@@ -87,30 +87,10 @@ namespace OverroidModel
         public IReadOnlyList<IGameAction> ActionHistory => actionHistory;
         public IReadOnlyList<Battle> Battles => battles;
         public Battle CurrentBattle => battles.Count > 0 ? battles.Last() : throw new GameLogicException("Game has no battle round yet.");
-        public PlayerAccount? Winner
-        {
-            get
-            {
-                if (!HasFinished())
-                {
-                    return null;
-                }
-                if (specialWinner != null)
-                {
-                    return specialWinner;
-                }
-                var humanStars = WinningStarOf(humanPlayer);
-                var overroidStars = WinningStarOf(overroidPlayer);
-                if (humanStars == overroidStars)
-                {
-                    return null;
-                }
-                return humanStars > overroidStars ? humanPlayer : overroidPlayer;
-            }
-        }
-
         public ICommandRequirement? CommandRequirement => commandAuthorizer?.CommandRequirement;
         public IReadOnlyList<InGameCard> AllInGameCards => inGameCards;
+
+        public ushort WinningStarOf(PlayerAccount p) => (ushort)battles.Aggregate(0, (c, b) => c + b.WinningStarOf(p));
 
         public bool HasFinished()
         {
@@ -118,13 +98,33 @@ namespace OverroidModel
             {
                 return true;
             }
-            if (Battles.Count > IndividualGame.maxRound)
+            if (Battles.Count > MAX_ROUND)
             {
                 throw new GameLogicException("Number of battles in the game exceeds max round");
             }
-            return Battles.Count == IndividualGame.maxRound && CurrentBattle.HasFinished();
-
+            return Battles.Count == MAX_ROUND && CurrentBattle.HasFinished();
         }
+
+        public PlayerAccount? CheckWinner()
+        {
+            if (!HasFinished())
+            {
+                return null;
+            }
+            if (specialWinner != null)
+            {
+                return specialWinner;
+            }
+            var humanStars = WinningStarOf(humanPlayer);
+            var overroidStars = WinningStarOf(overroidPlayer);
+            if (humanStars == overroidStars)
+            {
+                return null;
+            }
+            return humanStars > overroidStars ? humanPlayer : overroidPlayer;
+        }
+
+        public bool IsDrawGame() => HasFinished() && CheckWinner() == null;
 
         public PlayerAccount OpponentOf(PlayerAccount p)
         {
@@ -147,10 +147,6 @@ namespace OverroidModel
             }
             return playerHands[p];
         }
-
-        public ushort WinningStarOf(PlayerAccount p) => (ushort)battles.Aggregate(0, (c, b) => c + b.WinningStarOf(p));
-
-        public bool IsDrawGame() => HasFinished() && Winner == null;
 
         public bool EffectIsDisabled(ushort round, PlayerAccount? p)
         {
@@ -224,7 +220,7 @@ namespace OverroidModel
 
         void IMutableGame.DisableRoundEffects(ushort round, PlayerAccount targetPlayer)
         {
-            if (round == 0 || round > IndividualGame.maxRound)
+            if (round == 0 || round > MAX_ROUND)
             {
                 throw new ArgumentOutOfRangeException("Failed to disable round effect because out of round value");
             }

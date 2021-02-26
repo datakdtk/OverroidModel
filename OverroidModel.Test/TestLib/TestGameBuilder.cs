@@ -18,7 +18,7 @@ namespace OverroidModel.Test.TestLib
             var humanPlayer = new PlayerAccount("human");
             var overroidPlayer = new PlayerAccount("overroid");
 
-            var handSize = IndividualGame.maxRound + 1 - round;
+            var handSize = IndividualGame.MAX_ROUND + 1 - round;
             var humanHand = createPlayerHand(humanPlayer, cardNamesInHumanHand, handSize);
             var overroidHand = createPlayerHand(overroidPlayer, cardNamesInOverroidHand, handSize);
 

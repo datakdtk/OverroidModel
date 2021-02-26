@@ -49,7 +49,7 @@ namespace OverroidModel.Test.Card.Master
         public void Test_EffectDoesNotTriggerWhenWonAtLastRound()
         {
             var game = TestGameBuilder.CreateIndividualGame(
-                round: IndividualGame.maxRound,
+                round: IndividualGame.MAX_ROUND,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Legion }, // Defending
                 cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Attacking
                 );

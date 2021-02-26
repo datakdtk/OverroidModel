@@ -116,14 +116,6 @@ namespace OverroidModel
         }
 
         /// <summary>
-        /// Check if both attacking and defending players have placed a card.
-        /// </summary>
-        public bool HasBothPlayersCards()
-        {
-            return HasCardOf(attackingPlayer) && HasCardOf(defendingPlayer);
-        }
-
-        /// <summary>
         /// Check if the battle has already decided its winner.
         /// Additional card effects might be triggered even if this method returns true.
         /// </summary>
@@ -205,7 +197,11 @@ namespace OverroidModel
         /// <exception cref="CardNotFoundException">Thrown if any player did not set a card..</exception>
         internal void JudgeWinnerByValues()
         {
-            if (Winner != null)
+            if (!HasCardOf(AttackingPlayer) || !HasCardOf(DefendingPlayer))
+            {
+                throw new GameLogicException("Can not judge the battle winner. Not all cards have been set");
+            }
+            if (Winner != null || isDrawBattle)
             {
                 return; // Do not judge again if winner is already decided by effects.
             }

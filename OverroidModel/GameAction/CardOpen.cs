@@ -56,7 +56,7 @@ namespace OverroidModel.GameAction
 
         private void Assertion(Battle battle)
         {
-            if (!battle.HasBothPlayersCards())
+            if (!battle.HasCardOf(battle.AttackingPlayer) || !battle.HasCardOf(battle.DefendingPlayer))
             {
                 throw new GameLogicException("Battle cards cannot open. Not all cards have been set");
             }

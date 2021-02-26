@@ -24,19 +24,6 @@ namespace OverroidModel.Test
         }
 
         [Fact]
-        public void Test_UnrevealedCardCount()
-        {
-            var player = new PlayerAccount("hoge");
-            var cards = GetCardList(player);
-            cards[2].SetGuessed();
-            cards[3].SetGuessed();
-            cards[4].RevealByHack();
-            cards[5].RevealByHack();
-            var hand = new PlayerHand(player, cards);
-            Assert.Equal(cards.Count - 2, hand.UnrevealedCardCount);
-        }
-
-        [Fact]
         public void Test_GuessableCardNames()
         {
             var player = new PlayerAccount("hoge");

@@ -376,5 +376,152 @@ namespace OverroidModel.Test
             var cardInAllCardList = game.AllInGameCards.First(c => c.Name == CardName.Overroid);
             Assert.True(cardInAllCardList.IsGuessable());
         }
+
+        [Fact]
+        public void Test_HasFinished_FalseIfNotAllRoundsAreOver()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 5,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Idol}, // Attacking first
+                cardNamesInHumanHand: new List<CardName>() { CardName.Diva} // Defending first
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
+            Assert.False(game.HasFinished());
+        }
+
+        [Fact]
+        public void Test_HasFinished_TrueIfNotAllRoundsAreOverAndSpecialWinnerIsSet()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 5,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Idol}, // Attacking first
+                cardNamesInHumanHand: new List<CardName>() { CardName.Diva} // Defending first
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
+            game.SetSpecialWinner(game.OverroidPlayer);
+
+            Assert.True(game.HasFinished());
+        }
+
+        [Fact]
+        public void Test_HasFinished_TrueIfAllRoundsAreOver()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 6
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Unknown, CardName.Unknown, game);
+
+            Assert.True(game.HasFinished());
+        }
+
+        [Fact]
+        public void Test_CheckWinner_WhenNotAllRoundsAreOver()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 5,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Idol}, // Attacking 
+                cardNamesInHumanHand: new List<CardName>() { CardName.Diva} // Defending 
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
+            Assert.Null(game.CheckWinner());
+        }
+
+        [Fact]
+        public void Test_CheckWinner_WhenNotAllRoundsAreOverAndSpecialWinnerIsSet()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 5,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Idol}, // Attacking 
+                cardNamesInHumanHand: new List<CardName>() { CardName.Diva} // Defending 
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
+            game.SetSpecialWinner(game.OverroidPlayer);
+            Assert.True(game.WinningStarOf(game.HumanPlayer) > game.WinningStarOf(game.OverroidPlayer));
+            Assert.Equal(game.OverroidPlayer, game.CheckWinner());
+        }
+
+        [Fact]
+        public void Test_CheckWinner_WhenAllRoundsAreOverAndSpecialWinnerIsSet()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 6,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Idol}, // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Diva} // Attacking 
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Diva, CardName.Idol, game);
+            game.SetSpecialWinner(game.OverroidPlayer);
+            Assert.True(game.WinningStarOf(game.HumanPlayer) > game.WinningStarOf(game.OverroidPlayer));
+            Assert.Equal(game.OverroidPlayer, game.CheckWinner());
+        }
+
+        [Fact]
+        public void Test_CheckWinner_WhenAllRoundsAreOverAndIsNotDrawGame()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 6,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Idol}, // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Diva} // Attacking 
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Diva, CardName.Idol, game);
+            Assert.True(game.WinningStarOf(game.HumanPlayer) > game.WinningStarOf(game.OverroidPlayer));
+            Assert.Equal(game.HumanPlayer, game.CheckWinner());
+        }
+
+        [Fact]
+        public void Test_CheckWinner_WhenAllRoundsAreOverAndIsDrawGame()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 6
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Unknown, CardName.Unknown, game);
+            Assert.Equal(game.WinningStarOf(game.HumanPlayer), game.WinningStarOf(game.OverroidPlayer));
+            Assert.Null(game.CheckWinner());
+        }
+
+        [Fact]
+        public void Test_IsDrawGame_FalseWhenNotAllRoundsAreOver()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 5
+            );
+            Assert.Equal(game.WinningStarOf(game.HumanPlayer), game.WinningStarOf(game.OverroidPlayer));
+            Assert.False(game.IsDrawGame());
+        }
+
+        [Fact]
+        public void Test_IsDrawGame_FalseWhenAllRoundsAreOverAndIsNotDrawGame()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 6,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Idol}, // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Diva} // Attacking 
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Diva, CardName.Idol, game);
+            Assert.True(game.WinningStarOf(game.HumanPlayer) > game.WinningStarOf(game.OverroidPlayer));
+            Assert.False(game.IsDrawGame());
+        }
+
+        [Fact]
+        public void Test_IsDrawGame_TrueWhenAllRoundsAreOverAndIsDrawGame()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 6
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Unknown, CardName.Unknown, game);
+            Assert.Equal(game.WinningStarOf(game.HumanPlayer), game.WinningStarOf(game.OverroidPlayer));
+            Assert.True(game.IsDrawGame());
+        }
+
+        [Fact]
+        public void Test_IsDrawGame_WhenlSpecialWinnerIsSet()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 6
+            );
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Unknown, CardName.Unknown, game);
+            game.SetSpecialWinner(game.OverroidPlayer);
+            Assert.Equal(game.WinningStarOf(game.HumanPlayer), game.WinningStarOf(game.OverroidPlayer));
+            Assert.False(game.IsDrawGame());
+        }
     }
 }
