@@ -7,16 +7,22 @@ namespace OverroidModel
     /// </summary>
     public class PlayerAccount : IEquatable<PlayerAccount>
     {
+        readonly string id;
+        readonly string displayName;
+
+        /// <param name="id">ID string to identify a player.</param>
+        public PlayerAccount(string id, string displayName = "unknown")
+        {
+            this.id = id;
+            this.displayName = displayName;
+        }
+
         /// <summary>
         /// ID string to identify a player.
         /// </summary>
-        public string ID { get; }
+        public string ID => id;
 
-        /// <param name="iD">ID string to identify a player.</param>
-        public PlayerAccount(string iD)
-        {
-            ID = iD;
-        }
+        public string DisplayName => displayName;
 
         public bool Equals(PlayerAccount? other)
         {

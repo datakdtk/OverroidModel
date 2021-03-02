@@ -16,6 +16,16 @@ namespace OverroidModel.Test
         }
 
         [Fact]
+        public void Test_Equality_EqualWhenDifferentDisplayName()
+        {
+            var a = new PlayerAccount("hoge", "name1");
+            var b = new PlayerAccount("hoge", "name2");
+            Assert.Equal(a, b);
+            Assert.True(a == b);
+            Assert.False(a != b);
+        }
+
+        [Fact]
         public void Test_Equality_NotEqual()
         {
             var a = new PlayerAccount("hoge");
@@ -69,6 +79,19 @@ namespace OverroidModel.Test
             Assert.Equal(1, dic[a]);
             Assert.Equal(2, dic[c]);
             Assert.Equal(2, dic.Keys.Count);
+        }
+
+        [Fact]
+        public void Test_BehaviourAsHashKey_WhenDifferentDisplayName()
+        {
+            var a = new PlayerAccount("hoge", "name1");
+            var b = new PlayerAccount("hoge", "name2");
+            var dic = new Dictionary<PlayerAccount, int>();
+
+            dic[a] = 0;
+            dic[b] = 1;
+            Assert.Equal(1, dic[a]);
+            Assert.Single(dic.Keys);
         }
     }
 }
