@@ -5,7 +5,7 @@ using Xunit;
 
 namespace OverroidModel.Test
 {
-    public class CommandAuthorieTest
+    public class CommandAuthorizerTest
     {
         [Fact]
         public void Test_CommandRequirement()
@@ -25,7 +25,7 @@ namespace OverroidModel.Test
             var player = new PlayerAccount("hoge");
             var authorizer = new CommandAuthorizerImplement<CardPlacement>(player);
 
-            var command = new CardPlacement(player, CardName.Innocence, null);
+            var command = new CardPlacement(player, CardName.Innocence);
             authorizer.Authorize(command);
 
             Assert.True(true); // Expected not to be thrown;
@@ -38,7 +38,7 @@ namespace OverroidModel.Test
             var authorizer = new CommandAuthorizerImplement<CardPlacement>(player);
 
             var anotherPlayer = new PlayerAccount("fuga");
-            var command = new CardPlacement(anotherPlayer, CardName.Innocence, null);
+            var command = new CardPlacement(anotherPlayer, CardName.Innocence);
             Assert.Throws<UnavailableActionException>(() => authorizer.Authorize(command));
         }
 

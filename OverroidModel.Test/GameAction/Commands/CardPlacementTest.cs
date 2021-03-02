@@ -11,11 +11,10 @@ namespace OverroidModel.Test.GameAction.Commands
     {
 
         [Fact]
-        public void Test_DetectedCardNameIsFirstTarget()
+        public void Test_PlacedCardNameIsNotTargetCardNAme()
         {
-            var command = new CardPlacement(new PlayerAccount("hoge"), CardName.Innocence, CardName.Overroid);
-            Assert.Equal(CardName.Overroid, command.DetectedCardName);
-            Assert.Equal(CardName.Overroid, command.TargetCardName);
+            var command = new CardPlacement(new PlayerAccount("hoge"), CardName.Innocence);
+            Assert.Null(command.TargetCardName);
             Assert.Null(command.SecondTargetCardName);
         }
 
@@ -27,7 +26,7 @@ namespace OverroidModel.Test.GameAction.Commands
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Creator}
             );
             var me = game.OverroidPlayer;
-            IGameCommand command = new CardPlacement(me, CardName.Creator, null);
+            IGameCommand command = new CardPlacement(me, CardName.Creator);
             command.Validate(game);
             Assert.True(true); // Not thrown;
         }
@@ -40,19 +39,7 @@ namespace OverroidModel.Test.GameAction.Commands
                 cardNamesInHumanHand: new List<CardName>() { CardName.Creator }
             );
             var me = game.OverroidPlayer;
-            IGameCommand command = new CardPlacement(me, CardName.Creator, null);
-            Assert.Throws<UnavailableActionException>(() => { command.Validate(game); });
-        }
-
-        [Fact]
-        public void Test_Validate_ValidWhenDitectingAnyCard()
-        {
-            var game = TestGameBuilder.CreateIndividualGame(
-                round: 1,
-                cardNamesInHumanHand: new List<CardName>() { CardName.Creator }
-            );
-            var me = game.OverroidPlayer;
-            IGameCommand command = new CardPlacement(me, CardName.Creator, CardName.Watcher);
+            IGameCommand command = new CardPlacement(me, CardName.Creator);
             Assert.Throws<UnavailableActionException>(() => { command.Validate(game); });
         }
 
@@ -68,19 +55,6 @@ namespace OverroidModel.Test.GameAction.Commands
             IGameCommand command = CardPlacement.CreateRandomCommand(game, me);
             command.Validate(game);
             Assert.True(true); // Not thrown;
-        }
-
-        [Fact]
-        public void Test_CreateRandomCommand_NoDetecting()
-        {
-            var game = TestGameBuilder.CreateIndividualGame(
-                round: 4,
-                cardNamesInOverroidHand: new List<CardName>() { CardName.Innocence, CardName.Idol }
-            );
-            var me = game.OverroidPlayer;
-
-            var command = CardPlacement.CreateRandomCommand(game, me);
-            Assert.Null(command.DetectedCardName);
         }
 
         [Fact]
@@ -100,6 +74,5 @@ namespace OverroidModel.Test.GameAction.Commands
                 CardPlacement.CreateRandomCommand(game, me);
             });
         }
-
     }
 }

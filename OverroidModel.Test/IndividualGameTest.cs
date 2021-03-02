@@ -43,7 +43,7 @@ namespace OverroidModel.Test
             );
             var player = game.OverroidPlayer;
 
-            var command = new CardPlacement(player, CardName.Diva, null);
+            var command = new CardPlacement(player, CardName.Diva);
             game.ReceiveCommand(command);
 
             Assert.Equal(5, game.HandOf(player).Count);
@@ -61,7 +61,7 @@ namespace OverroidModel.Test
             );
 
             var player = game.OverroidPlayer;
-            var command = new CardPlacement(player, CardName.Diva, null);
+            var command = new CardPlacement(player, CardName.Diva);
             game.ReceiveCommand(command);
 
             CustomAssertion.WaitingForCommand<CardPlacement>(game.OpponentOf(player), game);
@@ -77,11 +77,11 @@ namespace OverroidModel.Test
             );
 
             var player1 = game.OverroidPlayer;
-            var command1 = new CardPlacement(player1, CardName.Diva, null);
+            var command1 = new CardPlacement(player1, CardName.Diva);
             game.ReceiveCommand(command1);
 
             var player2 = game.HumanPlayer;
-            var command2 = new CardPlacement(player2, CardName.Idol, null);
+            var command2 = new CardPlacement(player2, CardName.Idol);
             game.ReceiveCommand(command2);
 
             Assert.Equal(5, game.HandOf(player2).Count);
@@ -157,11 +157,11 @@ namespace OverroidModel.Test
             );
 
             var player1 = game.OverroidPlayer;
-            var command1 = new CardPlacement(player1, CardName.Diva, null);
+            var command1 = new CardPlacement(player1, CardName.Diva);
             game.ReceiveCommand(command1);
 
             var player2 = game.HumanPlayer;
-            var command2 = new CardPlacement(player2, CardName.Idol, null);
+            var command2 = new CardPlacement(player2, CardName.Idol);
             game.ReceiveCommand(command2);
             game.ResolveAllActions();
 
@@ -202,11 +202,11 @@ namespace OverroidModel.Test
             );
 
             var player1 = game.OverroidPlayer;
-            var command1 = new CardPlacement(player1, CardName.Diva, null);
+            var command1 = new CardPlacement(player1, CardName.Diva);
             game.ReceiveCommand(command1);
 
             var player2 = game.HumanPlayer;
-            var command2 = new CardPlacement(player2, CardName.Idol, null);
+            var command2 = new CardPlacement(player2, CardName.Idol);
             game.ReceiveCommand(command2);
             game.ResolveAllActions(); // decide winner;
 
@@ -225,11 +225,11 @@ namespace OverroidModel.Test
             );
 
             var player1 = game.OverroidPlayer;
-            var command1 = new CardPlacement(player1, CardName.Diva, null);
+            var command1 = new CardPlacement(player1, CardName.Diva);
             game.ReceiveCommand(command1);
 
             var player2 = game.HumanPlayer;
-            var command2 = new CardPlacement(player2, CardName.Idol, null);
+            var command2 = new CardPlacement(player2, CardName.Idol);
             game.ReceiveCommand(command2);
             game.ResolveAllActions(); // decide winner;
 
@@ -246,11 +246,11 @@ namespace OverroidModel.Test
             );
 
             var player1 = game.HumanPlayer;
-            var command1 = new CardPlacement(player1, CardName.Idol, null);
+            var command1 = new CardPlacement(player1, CardName.Idol);
             game.ReceiveCommand(command1);
 
             var player2 = game.OverroidPlayer;
-            var command2 = new CardPlacement(player2, CardName.Diva, null);
+            var command2 = new CardPlacement(player2, CardName.Diva);
             game.ReceiveCommand(command2);
             game.ResolveAllActions(); // decide winner;
 
@@ -269,11 +269,11 @@ namespace OverroidModel.Test
             );
 
             var player1 = game.OverroidPlayer;
-            var command1 = new CardPlacement(player1, CardName.Diva, null);
+            var command1 = new CardPlacement(player1, CardName.Diva);
             game.ReceiveCommand(command1);
 
             var player2 = game.HumanPlayer;
-            var command2 = new CardPlacement(player2, CardName.Idol, null);
+            var command2 = new CardPlacement(player2, CardName.Idol);
             game.ReceiveCommand(command2);
 
             var res1 = game.ResolveNextAction();
@@ -295,11 +295,11 @@ namespace OverroidModel.Test
             );
 
             var player1 = game.OverroidPlayer;
-            var command1 = new CardPlacement(player1, CardName.Diva, null);
+            var command1 = new CardPlacement(player1, CardName.Diva);
             game.ReceiveCommand(command1);
 
             var player2 = game.HumanPlayer;
-            var command2 = new CardPlacement(player2, CardName.Idol, null);
+            var command2 = new CardPlacement(player2, CardName.Idol);
             game.ReceiveCommand(command2);
 
             CustomAssertion.ActionIsNotInHistory<CardOpen>(game.ActionHistory);
@@ -323,11 +323,11 @@ namespace OverroidModel.Test
             );
 
             var player1 = game.OverroidPlayer;
-            var command1 = new CardPlacement(player1, CardName.Spy, null);
+            var command1 = new CardPlacement(player1, CardName.Spy);
             game.ReceiveCommand(command1);
 
             var player2 = game.HumanPlayer;
-            var command2 = new CardPlacement(player2, CardName.Legion, null);
+            var command2 = new CardPlacement(player2, CardName.Legion);
             game.ReceiveCommand(command2);
 
             while (game.CommandRequirement == null)
@@ -356,11 +356,11 @@ namespace OverroidModel.Test
             );
 
             var player1 = game.HumanPlayer;
-            var command1 = new CardPlacement(player1, CardName.Idol, null);
+            var command1 = new CardPlacement(player1, CardName.Idol);
             game.ReceiveCommand(command1);
 
             var player2 = game.OverroidPlayer;
-            var command2 = new CardPlacement(player2, CardName.Diva, null);
+            var command2 = new CardPlacement(player2, CardName.Diva);
             game.ReceiveCommand(command2);
             game.ResolveAllActions(); // decide winner;
 
@@ -378,11 +378,11 @@ namespace OverroidModel.Test
             );
 
             var player1 = game.OverroidPlayer;
-            var command1 = new CardPlacement(player1, CardName.Doctor, null);
+            var command1 = new CardPlacement(player1, CardName.Doctor);
             game.ReceiveCommand(command1);
 
             var player2 = game.HumanPlayer;
-            var command2 = new CardPlacement(player2, CardName.Legion, null);
+            var command2 = new CardPlacement(player2, CardName.Legion);
             game.ReceiveCommand(command2);
 
             IGameAction? lastAction = null;
@@ -409,7 +409,7 @@ namespace OverroidModel.Test
             );
 
             var player = game.OverroidPlayer;
-            var command = new CardPlacement(player, CardName.Overroid, null);
+            var command = new CardPlacement(player, CardName.Overroid);
             game.ReceiveCommand(command); // card moved to battle area from hand
 
             Assert.Equal(12, game.AllInGameCards.Count);

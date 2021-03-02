@@ -11,6 +11,7 @@ namespace OverroidModel
         readonly string displayName;
 
         /// <param name="id">ID string to identify a player.</param>
+        /// <param name="displayName">Player name to show in the game screen.</param>
         public PlayerAccount(string id, string displayName = "unknown")
         {
             this.id = id;

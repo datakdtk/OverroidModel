@@ -61,8 +61,8 @@ namespace OverroidModel.Test.TestLib
         public static void SetCardsToCurrentBattle(CardName attakingCardName, CardName defendingCardName, IMutableGame game)
         {
             var battle = game.CurrentBattle;
-            game.ReceiveCommand(new CardPlacement(battle.AttackingPlayer, attakingCardName, null));
-            game.ReceiveCommand(new CardPlacement(battle.DefendingPlayer, defendingCardName, null));
+            game.ReceiveCommand(new CardPlacement(battle.AttackingPlayer, attakingCardName));
+            game.ReceiveCommand(new CardPlacement(battle.DefendingPlayer, defendingCardName));
             game.ResolveAllActions();
         }
 

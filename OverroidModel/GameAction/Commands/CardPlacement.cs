@@ -12,34 +12,28 @@ namespace OverroidModel.GameAction.Commands
     {
         readonly PlayerAccount player;
         readonly CardName cardNameToPlace;
-        readonly CardName? detectedCardName;
 
         /// <param name="player">Player who places a card.</param>
         /// <param name="cardNameToPlace">Card to be placed.</param>
-        /// <param name="detectedCardName">Called card name for detection if detected by defending player.</param>
-        public CardPlacement(PlayerAccount player, CardName cardNameToPlace, CardName? detectedCardName)
+        public CardPlacement(PlayerAccount player, CardName cardNameToPlace)
         {
             this.player = player;
             this.cardNameToPlace = cardNameToPlace;
-            this.detectedCardName = detectedCardName;
         }
 
         public PlayerAccount Controller => CommandingPlayer;
 
         public PlayerAccount CommandingPlayer => player;
 
-        public CardName? TargetCardName => detectedCardName; // placedCardName should be unknown until card open.
+        public CardName? TargetCardName => null; // placedCardName should be unknown until card open.
 
         public CardName? SecondTargetCardName => null;
 
         public CardName CardNameToPlace => cardNameToPlace;
 
-        public CardName? DetectedCardName => detectedCardName;
-
         public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
         {
             ["cardNameToPlace"] = cardNameToPlace.ToString(),
-            ["detectedCardName"] = detectedCardName?.ToString() ?? "",
         };
 
         void IGameAction.Resolve(IMutableGame g)
@@ -100,7 +94,7 @@ namespace OverroidModel.GameAction.Commands
         public static CardPlacement CreateRandomCommand(IGameInformation g, PlayerAccount commandingPlayer)
         {
             var target = g.HandOf(commandingPlayer).SelectRandomCard();
-            return new CardPlacement(commandingPlayer, target.Name, null);
+            return new CardPlacement(commandingPlayer, target.Name);
         }
     }
 }
