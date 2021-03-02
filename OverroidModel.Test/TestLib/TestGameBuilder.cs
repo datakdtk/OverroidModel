@@ -13,7 +13,7 @@ namespace OverroidModel.Test.TestLib
             int round = 1,
             IEnumerable<CardName>? cardNamesInHumanHand = null,
             IEnumerable<CardName>? cardNamesInOverroidHand = null,
-            bool detectionAvailable = true)
+            bool detectionAvailable = false)
         {
             var humanPlayer = new PlayerAccount("human");
             var overroidPlayer = new PlayerAccount("overroid");

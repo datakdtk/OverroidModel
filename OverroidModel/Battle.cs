@@ -143,53 +143,20 @@ namespace OverroidModel
                 return 0;
             }
 
-            var loser = Winner == AttackingPlayer ? DefendingPlayer : AttackingPlayer;
-            var detectionSuccess = CardOf(loser).Name == DetectedCardName;
+            var detectionSuccess = Winner == DefendingPlayer && CardOf(AttackingPlayer).Name == DetectedCardName;
             return (ushort)(detectionSuccess ? 2 : 1);
         }
 
         /// <summary>
         /// Set a card to this battle.
         /// </summary>
-        /// <param name="p">Player who places a card.</param>
         /// <param name="c">Card to be placed.</param>
-        /// <param name="detectedCardName">The card name if the player is detecting a card.</param>
-        /// <exception cref="GameLogicException">Thrown if the player has already set a card.</exception>
-        internal void SetCard(PlayerAccount p, InGameCard c, CardName? detectedCardName)
-        {
-            if (c.Owner != p)
-            {
-                throw new GameLogicException("Player putting the card is not the owner of the card");
-            }
-            if (HasCardOf(p))
-            {
-                throw new GameLogicException("Battle Card has already been set.");
-            }
-            cards[p] = c;
-            if (p == DefendingPlayer)
-            {
-                this.detectedCardName = detectedCardName;
-            }
-        }
+        internal void SetCard(InGameCard c) => cards[c.Owner] = c;
 
         /// <summary>
-        /// Replace the card in this battle with another card.
+        /// Set card name for detection.
         /// </summary>
-        /// <param name="p">Player who places a card.</param>
-        /// <param name="c">Card to be newly placed.</param>
-        /// <exception cref="GameLogicException">Thrown if the player has not set any card yet.</exception>
-        internal void ReplaceCard(PlayerAccount p, InGameCard c)
-        {
-            if (c.Owner != p)
-            {
-                throw new GameLogicException("Player putting the card is not the owner of the card");
-            }
-            if (!HasCardOf(p))
-            {
-                throw new GameLogicException("Battle Card has not set yet.");
-            }
-            cards[p] = c;
-        }
+        internal void DetectCard(CardName detectedCardName) => this.detectedCardName = detectedCardName;
 
         /// <summary>
         /// Compares card values and determines the battle winner if not determined yet.

@@ -92,6 +92,62 @@ namespace OverroidModel.Test
         }
 
         [Fact]
+        public void Test_WaitingForDetectionAtRound1WhenDetectionIsAvailable()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 1,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
+                cardNamesInHumanHand: new List<CardName>() { CardName.Idol },
+                detectionAvailable: true
+            );
+
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Diva, CardName.Idol, game);
+            CustomAssertion.WaitingForCommand<Detection>(game.HumanPlayer, game);
+        }
+ 
+        [Fact]
+        public void Test_NotWaitingForDetectionAtRound1WhenDetectionIsUnavailable()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 1,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
+                cardNamesInHumanHand: new List<CardName>() { CardName.Idol },
+                detectionAvailable: false
+            );
+
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Diva, CardName.Idol, game);
+            CustomAssertion.NotWaitingForCommand<Detection>(game);
+        }
+
+        [Fact]
+        public void Test_WaitingForDetectionAtRound4WhenDetectionIsAvailable()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 2,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
+                cardNamesInHumanHand: new List<CardName>() { CardName.Idol },
+                detectionAvailable: true
+            );
+
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
+            CustomAssertion.WaitingForCommand<Detection>(game.OverroidPlayer, game);
+        }
+
+        [Fact]
+        public void Test_NotWaitingForDetectionAtRound5WhenDetectionIsAvailable()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 5,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Diva },
+                cardNamesInHumanHand: new List<CardName>() { CardName.Idol },
+                detectionAvailable: true
+            );
+
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Diva, CardName.Idol, game);
+            CustomAssertion.NotWaitingForCommand<Detection>(game);
+        }
+
+        [Fact]
         public void Test_GraterPlayerWins()
         {
             var game = TestGameBuilder.CreateIndividualGame(
@@ -120,21 +176,19 @@ namespace OverroidModel.Test
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Idol },
-                cardNamesInHumanHand: new List<CardName>() { CardName.Diva }
+                cardNamesInHumanHand: new List<CardName>() { CardName.Diva },
+                detectionAvailable: true
             );
 
-            var player1 = game.OverroidPlayer;
-            var command1 = new CardPlacement(player1, CardName.Idol, null);
-            game.ReceiveCommand(command1);
-
-            var player2 = game.HumanPlayer;
-            var command2 = new CardPlacement(player2, CardName.Diva, CardName.Idol);
-            game.ReceiveCommand(command2);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
+            var detection = new Detection(game.HumanPlayer, CardName.Idol);
+            game.ReceiveCommand(detection);
             game.ResolveAllActions(); // decide winner;
 
-            Assert.Equal(player2, game.Battles[0].Winner);
-            Assert.Equal(0, game.WinningStarOf(player1));
-            Assert.Equal(2, game.WinningStarOf(player2));
+            CustomAssertion.WaitingForCommand<CardPlacement>(game.HumanPlayer, game); // next round has begun
+            Assert.Equal(game.HumanPlayer, game.Battles[0].Winner);
+            Assert.Equal(0, game.WinningStarOf(game.OverroidPlayer));
+            Assert.Equal(2, game.WinningStarOf(game.HumanPlayer));
 
         }
 

@@ -38,8 +38,6 @@ namespace OverroidModel.Test
             Assert.False(b.IsDrawBattle());
         }
 
-
-
         [Fact]
         public void Test_SetCard_AttackingPlayer()
         {
@@ -48,14 +46,12 @@ namespace OverroidModel.Test
             Assert.False(b.HasCardOf(p));
 
             var c = CardDictionary.GetInGameCard(CardName.Innocence, p);
-            var detectedCardName = CardName.Hacker; // should be ignored
-            b.SetCard(p, c, detectedCardName);
+            b.SetCard(c);
 
             Assert.True(b.HasCardOf(p));
             Assert.Equal(c.Name, b.CardOf(c.Name).Name);
             Assert.Equal(c.Name, b.CardOf(p).Name);
             Assert.Equal(p, b.PlayerOf(c.Name));
-            Assert.Null(b.DetectedCardName);
         }
 
         [Fact]
@@ -66,31 +62,23 @@ namespace OverroidModel.Test
             Assert.False(b.HasCardOf(p));
 
             var c = CardDictionary.GetInGameCard(CardName.Innocence, p);
-            var detectedCardName = CardName.Hacker;
-            b.SetCard(p, c, detectedCardName);
+            b.SetCard(c);
 
             Assert.True(b.HasCardOf(p));
             Assert.Equal(c.Name, b.CardOf(c.Name).Name);
             Assert.Equal(c.Name, b.CardOf(p).Name);
             Assert.Equal(p, b.PlayerOf(c.Name));
-            Assert.Equal(b.DetectedCardName, detectedCardName);
         }
 
         [Fact]
-        public void Test_ReplaceCard()
+        public void Test_DetectCard()
         {
             var b = GetBattle();
-            var p = new PlayerAccount(defendingPlayerId);
-
-            var c1 = CardDictionary.GetInGameCard(CardName.Innocence, p);
-            var c2 = CardDictionary.GetInGameCard(CardName.Hacker, p);
-            var detectedCardName = CardName.Creator;
-            b.SetCard(p, c1, detectedCardName);
-            Assert.Equal(c1.Name, b.CardOf(p).Name);
-
-            b.ReplaceCard(p, c2);
-            Assert.Equal(c2.Name, b.CardOf(p).Name);
-            Assert.Equal(b.DetectedCardName, detectedCardName);
+            Assert.False(b.DetectedCardName.HasValue);
+            var cn = CardName.Innocence;
+            b.DetectCard(cn);
+            Assert.True(b.DetectedCardName.HasValue);
+            Assert.Equal(cn, b.DetectedCardName);
         }
 
         [Fact]
@@ -102,8 +90,8 @@ namespace OverroidModel.Test
             var ac = CardDictionary.GetInGameCard(CardName.Idol, ap);
             var dc = CardDictionary.GetInGameCard(CardName.Doctor, dp);
 
-            b.SetCard(ap, ac, null);
-            b.SetCard(dp, dc, null);
+            b.SetCard(ac);
+            b.SetCard(dc);
             Assert.Null(b.Winner);
             Assert.False(b.HasFinished());
             Assert.False(b.IsDrawBattle());
@@ -123,8 +111,8 @@ namespace OverroidModel.Test
             var ac = CardDictionary.GetInGameCard(CardName.Doctor, ap);
             var dc = CardDictionary.GetInGameCard(CardName.Idol, dp);
 
-            b.SetCard(ap, ac, null);
-            b.SetCard(dp, dc, null);
+            b.SetCard(ac);
+            b.SetCard(dc);
             Assert.Null(b.Winner);
             Assert.False(b.HasFinished());
             Assert.False(b.IsDrawBattle());
@@ -144,8 +132,8 @@ namespace OverroidModel.Test
             var ac = CardDictionary.GetInGameCard(CardName.Doctor, ap);
             var dc = CardDictionary.GetInGameCard(CardName.Doctor, dp);
 
-            b.SetCard(ap, ac, null);
-            b.SetCard(dp, dc, null);
+            b.SetCard(ac);
+            b.SetCard(dc);
             Assert.Null(b.Winner);
             Assert.False(b.HasFinished());
             Assert.False(b.IsDrawBattle());
@@ -165,8 +153,8 @@ namespace OverroidModel.Test
             var ac = CardDictionary.GetInGameCard(CardName.Spy, ap);
             var dc = CardDictionary.GetInGameCard(CardName.Trickster, dp);
 
-            b.SetCard(ap, ac, null);
-            b.SetCard(dp, dc, null);
+            b.SetCard(ac);
+            b.SetCard(dc);
             b.SetToReverseCardValues();
 
             b.JudgeWinnerByValues();
@@ -182,8 +170,8 @@ namespace OverroidModel.Test
             var ac = CardDictionary.GetInGameCard(CardName.Idol, ap);
             var dc = CardDictionary.GetInGameCard(CardName.Doctor, dp);
 
-            b.SetCard(ap, ac, null);
-            b.SetCard(dp, dc, null);
+            b.SetCard(ac);
+            b.SetCard(dc);
             b.SetSpecialWinner(dc.Name);
             Assert.Equal(dp, b.Winner);
             Assert.True(b.HasFinished());
@@ -201,8 +189,8 @@ namespace OverroidModel.Test
             var ac = CardDictionary.GetInGameCard(CardName.Spy, ap);
             var dc = CardDictionary.GetInGameCard(CardName.Trickster, dp);
 
-            b.SetCard(ap, ac, null);
-            b.SetCard(dp, dc, null);
+            b.SetCard(ac);
+            b.SetCard(dc);
             b.SetToReverseCardValues();
             b.SetSpecialWinner(ac.Name);
             Assert.Equal(ap, b.Winner);
@@ -213,7 +201,7 @@ namespace OverroidModel.Test
         }
 
         [Fact]
-        public void Test_WiningStarOf_NoDetection()
+        public void Test_WiningStarOf_DefendingPlayerWinsWithNoDetection()
         {
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
@@ -221,8 +209,8 @@ namespace OverroidModel.Test
             var ac = CardDictionary.GetInGameCard(CardName.Creator, ap);
             var dc = CardDictionary.GetInGameCard(CardName.Doctor, dp);
 
-            b.SetCard(ap, ac, null);
-            b.SetCard(dp, dc, null);
+            b.SetCard(ac);
+            b.SetCard(dc);
             b.JudgeWinnerByValues();
             Assert.Equal(dp, b.Winner);
 
@@ -231,7 +219,7 @@ namespace OverroidModel.Test
         }
 
         [Fact]
-        public void Test_WiningStarOf_DetectionFailed()
+        public void Test_WiningStarOf_DefendingPlayerWinsAndDetectionFailed()
         {
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
@@ -239,8 +227,9 @@ namespace OverroidModel.Test
             var ac = CardDictionary.GetInGameCard(CardName.Creator, ap);
             var dc = CardDictionary.GetInGameCard(CardName.Doctor, dp);
 
-            b.SetCard(ap, ac, null);
-            b.SetCard(dp, dc, dc.Name);
+            b.SetCard(ac);
+            b.SetCard(dc);
+            b.DetectCard(dc.Name);
             b.JudgeWinnerByValues();
             Assert.Equal(dp, b.Winner);
 
@@ -249,7 +238,7 @@ namespace OverroidModel.Test
         }
 
         [Fact]
-        public void Test_WiningStarOf_DetectionSucceeded()
+        public void Test_WiningStarOf_DefendingPlayerWinsAndDetectionSucceeded()
         {
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
@@ -257,8 +246,9 @@ namespace OverroidModel.Test
             var ac = CardDictionary.GetInGameCard(CardName.Creator, ap);
             var dc = CardDictionary.GetInGameCard(CardName.Doctor, dp);
 
-            b.SetCard(ap, ac, null);
-            b.SetCard(dp, dc, ac.Name);
+            b.SetCard(ac);
+            b.SetCard(dc);
+            b.DetectCard(ac.Name);
             b.JudgeWinnerByValues();
             Assert.Equal(dp, b.Winner);
 
@@ -267,7 +257,7 @@ namespace OverroidModel.Test
         }
 
         [Fact]
-        public void Test_WiningStarOf_AttackingPlayerWins()
+        public void Test_WiningStarOf_AttackingPlayerWinsAndDetectionIsCorrect()
         {
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
@@ -275,8 +265,9 @@ namespace OverroidModel.Test
             var ac = CardDictionary.GetInGameCard(CardName.Idol, ap);
             var dc = CardDictionary.GetInGameCard(CardName.Doctor, dp);
 
-            b.SetCard(ap, ac, null);
-            b.SetCard(dp, dc, ac.Name);
+            b.SetCard(ac);
+            b.SetCard(dc);
+            b.DetectCard(ac.Name);
             b.JudgeWinnerByValues();
             Assert.Equal(ap, b.Winner);
 
@@ -291,7 +282,7 @@ namespace OverroidModel.Test
                 1,
                 new PlayerAccount(attackingPlayerId),
                 new PlayerAccount(defendingPlayerId)
-                );
+            );
         }
 
     }

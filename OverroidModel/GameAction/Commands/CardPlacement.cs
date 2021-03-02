@@ -46,15 +46,15 @@ namespace OverroidModel.GameAction.Commands
         {
             var card = g.HandOf(player).RemoveCard(cardNameToPlace);
             var battle = g.CurrentBattle;
+            battle.SetCard(card);
             if (player == battle.AttackingPlayer)
             {
-                battle.SetCard(player, card, null);
                 g.AddCommandAuthorizer(new CommandAuthorizerImplement<CardPlacement>(g.OpponentOf(player)));
-            }
-            else
+            } else if (g.DetectionIsAvailableInRound(battle.Round))
             {
-                var detectedCardName = g.Config.DetectionAvailable ? this.detectedCardName : null;
-                battle.SetCard(player, card, detectedCardName);
+                g.AddCommandAuthorizer(new CommandAuthorizerImplement<Detection>(battle.DefendingPlayer));
+            } else
+            {
                 var ap = battle.AttackingPlayer;
                 g.PushToActionStack(new CardOpen(ap, battle.CardOf(ap).Name));
             }
@@ -74,14 +74,14 @@ namespace OverroidModel.GameAction.Commands
                 Debug.Assert(
                     !battle.HasCardOf(opponent),
                     "Defending player placed a card earlier than attackingPlayer"
-                    );
+                );
             }
             else
             {
                 Debug.Assert(
                     battle.HasCardOf(opponent),
                     "Attacking player has not placed a card yet."
-                    );
+                );
             }
             // Assertion end.
 

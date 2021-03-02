@@ -39,7 +39,7 @@ namespace OverroidModel.GameAction.Commands
         {
             g.HandOf(player).AddCard(g.CurrentBattle.CardOf(player));
             var targetCard = g.HandOf(player).RemoveCard(targetCardName);
-            g.CurrentBattle.ReplaceCard(player, targetCard);
+            g.CurrentBattle.SetCard(targetCard);
         }
 
         void IGameCommand.Validate(IGameInformation g)
