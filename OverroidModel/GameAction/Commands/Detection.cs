@@ -8,11 +8,11 @@ namespace OverroidModel.GameAction.Commands
     public class Detection : IGameCommand
     {
         readonly PlayerAccount controller;
-        readonly CardName targetCardName;
+        readonly CardName? targetCardName;
 
         /// <param name="controller">Card controller of the source card of the effect.</param>
-        /// <param name="targetCardName">Card name to detect.</param>
-        public Detection(PlayerAccount controller, CardName targetCardName)
+        /// <param name="targetCardName">Card name to detect if chosen to detect.</param>
+        public Detection(PlayerAccount controller, CardName? targetCardName)
         {
             this.controller = controller;
             this.targetCardName = targetCardName;
@@ -26,7 +26,7 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName? SecondTargetCardName => null;
 
-        public CardName DetectedCardName => targetCardName;
+        public CardName? DetectedCardName => targetCardName;
 
         void IGameAction.Resolve(IMutableGame g)
         {

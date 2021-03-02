@@ -154,9 +154,9 @@ namespace OverroidModel
         internal void SetCard(InGameCard c) => cards[c.Owner] = c;
 
         /// <summary>
-        /// Set card name for detection.
+        /// Set card name for detection if defending player chose to detect.
         /// </summary>
-        internal void DetectCard(CardName detectedCardName) => this.detectedCardName = detectedCardName;
+        internal void DetectCard(CardName? detectedCardName) => this.detectedCardName = detectedCardName;
 
         /// <summary>
         /// Compares card values and determines the battle winner if not determined yet.

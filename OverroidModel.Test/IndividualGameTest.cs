@@ -193,6 +193,27 @@ namespace OverroidModel.Test
         }
 
         [Fact]
+        public void Test_CanNullDetection()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 1,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Idol },
+                cardNamesInHumanHand: new List<CardName>() { CardName.Diva },
+                detectionAvailable: true
+            );
+
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
+            var detection = new Detection(game.HumanPlayer, null);
+            game.ReceiveCommand(detection);
+            game.ResolveAllActions(); // decide winner;
+
+            CustomAssertion.WaitingForCommand<CardPlacement>(game.HumanPlayer, game); // next round has begun
+            Assert.Equal(game.HumanPlayer, game.Battles[0].Winner);
+            Assert.Equal(0, game.WinningStarOf(game.OverroidPlayer));
+            Assert.Equal(1, game.WinningStarOf(game.HumanPlayer));
+        }
+
+        [Fact]
         public void Test_NewRoundHasBegunAfterSecondPlayerPlacesCardAndResolveStacks()
         {
             var game = TestGameBuilder.CreateIndividualGame(

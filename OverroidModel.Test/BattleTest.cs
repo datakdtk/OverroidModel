@@ -82,6 +82,15 @@ namespace OverroidModel.Test
         }
 
         [Fact]
+        public void Test_DetectCard_ChooseNull()
+        {
+            var b = GetBattle();
+            Assert.False(b.DetectedCardName.HasValue);
+            b.DetectCard(null);
+            Assert.False(b.DetectedCardName.HasValue);
+        }
+
+        [Fact]
         public void Test_JudgeWinnerByValues_AttackingPlayerWins()
         {
             var b = GetBattle();
