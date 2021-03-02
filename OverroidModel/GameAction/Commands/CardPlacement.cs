@@ -31,11 +31,6 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName CardNameToPlace => cardNameToPlace;
 
-        public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
-        {
-            ["cardNameToPlace"] = cardNameToPlace.ToString(),
-        };
-
         void IGameAction.Resolve(IMutableGame g)
         {
             var card = g.HandOf(player).RemoveCard(cardNameToPlace);

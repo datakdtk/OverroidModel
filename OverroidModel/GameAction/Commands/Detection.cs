@@ -20,8 +20,6 @@ namespace OverroidModel.GameAction.Commands
 
         public PlayerAccount CommandingPlayer => controller;
 
-        public Dictionary<string, string> ParametersToSave => throw new NotImplementedException();
-
         public PlayerAccount? Controller => controller;
 
         public CardName? TargetCardName => targetCardName;

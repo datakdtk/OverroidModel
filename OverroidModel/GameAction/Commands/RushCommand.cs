@@ -30,11 +30,6 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName RushTargetCardName => targetCardName;
 
-        public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
-        {
-            ["targetCardName"] = TargetCardName?.ToString() ?? "",
-        };
-
         void IGameAction.Resolve(IMutableGame g)
         {
             g.HandOf(player).AddCard(g.CurrentBattle.CardOf(player));

@@ -30,11 +30,6 @@ namespace OverroidModel.GameAction.Commands
 
         public CardName HackTargetCardName => targetCardName;
 
-        public Dictionary<string, string> ParametersToSave => new Dictionary<string, string>()
-        {
-            ["targetCardName"] = TargetCardName?.ToString() ?? "",
-        };
-
         void IGameAction.Resolve(IMutableGame g)
         {
             var opponentHand = g.HandOf(g.OpponentOf(CommandingPlayer));
