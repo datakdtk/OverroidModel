@@ -21,7 +21,7 @@ namespace OverroidModel
     {
         readonly PlayerAccount commandingPlayer;
 
-        public CommandRequirementImplement(PlayerAccount commandingPlayer)
+        internal CommandRequirementImplement(PlayerAccount commandingPlayer)
         {
             this.commandingPlayer = commandingPlayer;
         }

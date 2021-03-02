@@ -94,6 +94,11 @@ namespace OverroidModel
         public PlayerHand HandOf(PlayerAccount p);
 
         /// <summary>
+        /// Check if defending player can detect a card in given battle round.
+        /// </summary>
+        public bool DetectionIsAvailableInRound(ushort round);
+
+        /// <summary>
         /// Get hand cards of given player.
         /// </summary>
         /// <param name="p">Player in the game.</param>

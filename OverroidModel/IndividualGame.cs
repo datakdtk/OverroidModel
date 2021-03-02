@@ -40,7 +40,7 @@ namespace OverroidModel
         /// <param name="hiddenCardMaster">Card that was not distributed to hands</param>
         /// <param name="triggerCardMaster">Another card that was not distributed to hand if exists.</param>
         /// <param name="config">Customized rule of the game</param>
-        public IndividualGame(
+        internal IndividualGame(
             PlayerAccount humanPlayer,
             PlayerAccount overroidPlayer,
             PlayerHand humanPlayerHand,
@@ -147,6 +147,8 @@ namespace OverroidModel
             }
             return playerHands[p];
         }
+
+        public bool DetectionIsAvailableInRound(ushort round) => config.DetectionAvailable && round <= 4;
 
         public bool EffectIsDisabled(ushort round, PlayerAccount? p)
         {

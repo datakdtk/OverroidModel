@@ -523,5 +523,33 @@ namespace OverroidModel.Test
             Assert.Equal(game.WinningStarOf(game.HumanPlayer), game.WinningStarOf(game.OverroidPlayer));
             Assert.False(game.IsDrawGame());
         }
+
+        [Fact]
+        public void Test_DetectionIsAvailableInRound_ReturnsTrueInRound1IfAvailable()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(detectionAvailable: true);
+            Assert.True(game.DetectionIsAvailableInRound(1));
+        }
+ 
+        [Fact]
+        public void Test_DetectionIsAvailableInRound_ReturnsTrueInRound4IfAvailable()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(detectionAvailable: true);
+            Assert.True(game.DetectionIsAvailableInRound(4));
+        }
+ 
+        [Fact]
+        public void Test_DetectionIsAvailableInRound_ReturnsFalseInRound5IfAvailable()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(detectionAvailable: true);
+            Assert.False(game.DetectionIsAvailableInRound(5));
+        }
+ 
+        [Fact]
+        public void Test_DetectionIsAvailableInRound_ReturnsFalseInRound1IfNotAvailable()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(detectionAvailable: false);
+            Assert.False(game.DetectionIsAvailableInRound(1));
+        }
     }
 }
