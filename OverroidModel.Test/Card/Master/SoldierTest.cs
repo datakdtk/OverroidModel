@@ -64,18 +64,34 @@ namespace OverroidModel.Test.Card.Master
                 );
 
             TestGameBuilder.SetCardsToCurrentBattle(CardName.Soldier, CardName.Innocence, game);
-
-            CustomAssertion.WaitingForCommand<RushCommand>(game.OverroidPlayer, game);
-
             var command = new RushCommand(game.OverroidPlayer, CardName.Idol);
             game.ReceiveCommand(command);
             game.ResolveAllActions();
-
 
             Assert.Equal(CardName.Idol, game.Battles[0].CardOf(game.OverroidPlayer).Name);
             Assert.True(game.HandOf(game.OverroidPlayer).HasCard(CardName.Soldier));
 
             Assert.Equal(2, game.Battles.Count); // New round has begun,
+        }
+
+        [Fact]
+        public void Test_NewPlacedCardShouldBeOpened()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 1,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Idol, CardName.Soldier }, // Attacking
+                cardNamesInHumanHand: new List<CardName>() { CardName.Innocence } // Defending
+                );
+
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Soldier, CardName.Innocence, game);
+
+            var command = new RushCommand(game.OverroidPlayer, CardName.Idol);
+            game.ReceiveCommand(command);
+            game.ResolveAllActions();
+
+            var placedCard = game.Battles[0].CardOf(game.OverroidPlayer);
+            Assert.Equal(CardName.Idol, placedCard.Name);
+            Assert.True(placedCard.IsOpened());
         }
 
 
