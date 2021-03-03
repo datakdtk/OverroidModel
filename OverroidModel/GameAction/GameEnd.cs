@@ -2,7 +2,7 @@
 
 namespace OverroidModel.GameAction
 {
-    class GameEnd : IGameAction
+    public class GameEnd : IGameAction
     {
         public PlayerAccount? Controller => null;
 
