@@ -181,6 +181,7 @@ namespace OverroidModel
             {
                 actionStack.Clear();
                 commandAuthorizer = null;
+                // Create GameEnd action only once
                 if (!actionHistory.Any( h => h is GameEnd ))
                 {
                     actionStack.Push(new GameEnd());
