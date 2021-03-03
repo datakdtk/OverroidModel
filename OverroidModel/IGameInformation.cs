@@ -112,6 +112,6 @@ namespace OverroidModel
         /// Returns true if card effect of given player is disabled in given round.
         /// If player is null, returns false.
         /// </returns>
-        public bool EffectIsDisabled(ushort round, PlayerAccount? p);
+        public bool EffectIsDisabled(ushort round, PlayerAccount p);
     }
 }

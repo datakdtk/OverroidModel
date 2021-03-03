@@ -74,7 +74,7 @@ namespace OverroidModel
             battles = new List<Battle>();
             actionStack = new Stack<IGameAction>();
             actionHistory = new List<IGameAction>();
-            effectDisabledPlayers = new PlayerAccount?[MAX_ROUND];
+            effectDisabledPlayers = new PlayerAccount?[MAX_ROUND + 1]; // will use index 1 to 6 (MAX_ROUND) only
 
             inGameCards = humanPlayerHand.Cards.Concat(overroidPlayerHand.Cards).ToList();
         }
@@ -150,10 +150,10 @@ namespace OverroidModel
 
         public bool DetectionIsAvailableInRound(ushort round) => config.DetectionAvailable && round <= 4;
 
-        public bool EffectIsDisabled(ushort round, PlayerAccount? p)
+        public bool EffectIsDisabled(ushort round, PlayerAccount p)
         {
-            // Make sure at least one battle has been created and player is not null.
-            if (p == null || Battles.Count == 0)
+            // Make sure at least one battle has been created.
+            if (Battles.Count == 0)
             {
                 return false;
             }

@@ -626,5 +626,44 @@ namespace OverroidModel.Test
             var game = TestGameBuilder.CreateIndividualGame(detectionAvailable: false);
             Assert.False(game.DetectionIsAvailableInRound(1));
         }
-    }
+
+        [Fact]
+        public void Test_DisableRoundEffect_AvailableInFirstRound()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(round: 1);
+            Assert.False(game.EffectIsDisabled(1, game.HumanPlayer));
+            game.DisableRoundEffects(1, game.HumanPlayer);
+            Assert.True(game.EffectIsDisabled(1, game.HumanPlayer));
+        }
+
+        [Fact]
+        public void Test_DisableRoundEffect_AvailableInFutureRound()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(round: 1);
+            Assert.False(game.EffectIsDisabled(2, game.HumanPlayer));
+            game.DisableRoundEffects(2, game.HumanPlayer);
+            Assert.False(game.EffectIsDisabled(1, game.HumanPlayer));
+            Assert.True(game.EffectIsDisabled(2, game.HumanPlayer));
+        }
+ 
+        [Fact]
+        public void Test_DisableRoundEffect_OtherPlayerIsNotAffected()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(round: 1);
+            Assert.False(game.EffectIsDisabled(1, game.HumanPlayer));
+            Assert.False(game.EffectIsDisabled(1, game.OverroidPlayer));
+            game.DisableRoundEffects(1, game.HumanPlayer);
+            Assert.True(game.EffectIsDisabled(1, game.HumanPlayer));
+            Assert.False(game.EffectIsDisabled(1, game.OverroidPlayer));
+        }
+
+        [Fact]
+        public void Test_DisableRoundEffect_AvailableInLastRound()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(round: 6);
+            Assert.False(game.EffectIsDisabled(6, game.HumanPlayer));
+            game.DisableRoundEffects(6, game.HumanPlayer);
+            Assert.True(game.EffectIsDisabled(6, game.HumanPlayer));
+        }
+   }
 }
