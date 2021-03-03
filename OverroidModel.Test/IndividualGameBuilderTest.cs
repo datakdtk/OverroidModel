@@ -1,5 +1,6 @@
 ﻿using OverroidModel.Card;
 using OverroidModel.Exceptions;
+using OverroidModel.GameAction;
 using OverroidModel.GameAction.Commands;
 using OverroidModel.Test.TestLib;
 using Xunit;
@@ -8,6 +9,26 @@ namespace OverroidModel.Test
 {
     public class IndividualGameBuilderTest
     {
+        [Fact]
+        public void Test_InitializeGame_FirstActionIsGameStart()
+        {
+            var builder = new IndividualGameBuilder(new DummyShuffler());
+
+            var humanPlayer = new PlayerAccount("hoge");
+            var overroidPlayer = new PlayerAccount("fuga");
+            var config = new TestConfig();
+
+            var game = builder.InitializeGame(
+                humanPlayer: humanPlayer,
+                overroidPlayer: overroidPlayer,
+                shufflingSeed: "dummySeed",
+                config: config
+            );
+
+            var firstAction = game.ResolveNextAction();
+            Assert.IsType<GameStart>(firstAction);
+        }
+
         [Fact]
         public void Test_InitializeGame_FirstRoundNotIsCreatedBeforeResolvingActions()
         {

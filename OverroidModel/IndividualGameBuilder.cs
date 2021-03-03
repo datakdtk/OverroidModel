@@ -58,8 +58,9 @@ namespace OverroidModel
                 hiddenCard,
                 triggerCard,
                 config
-                );
+            );
             game.PushToActionStack(new RoundStart());
+            game.PushToActionStack(new GameStart());
             return game;
         }
 

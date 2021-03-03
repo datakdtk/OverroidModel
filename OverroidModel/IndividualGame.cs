@@ -180,7 +180,11 @@ namespace OverroidModel
             if (HasFinished())
             {
                 actionStack.Clear();
-                return null;
+                commandAuthorizer = null;
+                if (!actionHistory.Any( h => h is GameEnd ))
+                {
+                    actionStack.Push(new GameEnd());
+                }
             }
             
             if (commandAuthorizer != null || actionStack.Count == 0)

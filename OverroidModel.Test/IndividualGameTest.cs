@@ -422,6 +422,37 @@ namespace OverroidModel.Test
         }
 
         [Fact]
+        public void Test_ResolveNextAction_ReturnsGameEndActionJustAfterGameHasFinished()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 1,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Doctor },
+                cardNamesInHumanHand: new List<CardName>() { CardName.Legion }
+            );
+            game.SetSpecialWinner(game.OverroidPlayer);
+            Assert.True(game.HasFinished());
+
+            var action = game.ResolveNextAction();
+            Assert.IsType<GameEnd>(action);
+        }
+ 
+        [Fact]
+        public void Test_ResolveNextAction_ReturnsNullAfterGameEndIsReturned()
+        {
+            IMutableGame game = TestGameBuilder.CreateIndividualGame(
+                round: 1,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Doctor },
+                cardNamesInHumanHand: new List<CardName>() { CardName.Legion }
+            );
+            game.SetSpecialWinner(game.OverroidPlayer);
+            Assert.True(game.HasFinished());
+
+            var action = game.ResolveNextAction();
+            Assert.IsType<GameEnd>(action);
+            Assert.Null(game.ResolveNextAction());
+        }
+
+        [Fact]
         public void Test_AllCards_KeepTrackingMovedCard()
         {
             var game = TestGameBuilder.CreateIndividualGame(
