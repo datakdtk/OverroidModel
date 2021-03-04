@@ -1,6 +1,7 @@
 ﻿using OverroidModel.Card;
 using OverroidModel.Exceptions;
 using OverroidModel.GameAction;
+using OverroidModel.GameAction.Commands;
 using System;
 using System.Collections.Generic;
 
@@ -32,6 +33,11 @@ namespace OverroidModel
         /// Game actions from the beginning to current game state.
         /// </summary>
         public IReadOnlyList<IGameAction> ActionHistory { get; }
+
+        /// <summary>
+        /// Game commands from the beginning to current game state.
+        /// </summary>
+        public IReadOnlyList<IGameCommand> CommandHistory { get; }
 
         /// <summary>
         /// List of battles in this game.

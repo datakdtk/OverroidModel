@@ -85,6 +85,7 @@ namespace OverroidModel
         public OutsideCard HiddenCard => hiddendCard;
         public OutsideCard? TriggerCard => triggerCard;
         public IReadOnlyList<IGameAction> ActionHistory => actionHistory;
+        public IReadOnlyList<IGameCommand> CommandHistory => actionHistory.OfType<IGameCommand>().ToList();
         public IReadOnlyList<Battle> Battles => battles;
         public Battle CurrentBattle => battles.Count > 0 ? battles.Last() : throw new GameLogicException("Game has no battle round yet.");
         public ICommandRequirement? CommandRequirement => commandAuthorizer?.CommandRequirement;
