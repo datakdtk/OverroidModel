@@ -103,6 +103,10 @@ namespace OverroidModel
             {
                 throw new GameLogicException("Number of battles in the game exceeds max round");
             }
+            if (actionStack.FirstOrDefault() is SingularityEffect)
+            {
+                return false; // game does not finish until singularity is resolved.
+            }
             return Battles.Count == MAX_ROUND && CurrentBattle.HasFinished();
         }
 

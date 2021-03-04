@@ -37,6 +37,9 @@ namespace OverroidModel.Test.TestLib
             while (ig.Battles.Count < round - 1)
             {
                 ig.AddNewRound();
+                var battle = ig.CurrentBattle;
+                battle.SetCard(new InGameCard(new DummyCard(99), battle.AttackingPlayer));
+                battle.SetCard(new InGameCard(new DummyCard(99), battle.DefendingPlayer));
             }
 
             var g = (IndividualGame)ig;

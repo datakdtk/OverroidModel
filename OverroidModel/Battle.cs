@@ -84,7 +84,7 @@ namespace OverroidModel
         {
             if (!HasCardOf(p))
             {
-                throw new CardNotFoundException("Player did not set a card on current battle round");
+                throw new CardNotFoundException($"Player did not set a card in round {Round}");
             }
             return cards[p];
         }

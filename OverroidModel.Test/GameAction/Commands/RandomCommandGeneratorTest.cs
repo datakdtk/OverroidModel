@@ -46,14 +46,8 @@ namespace OverroidModel.Test.GameAction.Commands
         [Fact]
         public void Test_CreateFromRequirement_MorphCommand()
         {
-            var game = TestGameBuilder.CreateIndividualGame(round: 1);
-
-            // Go to next round to prepare Morph target
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Unknown, CardName.Unknown, game);
-            game.ResolveAllActions();
-
+            var game = TestGameBuilder.CreateIndividualGame(round: 3);
             var requirement = new CommandRequirementImplement<MorphCommand>(game.OverroidPlayer);
-
             var command = RandomCommandGenerator.CreateFromRequirement(requirement, game);
             Assert.IsType<MorphCommand>(command);
         }

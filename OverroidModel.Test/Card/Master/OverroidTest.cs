@@ -82,5 +82,20 @@ namespace OverroidModel.Test.Card.Master
             CustomAssertion.NotWaitingForCommand<EspionageCommand>(game);
 
         }
+
+        [Fact]
+        public void Test_SingularityTriggersInLastRound()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 6,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Overroid }, // Defending
+                cardNamesInHumanHand: new List<CardName>() { CardName.Spy } // Attacking
+                );
+
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Spy, CardName.Overroid, game);
+
+            CustomAssertion.WinsInLastRound(CardName.Overroid, game);
+            CustomAssertion.ActionIsInHistory<SingularityEffect>(game.ActionHistory);
+        }
     }
 }

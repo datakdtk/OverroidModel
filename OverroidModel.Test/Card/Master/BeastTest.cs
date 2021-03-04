@@ -104,6 +104,28 @@ namespace OverroidModel.Test.Card.Master
         }
 
         [Fact]
+        public void Test_SingularityWhenCopiesOverroidAndWinsInFinalRound()
+        {
+            var game = TestGameBuilder.CreateIndividualGame(
+                round: 5,
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Doctor, CardName.Beast }, // Attacking first
+                cardNamesInHumanHand: new List<CardName>() { CardName.Overroid, CardName.Innocence } // Defending first
+                );
+
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Doctor, CardName.Overroid, game);
+            Assert.Equal(6, game.CurrentBattle.Round);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Innocence, CardName.Beast, game);
+
+            var command = new MorphCommand(game.OverroidPlayer, CardName.Overroid);
+            game.ReceiveCommand(command);
+            game.ResolveAllActions();
+
+            CustomAssertion.WinsInLastRound(CardName.Beast, game);
+            CustomAssertion.ActionIsInHistory<SingularityEffect>(game.ActionHistory);
+            Assert.True(game.HasFinished());
+        }
+
+        [Fact]
         public void Test_NoSingularityWhenCopiesOverroidAndLost()
         {
             var game = TestGameBuilder.CreateIndividualGame(
