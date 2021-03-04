@@ -6,7 +6,7 @@ namespace OverroidModel.Test.TestLib
 {
     class DummyShuffler : ICardShuffler
     {
-        public List<ICardMaster> Shuffle(IEnumerable<ICardMaster> cards, string seed)
+        public List<ICardMaster> Shuffle(IEnumerable<ICardMaster> cards, int seed)
         {
             return cards.ToList();
         }

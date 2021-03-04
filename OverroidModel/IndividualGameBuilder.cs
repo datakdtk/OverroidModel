@@ -30,7 +30,7 @@ namespace OverroidModel
         public IndividualGame InitializeGame(
             PlayerAccount humanPlayer,
             PlayerAccount overroidPlayer,
-            string shufflingSeed,
+            int shufflingSeed,
             IGameConfig config
         )
         {
@@ -76,7 +76,7 @@ namespace OverroidModel
         public IndividualGame LordGame(
             PlayerAccount humanPlayer,
             PlayerAccount overroidPlayer,
-            string shufflingSeed,
+            int shufflingSeed,
             IGameConfig config,
             IEnumerable<IGameCommand> commandHistory
         )

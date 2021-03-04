@@ -21,7 +21,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
 
@@ -41,7 +41,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
 
@@ -61,7 +61,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
             game.ResolveAllActions();
@@ -82,7 +82,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
             game.ResolveAllActions();
@@ -103,7 +103,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
 
@@ -123,7 +123,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
             game.ResolveAllActions();
@@ -143,7 +143,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
 
@@ -167,7 +167,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
 
@@ -191,7 +191,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
 
@@ -212,7 +212,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
 
@@ -233,7 +233,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
 
@@ -255,7 +255,7 @@ namespace OverroidModel.Test
             var game = builder.InitializeGame(
                 humanPlayer: humanPlayer,
                 overroidPlayer: overroidPlayer,
-                shufflingSeed: "dummySeed",
+                shufflingSeed: 12345,
                 config: config
             );
 

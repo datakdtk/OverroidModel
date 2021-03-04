@@ -14,6 +14,6 @@ namespace OverroidModel
         /// <param name="cards">List of cards used in the game.</param>
         /// <param name="seed">Parameter for randomizing card order.</param>
         /// <returns>Shuffled card deck.</returns>
-        public List<ICardMaster> Shuffle(IEnumerable<ICardMaster> cards, string seed);
+        public List<ICardMaster> Shuffle(IEnumerable<ICardMaster> cards, int seed);
     }
 }
