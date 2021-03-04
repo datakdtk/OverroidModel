@@ -28,11 +28,10 @@ namespace OverroidModel.Test.Card.Master
         {
             var game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
-                cardNamesInOverroidHand: new List<CardName>() { CardName.Soldier }, // Attacking
-                cardNamesInHumanHand: new List<CardName>() { CardName.Diva } // Defending
-                );
+                cardNamesInOverroidHand: new List<CardName>() { CardName.Soldier } // Attacking
+            );
 
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Soldier, CardName.Diva, game);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Soldier, CardName.Unknown, game);
 
             CustomAssertion.LosesInLastRound(CardName.Soldier, game);
             CustomAssertion.NotWaitingForCommand<RushCommand>(game);

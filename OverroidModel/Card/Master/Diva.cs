@@ -9,7 +9,7 @@ namespace OverroidModel.Card.Master
     {
         ICardEffect? effect;
 
-        public ushort Value => 18;
+        public ushort Value => 8;
 
         public CardName Name => CardName.Diva;
 
