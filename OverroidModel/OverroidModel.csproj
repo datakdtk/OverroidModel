@@ -4,16 +4,16 @@
       <LangVersion>8.0</LangVersion>
       <Nullable>enable</Nullable>
       <TargetFramework>netstandard2.0</TargetFramework>
-      <Version>0.5.5</Version>
+      <Version>0.6.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <DocumentationFile>bin\OverroidModel.xml</DocumentationFile>
-      <WarningLevel>5</WarningLevel>
       <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <DocumentationFile>bin\OverroidModel.xml</DocumentationFile>
+      <WarningLevel>5</WarningLevel>
       <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
