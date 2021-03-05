@@ -105,7 +105,7 @@ namespace OverroidModel.Test
             Assert.False(b.HasFinished());
             Assert.False(b.IsDrawBattle());
 
-            b.JudgeWinnerByValues();
+            b.Finish();
             Assert.Equal(ap, b.Winner);
             Assert.True(b.HasFinished());
             Assert.False(b.IsDrawBattle());
@@ -126,7 +126,7 @@ namespace OverroidModel.Test
             Assert.False(b.HasFinished());
             Assert.False(b.IsDrawBattle());
 
-            b.JudgeWinnerByValues();
+            b.Finish();
             Assert.Equal(dp, b.Winner);
             Assert.True(b.HasFinished());
             Assert.False(b.IsDrawBattle());
@@ -147,7 +147,7 @@ namespace OverroidModel.Test
             Assert.False(b.HasFinished());
             Assert.False(b.IsDrawBattle());
 
-            b.JudgeWinnerByValues();
+            b.Finish();
             Assert.Null(b.Winner);
             Assert.True(b.HasFinished());
             Assert.True(b.IsDrawBattle());
@@ -166,12 +166,12 @@ namespace OverroidModel.Test
             b.SetCard(dc);
             b.SetToReverseCardValues();
 
-            b.JudgeWinnerByValues();
+            b.Finish();
             Assert.Equal(dp, b.Winner);
         }
 
         [Fact]
-        public void Test_SetSpecialWinner()
+        public void Test_SetSpecialWinner_IgnoresCardValues()
         {
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
@@ -183,30 +183,27 @@ namespace OverroidModel.Test
             b.SetCard(dc);
             b.SetSpecialWinner(dc.Name);
             Assert.Equal(dp, b.Winner);
-            Assert.True(b.HasFinished());
 
-            b.JudgeWinnerByValues();
+            b.Finish();
             Assert.Equal(dp, b.Winner);
         }
 
         [Fact]
-        public void Test_SetToReverseCardValuesAndSetSpecialWinner()
+        public void Test_SetSpecialWinner_NotFinishUntilGameFinish()
         {
             var b = GetBattle();
             var ap = new PlayerAccount(attackingPlayerId);
             var dp = new PlayerAccount(defendingPlayerId);
-            var ac = CardDictionary.GetInGameCard(CardName.Spy, ap);
-            var dc = CardDictionary.GetInGameCard(CardName.Trickster, dp);
+            var ac = CardDictionary.GetInGameCard(CardName.Idol, ap);
+            var dc = CardDictionary.GetInGameCard(CardName.Doctor, dp);
 
             b.SetCard(ac);
             b.SetCard(dc);
-            b.SetToReverseCardValues();
-            b.SetSpecialWinner(ac.Name);
-            Assert.Equal(ap, b.Winner);
-            Assert.True(b.HasFinished());
+            b.SetSpecialWinner(dc.Name);
+            Assert.False(b.HasFinished());
 
-            b.JudgeWinnerByValues();
-            Assert.Equal(ap, b.Winner);
+            b.Finish();
+            Assert.True(b.HasFinished());
         }
 
         [Fact]
@@ -220,7 +217,7 @@ namespace OverroidModel.Test
 
             b.SetCard(ac);
             b.SetCard(dc);
-            b.JudgeWinnerByValues();
+            b.Finish();
             Assert.Equal(dp, b.Winner);
 
             Assert.Equal(0, b.WinningStarOf(ap));
@@ -239,7 +236,7 @@ namespace OverroidModel.Test
             b.SetCard(ac);
             b.SetCard(dc);
             b.DetectCard(dc.Name);
-            b.JudgeWinnerByValues();
+            b.Finish();
             Assert.Equal(dp, b.Winner);
 
             Assert.Equal(0, b.WinningStarOf(ap));
@@ -258,7 +255,7 @@ namespace OverroidModel.Test
             b.SetCard(ac);
             b.SetCard(dc);
             b.DetectCard(ac.Name);
-            b.JudgeWinnerByValues();
+            b.Finish();
             Assert.Equal(dp, b.Winner);
 
             Assert.Equal(0, b.WinningStarOf(ap));
@@ -277,7 +274,7 @@ namespace OverroidModel.Test
             b.SetCard(ac);
             b.SetCard(dc);
             b.DetectCard(ac.Name);
-            b.JudgeWinnerByValues();
+            b.Finish();
             Assert.Equal(ap, b.Winner);
 
             Assert.Equal(1, b.WinningStarOf(ap));

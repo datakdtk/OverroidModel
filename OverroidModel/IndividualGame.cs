@@ -95,10 +95,6 @@ namespace OverroidModel
 
         public bool HasFinished()
         {
-            if (specialWinner != null)
-            {
-                return true;
-            }
             if (Battles.Count > MAX_ROUND)
             {
                 throw new GameLogicException("Number of battles in the game exceeds max round");
@@ -107,7 +103,7 @@ namespace OverroidModel
             {
                 return false; // game does not finish until singularity is resolved.
             }
-            return Battles.Count == MAX_ROUND && CurrentBattle.HasFinished();
+            return (specialWinner != null || Battles.Count == MAX_ROUND) && CurrentBattle.HasFinished();
         }
 
         public PlayerAccount? CheckWinner()

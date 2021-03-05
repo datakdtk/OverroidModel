@@ -18,7 +18,7 @@ namespace OverroidModel.GameAction
         void IGameAction.Resolve(IMutableGame g)
         {
             var battle = g.CurrentBattle;
-            battle.JudgeWinnerByValues();
+            battle.Finish();
 
             if (!g.HasFinished())
             {

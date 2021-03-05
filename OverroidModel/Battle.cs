@@ -16,7 +16,7 @@ namespace OverroidModel
         readonly Dictionary<PlayerAccount, InGameCard> cards;
         CardName? detectedCardName;
         PlayerAccount? winner;
-        bool isDrawBattle;
+        bool hasFinished;
         bool reversesCardValues;
 
         /// <param name="round">Current battle number</param>
@@ -119,12 +119,12 @@ namespace OverroidModel
         /// Check if the battle has already decided its winner.
         /// Additional card effects might be triggered even if this method returns true.
         /// </summary>
-        public bool HasFinished() => isDrawBattle || Winner != null;
+        public bool HasFinished() => hasFinished;
 
         /// <summary>
         /// Returns true if battle has ended and there is no winner. 
         /// </summary>
-        public bool IsDrawBattle() => isDrawBattle;
+        public bool IsDrawBattle() => hasFinished && winner == null;
 
         /// <summary>
         /// Get number of stars that given player got in this battle.
@@ -162,22 +162,18 @@ namespace OverroidModel
         /// Compares card values and determines the battle winner if not determined yet.
         /// </summary>
         /// <exception cref="CardNotFoundException">Thrown if any player did not set a card..</exception>
-        internal void JudgeWinnerByValues()
+        internal void Finish()
         {
             if (!HasCardOf(AttackingPlayer) || !HasCardOf(DefendingPlayer))
             {
                 throw new GameLogicException("Can not judge the battle winner. Not all cards have been set");
             }
-            if (Winner != null || isDrawBattle)
-            {
-                return; // Do not judge again if winner is already decided by effects.
-            }
+            hasFinished = true;
             var attackingCard = CardOf(AttackingPlayer);
             var defendingCard = CardOf(DefendingPlayer);
 
-            if (attackingCard.Value == defendingCard.Value)
+            if (winner != null || attackingCard.Value == defendingCard.Value)
             {
-                isDrawBattle = true;
                 return;
             }
 

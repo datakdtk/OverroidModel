@@ -422,7 +422,7 @@ namespace OverroidModel.Test
         }
 
         [Fact]
-        public void Test_ResolveNextAction_ReturnsGameEndActionJustAfterGameHasFinished()
+        public void Test_ResolveAllActions_LastActionIsGameEndWhenGameFinished()
         {
             IMutableGame game = TestGameBuilder.CreateIndividualGame(
                 round: 1,
@@ -430,42 +430,11 @@ namespace OverroidModel.Test
                 cardNamesInHumanHand: new List<CardName>() { CardName.Legion }
             );
             game.SetSpecialWinner(game.OverroidPlayer);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Doctor, CardName.Legion, game);
             Assert.True(game.HasFinished());
 
-            var action = game.ResolveNextAction();
+            var action = game.ActionHistory.Last();
             Assert.IsType<GameEnd>(action);
-        }
- 
-        [Fact]
-        public void Test_ResolveNextAction_ReturnsNullAfterGameEndIsReturned()
-        {
-            IMutableGame game = TestGameBuilder.CreateIndividualGame(
-                round: 1,
-                cardNamesInOverroidHand: new List<CardName>() { CardName.Doctor },
-                cardNamesInHumanHand: new List<CardName>() { CardName.Legion }
-            );
-            game.SetSpecialWinner(game.OverroidPlayer);
-            Assert.True(game.HasFinished());
-
-            var action = game.ResolveNextAction();
-            Assert.IsType<GameEnd>(action);
-            Assert.Null(game.ResolveNextAction());
-        }
-
-        [Fact]
-        public void Test_AllCards_KeepTrackingMovedCard()
-        {
-            var game = TestGameBuilder.CreateIndividualGame(
-                round: 1,
-                cardNamesInOverroidHand: new List<CardName>() { CardName.Overroid }
-            );
-
-            var player = game.OverroidPlayer;
-            var command = new CardPlacement(player, CardName.Overroid);
-            game.ReceiveCommand(command); // card moved to battle area from hand
-
-            Assert.Equal(12, game.AllInGameCards.Count);
-            Assert.Contains(game.AllInGameCards, c => c.Name == CardName.Overroid);
         }
 
         [Fact]
@@ -503,8 +472,8 @@ namespace OverroidModel.Test
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Idol}, // Attacking first
                 cardNamesInHumanHand: new List<CardName>() { CardName.Diva} // Defending first
             );
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
             game.SetSpecialWinner(game.OverroidPlayer);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
 
             Assert.True(game.HasFinished());
         }
@@ -540,8 +509,8 @@ namespace OverroidModel.Test
                 cardNamesInOverroidHand: new List<CardName>() { CardName.Idol}, // Attacking 
                 cardNamesInHumanHand: new List<CardName>() { CardName.Diva} // Defending 
             );
-            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
             game.SetSpecialWinner(game.OverroidPlayer);
+            TestGameBuilder.SetCardsToCurrentBattle(CardName.Idol, CardName.Diva, game);
             Assert.True(game.WinningStarOf(game.HumanPlayer) > game.WinningStarOf(game.OverroidPlayer));
             Assert.Equal(game.OverroidPlayer, game.CheckWinner());
         }
