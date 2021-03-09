@@ -29,6 +29,11 @@ namespace OverroidModel.GameAction.Effects
         void IGameAction.Resolve(IMutableGame g)
         {
             g.HiddenCard.RevealTo(controller);
+            var opponentHand = g.HandOf(g.OpponentOf(controller));
+            foreach (var c in opponentHand.Cards)
+            {
+                c.SetGuessed();
+            }
         }
     }
 }
