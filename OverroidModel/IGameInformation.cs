@@ -50,7 +50,7 @@ namespace OverroidModel
         public Battle CurrentBattle { get; }
 
         /// <summary>
-        /// All cards used in the game.
+        /// All cards used in the game. Mock cards with name "Unknown" are excluded.
         /// </summary>
         public IReadOnlyDictionary<CardName, ICardInformation> CardDictionary { get; }
 
