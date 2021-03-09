@@ -7,7 +7,7 @@ namespace OverroidModel.Card
     /// <summary>
     /// Card that is not used in the game. 
     /// </summary>
-    public class OutsideCard : ICardInfo
+    public class OutsideCard : ICardInformation
     {
         readonly ICardMaster card;
         readonly List<PlayerAccount> lookingPlayers;

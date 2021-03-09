@@ -6,7 +6,7 @@ namespace OverroidModel.Card
     /// <summary>
     /// Cards used in game. It may have temporal state.
     /// </summary>
-    public class InGameCard : ICardInfo
+    public class InGameCard : ICardInformation
     {
         readonly ICardMaster data;
         PlayerAccount owner;

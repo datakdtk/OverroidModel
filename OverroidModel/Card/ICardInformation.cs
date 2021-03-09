@@ -2,7 +2,7 @@
 
 namespace OverroidModel.Card
 {
-    public interface ICardInfo
+    public interface ICardInformation
     {
         /// <summary>
         /// Card name that identifies each card in game.

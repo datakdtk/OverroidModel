@@ -47,7 +47,7 @@ namespace OverroidModel.GameAction.Commands
         /// <param name="commandingPlayer">Controller of Hacker card.</param>
         public static Detection CreateRandomCommand(IGameInformation g, PlayerAccount commandingPlayer)
         {
-            List<ICardInfo> cards = g.AllCards.Cast<ICardInfo>().ToList();
+            List<ICardInformation> cards = g.AllCards.Cast<ICardInformation>().ToList();
             cards.Add(g.HiddenCard);
             var rand = new Random();
             var randomIndex = rand.Next(cards.Count - 1);

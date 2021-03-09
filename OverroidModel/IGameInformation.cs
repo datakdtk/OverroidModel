@@ -52,7 +52,7 @@ namespace OverroidModel
         /// <summary>
         /// All cards used in the game.
         /// </summary>
-        public IReadOnlyList<ICardInfo> AllCards { get; }
+        public IReadOnlyList<ICardInformation> AllCards { get; }
 
         /// <summary>
         /// Card that was not distributed to player's hands.
