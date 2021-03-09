@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using OverroidModel.Card.Effects;
 
 namespace OverroidModel.Card
 {
@@ -10,6 +8,21 @@ namespace OverroidModel.Card
         /// Card name that identifies each card in game.
         /// </summary>
         public CardName Name { get; }
+
+        /// <summary>
+        /// Strength of the card.
+        /// </summary>
+        public ushort Value { get; }
+
+        /// <summary>
+        /// Unique effect of the cards.
+        /// </summary>
+        public ICardEffect Effect { get; }
+
+        /// <summary>
+        /// Player using this card. Returns null if it is not used in the game.
+        /// </summary>
+        public PlayerAccount? Owner { get; }
 
         /// <summary>
         /// Check if the card is face up.
@@ -26,5 +39,9 @@ namespace OverroidModel.Card
         /// </returns>
         public bool IsVisibleTo(PlayerAccount player);
 
+        /// <summary>
+        /// Check if a player can guess his opponent has the card.
+        /// </summary>
+        public bool IsGuessable();
     }
 }

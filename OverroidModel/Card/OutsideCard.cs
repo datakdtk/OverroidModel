@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OverroidModel.Card.Effects;
 using OverroidModel.Card.Master;
 
 namespace OverroidModel.Card
@@ -21,12 +22,20 @@ namespace OverroidModel.Card
 
         public CardName Name => card.Name;
 
+        public ushort Value => card.Value;
+
+        public ICardEffect Effect => card.Effect;
+
+        public PlayerAccount? Owner => null;
+
         public bool IsOpened() => isOpened;
 
         public bool IsVisibleTo(PlayerAccount player)
         {
             return isOpened || lookingPlayers.Contains(player);
         }
+
+        public bool IsGuessable() => false;
 
         /// <summary>
         /// Make given player be able to look at the card

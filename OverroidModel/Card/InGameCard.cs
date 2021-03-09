@@ -22,6 +22,9 @@ namespace OverroidModel.Card
             this.owner = owner;
         }
 
+        /// <summary>
+        /// Card name that identifies each card in game.
+        /// </summary>
         public CardName Name => data.Name;
 
         /// <summary>
@@ -57,7 +60,7 @@ namespace OverroidModel.Card
         }
 
         /// <summary>
-        /// Check if the opponent of card owner can guess the owner has the card.
+        /// Check if the opponent of card owner can believe that the owner has the card.
         /// </summary>
         public bool IsGuessable() => visibility != CardVisibility.Hidden;
 
