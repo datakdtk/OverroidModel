@@ -47,12 +47,16 @@ namespace OverroidModel.GameAction.Commands
         /// <param name="commandingPlayer">Controller of Hacker card.</param>
         public static Detection CreateRandomCommand(IGameInformation g, PlayerAccount commandingPlayer)
         {
-            List<ICardInformation> cards = g.AllCards.Cast<ICardInformation>().ToList();
-            cards.Add(g.HiddenCard);
+            List<CardName> cards = g.CardDictionary.Keys.ToList();
+            if (cards.Count == 0)
+            {
+                // There is expected to be only unknown cards in test.
+                return new Detection(commandingPlayer, CardName.Unknown);
+            }
             var rand = new Random();
             var randomIndex = rand.Next(cards.Count - 1);
             var target = cards[randomIndex];
-            return new Detection(commandingPlayer, target.Name);
+            return new Detection(commandingPlayer, target);
         }
     }
 }

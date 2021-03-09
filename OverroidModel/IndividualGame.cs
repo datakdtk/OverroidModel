@@ -31,7 +31,7 @@ namespace OverroidModel
         readonly PlayerAccount?[] effectDisabledPlayers;
         ICommandAuthorizer? commandAuthorizer;
         PlayerAccount? specialWinner;
-        readonly List<ICardInformation> allCards;
+        readonly IReadOnlyDictionary<CardName, ICardInformation> cardDictionary;
 
         /// <param name="humanPlayer"> Player who plays Human force,</param>
         /// <param name="overroidPlayer">Player who plays Overroid force.</param>
@@ -76,12 +76,13 @@ namespace OverroidModel
             actionHistory = new List<IGameAction>();
             effectDisabledPlayers = new PlayerAccount?[MAX_ROUND + 1]; // will use index 1 to 6 (MAX_ROUND) only
 
-            allCards = humanPlayerHand.Cards.Concat(overroidPlayerHand.Cards).OfType<ICardInformation>().ToList();
+            var allCards = humanPlayerHand.Cards.Concat(overroidPlayerHand.Cards).OfType<ICardInformation>().ToList();
             allCards.Add(hiddendCard);
             if (triggerCard != null)
             {
                 allCards.Add(triggerCard);
             }
+            cardDictionary = allCards.Where(c => c.Name != CardName.Unknown).ToDictionary(c => c.Name);
         }
 
         public PlayerAccount HumanPlayer => humanPlayer;
@@ -94,7 +95,7 @@ namespace OverroidModel
         public IReadOnlyList<Battle> Battles => battles;
         public Battle CurrentBattle => battles.Count > 0 ? battles.Last() : throw new GameLogicException("Game has no battle round yet.");
         public ICommandRequirement? CommandRequirement => commandAuthorizer?.CommandRequirement;
-        public IReadOnlyList<ICardInformation> AllCards => allCards;
+        public IReadOnlyDictionary<CardName, ICardInformation> CardDictionary => cardDictionary;
 
         public ushort WinningStarOf(PlayerAccount p) => (ushort)battles.Aggregate(0, (c, b) => c + b.WinningStarOf(p));
 
