@@ -282,7 +282,7 @@ namespace OverroidModel.Test
                 config: config
             );
 
-            Assert.Equal(13, game.CardDictionary.Count);
+            Assert.Equal(13, game.AllCardDictionary.Count);
         }
  
         [Fact]
@@ -302,7 +302,7 @@ namespace OverroidModel.Test
                 config: config
             );
 
-            Assert.Equal(14, game.CardDictionary.Count);
+            Assert.Equal(14, game.AllCardDictionary.Count);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace OverroidModel
         /// <summary>
         /// All cards used in the game. Mock cards with name "Unknown" are excluded.
         /// </summary>
-        public IReadOnlyDictionary<CardName, ICardInformation> CardDictionary { get; }
+        public IReadOnlyDictionary<CardName, ICardInformation> AllCardDictionary { get; }
 
         /// <summary>
         /// Card that was not distributed to player's hands.

@@ -47,7 +47,7 @@ namespace OverroidModel.GameAction.Commands
         /// <param name="commandingPlayer">Controller of Hacker card.</param>
         public static Detection CreateRandomCommand(IGameInformation g, PlayerAccount commandingPlayer)
         {
-            List<CardName> cards = g.CardDictionary.Keys.ToList();
+            List<CardName> cards = g.AllCardDictionary.Keys.ToList();
             if (cards.Count == 0)
             {
                 // There is expected to be only unknown cards in test.

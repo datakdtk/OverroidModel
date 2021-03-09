@@ -448,7 +448,7 @@ namespace OverroidModel.Test
             var handCard = game.HandOf(game.OverroidPlayer).CardOf(CardName.Overroid)!;
             handCard.SetGuessed();
 
-            var cardInAllCardList = game.CardDictionary[CardName.Overroid];
+            var cardInAllCardList = game.AllCardDictionary[CardName.Overroid];
             Assert.True(cardInAllCardList.IsGuessable());
         }
 
