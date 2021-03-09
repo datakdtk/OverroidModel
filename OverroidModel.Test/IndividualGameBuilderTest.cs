@@ -264,5 +264,45 @@ namespace OverroidModel.Test
             Assert.True(triggerCard!.IsVisibleTo(humanPlayer));
             Assert.True(triggerCard!.IsVisibleTo(overroidPlayer));
         }
+ 
+        [Fact]
+        public void Test_InitializeGame_ThereAre13CardsWhenWatcherIsNotUsed()
+        {
+            var builder = new IndividualGameBuilder(new DummyShuffler());
+
+            var humanPlayer = new PlayerAccount("hoge");
+            var overroidPlayer = new PlayerAccount("fuga");
+            var config = new TestConfig();
+            config.UsesWatcher = false;
+
+            var game = builder.InitializeGame(
+                humanPlayer: humanPlayer,
+                overroidPlayer: overroidPlayer,
+                shufflingSeed: 12345,
+                config: config
+            );
+
+            Assert.Equal(13, game.AllCards.Count);
+        }
+ 
+        [Fact]
+        public void Test_InitializeGame_ThereAre14CardsWhenWatcherIsUsed()
+        {
+            var builder = new IndividualGameBuilder(new DummyShuffler());
+
+            var humanPlayer = new PlayerAccount("hoge");
+            var overroidPlayer = new PlayerAccount("fuga");
+            var config = new TestConfig();
+            config.UsesWatcher = true;
+
+            var game = builder.InitializeGame(
+                humanPlayer: humanPlayer,
+                overroidPlayer: overroidPlayer,
+                shufflingSeed: 12345,
+                config: config
+            );
+
+            Assert.Equal(14, game.AllCards.Count);
+        }
     }
 }

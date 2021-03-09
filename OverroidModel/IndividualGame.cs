@@ -31,7 +31,7 @@ namespace OverroidModel
         readonly PlayerAccount?[] effectDisabledPlayers;
         ICommandAuthorizer? commandAuthorizer;
         PlayerAccount? specialWinner;
-        readonly List<InGameCard> inGameCards;
+        readonly List<ICardInfo> allCards;
 
         /// <param name="humanPlayer"> Player who plays Human force,</param>
         /// <param name="overroidPlayer">Player who plays Overroid force.</param>
@@ -76,7 +76,12 @@ namespace OverroidModel
             actionHistory = new List<IGameAction>();
             effectDisabledPlayers = new PlayerAccount?[MAX_ROUND + 1]; // will use index 1 to 6 (MAX_ROUND) only
 
-            inGameCards = humanPlayerHand.Cards.Concat(overroidPlayerHand.Cards).ToList();
+            allCards = humanPlayerHand.Cards.Concat(overroidPlayerHand.Cards).OfType<ICardInfo>().ToList();
+            allCards.Add(hiddendCard);
+            if (triggerCard != null)
+            {
+                allCards.Add(triggerCard);
+            }
         }
 
         public PlayerAccount HumanPlayer => humanPlayer;
@@ -89,7 +94,7 @@ namespace OverroidModel
         public IReadOnlyList<Battle> Battles => battles;
         public Battle CurrentBattle => battles.Count > 0 ? battles.Last() : throw new GameLogicException("Game has no battle round yet.");
         public ICommandRequirement? CommandRequirement => commandAuthorizer?.CommandRequirement;
-        public IReadOnlyList<InGameCard> AllInGameCards => inGameCards;
+        public IReadOnlyList<ICardInfo> AllCards => allCards;
 
         public ushort WinningStarOf(PlayerAccount p) => (ushort)battles.Aggregate(0, (c, b) => c + b.WinningStarOf(p));
 
